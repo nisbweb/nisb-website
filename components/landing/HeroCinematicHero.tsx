@@ -166,13 +166,13 @@ export default function HeroCinematicHero() {
               {/* Center Hub Node (Full Covering Circle Image) */}
               <a
                 href="#chapters"
-                className="relative z-30 w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-[#09090d] border-2 border-[var(--accent)] overflow-hidden flex items-center justify-center shadow-[0_0_35px_var(--accent-glow)] hover:scale-110 transition-transform group p-0"
+                className="relative z-30 w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-white border-2 border-[var(--accent)] overflow-hidden flex items-center justify-center shadow-[0_0_35px_var(--accent-glow)] hover:scale-110 transition-transform group p-0"
                 title="NISB Student Branch"
               >
                 <img
                   src="/icon.png"
                   alt="NISB Logo"
-                  className="w-full h-full object-cover rounded-full scale-[1.25] group-hover:scale-[1.35] transition-transform duration-300"
+                  className="w-full h-full object-cover rounded-full group-hover:scale-105 transition-transform duration-300"
                 />
               </a>
 

@@ -45,6 +45,53 @@ export default function MobileIntro({ onComplete }: MobileIntroProps) {
         backgroundColor: '#030712',
       }}
     >
+      {/* ── PURE CSS MICRO-BRUSHED METALLIC STYLES ── */}
+      <style jsx global>{`
+        .bg-brushed-metal {
+          background-image: 
+            repeating-linear-gradient(
+              90deg,
+              rgba(255, 255, 255, 0.035) 0px,
+              rgba(255, 255, 255, 0.035) 1px,
+              transparent 1px,
+              transparent 3px
+            ),
+            repeating-linear-gradient(
+              0deg,
+              rgba(0, 0, 0, 0.18) 0px,
+              rgba(255, 255, 255, 0.02) 1px,
+              transparent 2px,
+              transparent 4px
+            );
+          background-size: 100% 100%, 100% 100%;
+        }
+
+        .text-debossed-platinum-bright {
+          color: #ffffff;
+          background: linear-gradient(180deg, #ffffff 0%, #f1f5f9 45%, #cbd5e1 85%, #ffffff 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          filter: drop-shadow(0px 1.5px 2px rgba(0, 0, 0, 0.95));
+        }
+
+        .metal-edge-bevel {
+          box-shadow: 
+            inset 0 1px 1.5px rgba(255, 255, 255, 0.4),
+            inset 0 -1px 1.5px rgba(0, 0, 0, 0.85),
+            inset 1px 0 1.5px rgba(255, 255, 255, 0.25),
+            inset -1px 0 1.5px rgba(0, 0, 0, 0.65),
+            0 25px 50px -12px rgba(0, 0, 0, 0.85),
+            0 0 0 1px rgba(255, 255, 255, 0.1);
+        }
+
+        .engraved-native-stamp {
+          background: rgba(5, 8, 15, 0.45);
+          box-shadow: 
+            inset 0 1px 2px rgba(0, 0, 0, 0.8),
+            0 1px 0 rgba(255, 255, 255, 0.12);
+        }
+      `}</style>
+
       {/* Lightweight Ambient Cyan Glow on Mobile */}
       <div
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[340px] h-[340px] rounded-full pointer-events-none z-[1]"
@@ -53,7 +100,7 @@ export default function MobileIntro({ onComplete }: MobileIntroProps) {
         }}
       />
 
-      {/* Auto-optimized lightweight Electric Blue Stardust (6 puffs, 14 embers on mobile) */}
+      {/* Auto-optimized lightweight Electric Blue Stardust */}
       <LuxuryStardustCanvas />
 
       {/* 4-Dot to NISB Letterform Morph Engine */}
@@ -80,24 +127,43 @@ export default function MobileIntro({ onComplete }: MobileIntroProps) {
         </div>
       </header>
 
-      {/* Clean, Lightweight Mobile Bottom Badge */}
-      <footer className="relative z-20 w-full px-4 pb-7 flex justify-center pointer-events-none">
+      {/* ── REFINED MICRO-BRUSHED METALLIC CARD (MOBILE WITH TOP MARGIN) ── */}
+      <footer className="relative z-20 w-full max-w-sm px-4 mt-6 pb-7 flex justify-center pointer-events-none">
         <AnimatePresence>
           {isRevealed && (
             <motion.div
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: 20, opacity: 0 }}
-              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-              className="w-full max-w-xs pointer-events-auto px-4 py-2.5 rounded-full bg-[#060c18]/90 backdrop-blur-xl border border-sky-300/30 shadow-[0_10px_30px_rgba(0,0,0,0.8)] flex items-center justify-between gap-2"
+              initial={{ y: 20, opacity: 0, scale: 0.96 }}
+              animate={{ y: 0, opacity: 1, scale: 1 }}
+              exit={{ y: 20, opacity: 0, scale: 0.96 }}
+              transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+              className="relative w-full pointer-events-auto rounded-2xl bg-gradient-to-br from-[#0e1628] via-[#0a111f] to-[#060913] border border-slate-700/60 p-4 metal-edge-bevel font-mono overflow-hidden shadow-[0_15px_35px_rgba(0,0,0,0.9)] flex flex-col gap-2.5"
             >
-              <div className="flex items-center gap-1.5 text-sky-200 font-bold text-[10px] font-mono tracking-wider uppercase">
-                <span className="w-1.5 h-1.5 rounded-full bg-sky-400 shadow-[0_0_6px_#38bdf8]" />
-                <span>NISB • IEEE</span>
+              {/* Anisotropic Micro-Brushed Surface Overlay */}
+              <div className="absolute inset-0 bg-brushed-metal opacity-35 pointer-events-none z-0" />
+
+              {/* Card Top Row */}
+              <div className="relative z-10 flex items-center justify-between gap-2">
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 rounded-full bg-gradient-to-tr from-slate-400 via-white to-slate-200 ring-1 ring-slate-100/60 shadow-[0_0_6px_rgba(255,255,255,0.5)] flex-shrink-0" />
+                  <h3 className="text-xs font-black tracking-[0.2em] text-debossed-platinum-bright uppercase leading-tight">
+                    NISB • IEEE
+                  </h3>
+                </div>
+
+                <div className="px-2.5 py-0.5 rounded border border-slate-700/60 engraved-native-stamp text-[9px] font-bold tracking-wider text-slate-300 uppercase flex-shrink-0">
+                  EST. 1999 • R10
+                </div>
               </div>
-              <span className="text-[9px] font-mono text-sky-300/80 font-semibold tracking-wider">
-                EST. 1999 • REGION 10
-              </span>
+
+              {/* Hairline Divider */}
+              <div className="relative z-10 h-[1px] w-full bg-slate-950 border-b border-slate-700/60" />
+
+              {/* Card Bottom Row */}
+              <div className="relative z-10">
+                <p className="text-[9.5px] font-extrabold tracking-[0.22em] text-debossed-platinum-bright uppercase leading-relaxed">
+                  ADVANCING TECHNOLOGY FOR HUMANITY
+                </p>
+              </div>
             </motion.div>
           )}
         </AnimatePresence>

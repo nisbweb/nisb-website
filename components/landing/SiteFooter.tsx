@@ -193,10 +193,15 @@ export default function SiteFooter() {
                   <p className="text-sm font-bold text-[var(--star-white)] mt-1">
                     Sagar Kumar Singh
                   </p>
-                  <p className="text-[var(--text-muted)] text-[11px] mt-0.5">+91 86603 18339</p>
+                  <a
+                    href="tel:+918660318339"
+                    className="text-[var(--text-muted)] hover:text-[var(--accent)] transition-colors text-[11px] mt-0.5 block hover:underline"
+                  >
+                    +91 86603 18339
+                  </a>
                   <a
                     href="mailto:sagarks@ieee.org"
-                    className="text-[var(--accent)] font-bold hover:underline block text-[11px]"
+                    className="text-[var(--accent)] font-bold hover:underline block text-[11px] mt-0.5"
                   >
                     sagarks@ieee.org
                   </a>
@@ -263,7 +268,7 @@ export default function SiteFooter() {
 
         {/* Bottom copyright line */}
         <div className="pt-8 border-t border-[var(--border-main)] flex flex-col sm:flex-row items-center justify-between gap-4 text-[10px] font-mono uppercase tracking-[0.2em] text-[var(--text-muted)]">
-          <div>© {new Date().getFullYear()} IEEE NISB · National Institute of Engineering</div>
+          <div>© {new Date().getFullYear()}  NISB </div>
           <div>Honoured as Best Student Chapter of Region 10</div>
         </div>
 

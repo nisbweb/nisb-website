@@ -45,6 +45,64 @@ export default function IntroSequence({ onComplete }: IntroSequenceProps) {
         backgroundColor: '#030712',
       }}
     >
+      {/* ── PURE CSS MICRO-BRUSHED METALLIC & ENGRAVED STYLES ── */}
+      <style jsx global>{`
+        .bg-brushed-metal {
+          background-image: 
+            repeating-linear-gradient(
+              90deg,
+              rgba(255, 255, 255, 0.035) 0px,
+              rgba(255, 255, 255, 0.035) 1px,
+              transparent 1px,
+              transparent 3px
+            ),
+            repeating-linear-gradient(
+              0deg,
+              rgba(0, 0, 0, 0.18) 0px,
+              rgba(255, 255, 255, 0.02) 1px,
+              transparent 2px,
+              transparent 4px
+            );
+          background-size: 100% 100%, 100% 100%;
+        }
+
+        .text-debossed-platinum-bright {
+          color: #ffffff;
+          background: linear-gradient(180deg, #ffffff 0%, #f1f5f9 45%, #cbd5e1 85%, #ffffff 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          filter: drop-shadow(0px 1.5px 2px rgba(0, 0, 0, 0.95));
+        }
+
+        .metal-edge-bevel {
+          box-shadow: 
+            inset 0 1px 1.5px rgba(255, 255, 255, 0.4),
+            inset 0 -1px 1.5px rgba(0, 0, 0, 0.85),
+            inset 1px 0 1.5px rgba(255, 255, 255, 0.25),
+            inset -1px 0 1.5px rgba(0, 0, 0, 0.65),
+            0 25px 50px -12px rgba(0, 0, 0, 0.85),
+            0 0 0 1px rgba(255, 255, 255, 0.1);
+        }
+
+        .metallic-glare-sweep {
+          background: linear-gradient(
+            115deg,
+            transparent 20%,
+            rgba(255, 255, 255, 0.03) 35%,
+            rgba(255, 255, 255, 0.25) 50%,
+            rgba(255, 255, 255, 0.03) 65%,
+            transparent 80%
+          );
+        }
+
+        .engraved-native-stamp {
+          background: rgba(5, 8, 15, 0.45);
+          box-shadow: 
+            inset 0 1px 2px rgba(0, 0, 0, 0.8),
+            0 1px 0 rgba(255, 255, 255, 0.12);
+        }
+      `}</style>
+
       {/* ── VOLUMETRIC ELECTRIC BLUE & CYAN NEBULA BLOOMS ── */}
       <div
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[700px] rounded-full pointer-events-none z-[1]"
@@ -69,11 +127,11 @@ export default function IntroSequence({ onComplete }: IntroSequenceProps) {
         onSolidComplete={() => setIsRevealed(true)}
       />
 
-      {/* ── SKIP INTRO BUTTON WITH ELECTRIC CYAN PARTICLE ── */}
+      {/* ── TOP SPACER ── */}
+      <div className="w-full h-8 sm:h-12 pointer-events-none" />
 
-
-      {/* ── BOTTOM HUD FROSTED GLASS CARD OVERLAY ── */}
-      <footer className="relative z-20 w-full max-w-2xl mx-auto px-4 sm:px-6 pb-8 sm:pb-10 flex justify-center pointer-events-none">
+      {/* ── REFINED MICRO-BRUSHED METALLIC CARD (WITH INCREASED TOP MARGIN) ── */}
+      <footer className="relative z-20 w-full max-w-2xl mx-auto px-4 sm:px-6 mt-8 sm:mt-14 pb-8 sm:pb-12 flex justify-center pointer-events-none">
         <AnimatePresence>
           {isRevealed && (
             <motion.div
@@ -81,31 +139,48 @@ export default function IntroSequence({ onComplete }: IntroSequenceProps) {
               animate={{ y: 0, opacity: 1, scale: 1 }}
               exit={{ y: 35, opacity: 0, scale: 0.95 }}
               transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
-              className="w-full pointer-events-auto p-4 sm:p-5 rounded-2xl sm:rounded-3xl bg-[#060c18]/80 backdrop-blur-2xl border border-sky-300/30 shadow-[0_20px_50px_rgba(0,0,0,0.8),0_0_30px_rgba(56,189,248,0.2),inset_0_0_20px_rgba(186,230,253,0.05)] relative overflow-hidden group hover:border-sky-300/50 transition-all duration-500"
+              className="relative w-full pointer-events-auto rounded-2xl bg-gradient-to-br from-[#0e1628] via-[#0a111f] to-[#060913] border border-slate-700/60 p-5 sm:p-7 metal-edge-bevel font-mono overflow-hidden transition-all duration-300 shadow-[0_25px_60px_-12px_rgba(0,0,0,0.95)] hover:border-sky-400/50 group"
             >
-              {/* Subtle Ambient Glows inside Card */}
-              <div className="absolute -top-10 right-1/4 w-32 h-32 bg-sky-400/15 rounded-full blur-2xl pointer-events-none" />
-              <div className="absolute -bottom-10 left-1/4 w-32 h-32 bg-cyan-400/15 rounded-full blur-2xl pointer-events-none" />
+              {/* Anisotropic Micro-Brushed Surface Texture Overlay */}
+              <div className="absolute inset-0 bg-brushed-metal opacity-40 pointer-events-none z-0" />
 
-              {/* Top Row: Institution Name & Region Pill */}
-              <div className="flex items-center justify-between gap-2 pb-2.5 border-b border-white/10 text-[10px] sm:text-xs font-mono relative z-10">
-                <div className="flex items-center gap-2 text-sky-200 font-bold tracking-wider uppercase">
-                  <span className="relative flex h-2 w-2">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75" />
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-sky-300 shadow-[0_0_8px_#38bdf8]" />
-                  </span>
-                  <span>NIE IEEE STUDENT BRANCH</span>
+              {/* Physical Light Glare Sweep */}
+              <div className="absolute inset-0 metallic-glare-sweep opacity-25 pointer-events-none z-0 group-hover:opacity-40 transition-opacity duration-500" />
+
+              {/* Subtle Ambient Nebula Glow behind metal plate */}
+              <div className="absolute -top-12 right-1/4 w-36 h-36 bg-sky-400/10 rounded-full blur-2xl pointer-events-none" />
+
+              {/* CARD TOP ROW */}
+              <div className="relative z-10 flex flex-wrap items-center justify-between gap-3">
+                <div className="flex items-center gap-3">
+                  {/* Machined Silver Metallic Dot with Glowing Aura */}
+                  <div className="relative flex items-center justify-center">
+                    <div className="w-2.5 h-2.5 rounded-full bg-gradient-to-tr from-slate-400 via-white to-slate-200 ring-1 ring-slate-100/60 shadow-[0_0_8px_rgba(255,255,255,0.5)] flex-shrink-0" />
+                  </div>
+
+                  {/* Highly Visible Laser Engraved Branch Title */}
+                  <h2 className="text-sm sm:text-base md:text-lg font-black tracking-[0.24em] text-debossed-platinum-bright uppercase leading-tight">
+                    NIE IEEE STUDENT BRANCH
+                  </h2>
                 </div>
-                <span className="px-2.5 py-0.5 rounded-full bg-sky-500/15 border border-sky-400/30 text-sky-200 font-bold text-[9.5px] sm:text-[10px] tracking-widest uppercase shadow-sm">
-                  EST. 1999 • REGION 10
-                </span>
+
+                {/* Natively Integrated Engraved Stamp */}
+                <div className="px-3.5 py-1 rounded border border-slate-700/60 engraved-native-stamp text-[10px] sm:text-[11px] font-bold tracking-widest text-slate-300 uppercase flex-shrink-0">
+                  EST. 1999 <span className="text-slate-500 mx-1">•</span> REGION 10
+                </div>
               </div>
 
-              {/* Bottom Row: Motto & Telemetry Coordinates */}
-              <div className="flex flex-col sm:flex-row items-center justify-between gap-2 sm:gap-4 pt-2.5 relative z-10">
-                <p className="text-[11px] sm:text-xs font-mono uppercase tracking-[0.22em] text-white/90 font-medium text-center sm:text-left">
-                  Advancing Technology For Humanity
+              {/* Engraved Hairline Metallic Line Divider */}
+              <div className="relative z-10 my-4 sm:my-5">
+                <div className="h-[1px] w-full bg-slate-950 border-b border-slate-700/60" />
+              </div>
+
+              {/* CARD BOTTOM ROW */}
+              <div className="relative z-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-4">
+                <p className="text-[11px] sm:text-xs md:text-sm font-extrabold tracking-[0.26em] text-debossed-platinum-bright uppercase leading-relaxed">
+                  ADVANCING TECHNOLOGY FOR HUMANITY
                 </p>
+
 
               </div>
             </motion.div>
