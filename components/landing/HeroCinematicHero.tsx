@@ -247,7 +247,7 @@ export default function HeroCinematicHero() {
           <div className="flex flex-col items-center justify-center text-center p-3 rounded-xl bg-white/5 border border-white/15 hover:border-[var(--accent)]/50 transition-all duration-300 group/card">
             <span className="text-[8px] font-mono uppercase tracking-[0.2em] text-[var(--accent)] font-bold mb-1">FLAGSHIP EVENT</span>
             <h3 className="text-base font-black uppercase text-white font-display tracking-tight group-hover/card:text-[var(--accent)] transition-colors">ELECTRONIKA • IPL</h3>
-            <p className="text-[10px] font-mono text-white/60 mt-1">IPL &amp; Tech Symposia</p>
+
           </div>
         </div>
 
@@ -265,7 +265,7 @@ export default function HeroCinematicHero() {
               <div className="flex flex-col items-center justify-center text-center p-5 rounded-xl bg-black/65 backdrop-blur-md border border-white/15 hover:border-[var(--accent)]/50 transition-all duration-300 shadow-xl group/card">
                 <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-[var(--accent)] font-bold mb-1.5">FLAGSHIP EVENT</span>
                 <h3 className="text-2xl md:text-3xl font-black uppercase text-white font-display tracking-tight group-hover/card:text-[var(--accent)] transition-colors">ELECTRONIKA • IPL</h3>
-                <p className="text-xs font-mono text-white/70 mt-2">IEEE Programming League &amp; Tech Symposia</p>
+                <p className="text-xs font-mono text-white/70 mt-2">IEEE Programming League</p>
               </div>
             </div>
             <div className="flex items-center gap-3 flex-wrap shrink-0">

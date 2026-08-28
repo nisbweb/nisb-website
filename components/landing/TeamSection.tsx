@@ -18,7 +18,7 @@ const TEAM_MEMBERS: TeamMember[] = [
     role: 'Chairperson',
     category: 'core',
     society: 'Executive Board',
-    img: '/assets/team/SagarSingh.jpg?v=2',
+    img: '/assets/team/SagarSingh.jpg?v=3',
     fallback: 'https://raw.githubusercontent.com/nisbweb/nisbweb.github.io/master/assets/cores25-26/SagarSingh.jpg',
   },
   {
@@ -26,7 +26,7 @@ const TEAM_MEMBERS: TeamMember[] = [
     role: 'Vice Chairperson & Secretary of Marketing and Publicity',
     category: 'core',
     society: 'Executive Board',
-    img: '/assets/team/Abhay.jpg?v=2',
+    img: '/assets/team/Abhay.jpg?v=3',
     fallback: 'https://raw.githubusercontent.com/nisbweb/nisbweb.github.io/master/assets/cores25-26/Abhay.jpg',
   },
   {
@@ -34,7 +34,7 @@ const TEAM_MEMBERS: TeamMember[] = [
     role: 'Treasurer',
     category: 'core',
     society: 'Executive Board',
-    img: '/assets/team/Yogesh.jpg?v=2',
+    img: '/assets/team/Yogesh.jpg?v=3',
     fallback: 'https://raw.githubusercontent.com/nisbweb/nisbweb.github.io/master/assets/cores25-26/Yogesh.jpg',
   },
   {
@@ -42,7 +42,7 @@ const TEAM_MEMBERS: TeamMember[] = [
     role: 'Secretary of Internal Affairs',
     category: 'core',
     society: 'Executive Board',
-    img: '/assets/team/Saklesh.jpg?v=2',
+    img: '/assets/team/Saklesh.jpg?v=3',
     fallback: 'https://raw.githubusercontent.com/nisbweb/nisbweb.github.io/master/assets/cores25-26/Saklesh.jpg',
   },
   {
@@ -50,7 +50,7 @@ const TEAM_MEMBERS: TeamMember[] = [
     role: 'Secretary of Events',
     category: 'core',
     society: 'Event Operations',
-    img: '/assets/team/Anantha.jpg?v=2',
+    img: '/assets/team/Anantha.jpg?v=3',
     fallback: 'https://raw.githubusercontent.com/nisbweb/nisbweb.github.io/master/assets/cores25-26/Anantha.jpg',
   },
   {
@@ -58,7 +58,7 @@ const TEAM_MEMBERS: TeamMember[] = [
     role: 'Secretary of Events',
     category: 'core',
     society: 'Event Operations',
-    img: '/assets/team/ShreyaPV.jpg?v=2',
+    img: '/assets/team/ShreyaPV.jpg?v=3',
     fallback: 'https://raw.githubusercontent.com/nisbweb/nisbweb.github.io/master/assets/cores25-26/Shreya%20P%20V.jpg',
   },
   {
@@ -66,7 +66,7 @@ const TEAM_MEMBERS: TeamMember[] = [
     role: 'Secretary of Marketing and Publicity',
     category: 'core',
     society: 'Member Public Relations',
-    img: '/assets/team/Aadya.jpg?v=2',
+    img: '/assets/team/Aadya.jpg?v=3',
     fallback: 'https://raw.githubusercontent.com/nisbweb/nisbweb.github.io/master/assets/cores25-26/Aadya.jpeg',
   },
   {
@@ -74,7 +74,7 @@ const TEAM_MEMBERS: TeamMember[] = [
     role: 'Secretary of membership development & SAC Coordinator',
     category: 'core',
     society: 'Member Development & SAC',
-    img: '/assets/team/SagarNM.jpg?v=2',
+    img: '/assets/team/SagarNM.jpg?v=3',
     fallback: 'https://raw.githubusercontent.com/nisbweb/nisbweb.github.io/master/assets/cores25-26/SagarNM.jpg',
   },
   {
@@ -82,7 +82,7 @@ const TEAM_MEMBERS: TeamMember[] = [
     role: 'Technology Coordinator',
     category: 'tech',
     society: 'Tech Team',
-    img: '/assets/team/Pranav.jpg?v=2',
+    img: '/assets/team/Pranav.jpg?v=3',
     fallback: 'https://raw.githubusercontent.com/nisbweb/nisbweb.github.io/master/assets/cores25-26/Pranav.jpg',
   },
   {
@@ -90,7 +90,7 @@ const TEAM_MEMBERS: TeamMember[] = [
     role: 'Technology Coordinator',
     category: 'tech',
     society: 'Tech Team',
-    img: '/assets/team/Aashish.jpg?v=2',
+    img: '/assets/team/Aashish.jpg?v=3',
     fallback: 'https://raw.githubusercontent.com/nisbweb/nisbweb.github.io/master/assets/cores25-26/Aashish.jpg',
   },
   {
@@ -98,7 +98,7 @@ const TEAM_MEMBERS: TeamMember[] = [
     role: 'Editor-in-Chief',
     category: 'core',
     society: 'Editorial & Publications',
-    img: '/assets/team/Rahul.jpg?v=2',
+    img: '/assets/team/Rahul.jpg?v=3',
     fallback: 'https://raw.githubusercontent.com/nisbweb/nisbweb.github.io/master/assets/cores25-26/Rahul.jpeg',
   },
   {
@@ -106,7 +106,7 @@ const TEAM_MEMBERS: TeamMember[] = [
     role: 'Sponsorship Coordinator',
     category: 'core',
     society: 'Corporate Outreach',
-    img: '/assets/team/Shresht.jpg?v=2',
+    img: '/assets/team/Shresht.jpg?v=3',
     fallback: 'https://raw.githubusercontent.com/nisbweb/nisbweb.github.io/master/assets/cores25-26/Shresht.JPG',
   },
   {
@@ -114,7 +114,7 @@ const TEAM_MEMBERS: TeamMember[] = [
     role: 'CS Chairperson',
     category: 'chapter',
     society: 'Computer Society',
-    img: '/assets/team/Priyanka.jpg?v=2',
+    img: '/assets/team/Priyanka.jpg?v=3',
     fallback: 'https://raw.githubusercontent.com/nisbweb/nisbweb.github.io/master/assets/cores25-26/Priyanka.jpeg',
   },
   {
@@ -122,7 +122,7 @@ const TEAM_MEMBERS: TeamMember[] = [
     role: 'CS Secretary',
     category: 'chapter',
     society: 'Computer Society',
-    img: '/assets/team/PrerikaP.jpg?v=2',
+    img: '/assets/team/PrerikaP.jpg?v=3',
     fallback: 'https://raw.githubusercontent.com/nisbweb/nisbweb.github.io/master/assets/cores25-26/PrerikaP.jpeg',
   },
   {
@@ -130,7 +130,7 @@ const TEAM_MEMBERS: TeamMember[] = [
     role: 'CASS & RAS Chairperson',
     category: 'chapter',
     society: 'CASS & RAS Societies',
-    img: '/assets/team/Nikitha.jpg?v=2',
+    img: '/assets/team/Nikitha.jpg?v=3',
     fallback: 'https://raw.githubusercontent.com/nisbweb/nisbweb.github.io/master/assets/cores25-26/Nikitha.jpeg',
   },
   {
@@ -138,7 +138,7 @@ const TEAM_MEMBERS: TeamMember[] = [
     role: 'CASS Secretary',
     category: 'chapter',
     society: 'Circuits & Systems Society',
-    img: '/assets/team/Suma.jpg?v=2',
+    img: '/assets/team/Suma.jpg?v=3',
     fallback: 'https://raw.githubusercontent.com/nisbweb/nisbweb.github.io/master/assets/cores25-26/Suma.jpg',
   },
   {
@@ -146,7 +146,7 @@ const TEAM_MEMBERS: TeamMember[] = [
     role: 'WIE Chairperson',
     category: 'chapter',
     society: 'Women in Engineering',
-    img: '/assets/team/SanjanaS.jpg?v=2',
+    img: '/assets/team/SanjanaS.jpg?v=3',
     fallback: 'https://raw.githubusercontent.com/nisbweb/nisbweb.github.io/master/assets/cores25-26/SanjanaS.jpg',
   },
   {
@@ -154,7 +154,7 @@ const TEAM_MEMBERS: TeamMember[] = [
     role: 'WIE Secretary',
     category: 'chapter',
     society: 'Women in Engineering',
-    img: '/assets/team/Panchami.jpg?v=2',
+    img: '/assets/team/Panchami.jpg?v=3',
     fallback: 'https://raw.githubusercontent.com/nisbweb/nisbweb.github.io/master/assets/cores25-26/Panchami.jpg',
   },
   {
@@ -162,7 +162,7 @@ const TEAM_MEMBERS: TeamMember[] = [
     role: 'RAS Secretary',
     category: 'chapter',
     society: 'Robotics & Automation Society',
-    img: '/assets/team/Rachit.jpg?v=2',
+    img: '/assets/team/Rachit.jpg?v=3',
     fallback: 'https://raw.githubusercontent.com/nisbweb/nisbweb.github.io/master/assets/cores25-26/Rachit.jpeg',
   },
   {
@@ -170,7 +170,7 @@ const TEAM_MEMBERS: TeamMember[] = [
     role: 'GRSS Chairperson',
     category: 'chapter',
     society: 'Geoscience & Remote Sensing',
-    img: '/assets/team/Mansoor.jpg?v=2',
+    img: '/assets/team/Mansoor.jpg?v=3',
     fallback: 'https://raw.githubusercontent.com/nisbweb/nisbweb.github.io/master/assets/cores25-26/Mansoor.jpg',
   },
   {
@@ -178,7 +178,7 @@ const TEAM_MEMBERS: TeamMember[] = [
     role: 'GRSS Secretary',
     category: 'chapter',
     society: 'Geoscience & Remote Sensing',
-    img: '/assets/team/Amol.jpg?v=2',
+    img: '/assets/team/Amol.jpg?v=3',
     fallback: 'https://raw.githubusercontent.com/nisbweb/nisbweb.github.io/master/assets/cores25-26/Amol.jpg',
   },
 ];
