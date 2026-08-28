@@ -19,26 +19,32 @@ export default function MobileIntro({ onComplete }: MobileIntroProps) {
   const skip = useCallback(() => {
     if (completedRef.current) return;
     completedRef.current = true;
-    onComplete();
+    setIsExiting(true);
+    setTimeout(onComplete, 400);
   }, [onComplete]);
 
   useEffect(() => {
-    const t1 = setTimeout(() => setIsRevealed(true), 5200);
-    const t2 = setTimeout(() => setIsExiting(true), 8000);
-    const t3 = setTimeout(skip, 8800);
+    const t1 = setTimeout(() => setIsRevealed(true), 5400);
+    const t2 = setTimeout(() => setIsExiting(true), 8600);
+    const t3 = setTimeout(() => {
+      if (!completedRef.current) {
+        completedRef.current = true;
+        onComplete();
+      }
+    }, 9400);
 
     return () => {
       clearTimeout(t1);
       clearTimeout(t2);
       clearTimeout(t3);
     };
-  }, [skip]);
+  }, [onComplete]);
 
   return (
     <motion.div
       initial={{ opacity: 1 }}
       animate={{ opacity: isExiting ? 0 : 1 }}
-      transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+      transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
       className="fixed inset-0 z-[99999] flex flex-col justify-between items-center overflow-hidden select-none font-sans text-white"
       style={{
         background: 'radial-gradient(120% 120% at 50% 30%, #081020 0%, #03060e 50%, #010206 100%)',
@@ -106,7 +112,6 @@ export default function MobileIntro({ onComplete }: MobileIntroProps) {
       {/* 4-Dot to NISB Letterform Morph Engine */}
       <FluidDotMorphCanvas
         word="NISB"
-        onMorphComplete={() => setIsRevealed(true)}
         onSolidComplete={() => setIsRevealed(true)}
       />
 
@@ -132,10 +137,14 @@ export default function MobileIntro({ onComplete }: MobileIntroProps) {
         <AnimatePresence>
           {isRevealed && (
             <motion.div
-              initial={{ y: 20, opacity: 0, scale: 0.96 }}
+              initial={{ y: 28, opacity: 0, scale: 0.96 }}
               animate={{ y: 0, opacity: 1, scale: 1 }}
-              exit={{ y: 20, opacity: 0, scale: 0.96 }}
-              transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+              exit={{ y: 14, opacity: 0, scale: 0.98 }}
+              transition={{
+                duration: 0.95,
+                ease: [0.16, 1, 0.3, 1],
+              }}
+              style={{ willChange: 'transform, opacity' }}
               className="relative w-full pointer-events-auto rounded-2xl bg-gradient-to-br from-[#0e1628] via-[#0a111f] to-[#060913] border border-slate-700/60 p-4 metal-edge-bevel font-mono overflow-hidden shadow-[0_15px_35px_rgba(0,0,0,0.9)] flex flex-col gap-2.5"
             >
               {/* Anisotropic Micro-Brushed Surface Overlay */}

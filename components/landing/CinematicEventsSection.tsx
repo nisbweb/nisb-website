@@ -102,8 +102,95 @@ function parseGVizResponse(text: string): EventItem[] {
   return eventsList;
 }
 
+// Top 6 Events pre-seeded for instant 0ms initial paint
+export const INITIAL_TOP_EVENTS: EventItem[] = [
+  {
+    id: 'evt-top-0',
+    title: 'Automation in Healthcare',
+    category: 'NISB',
+    date: 'Sep 7, 2026',
+    image: 'https://lh3.googleusercontent.com/d/1wxukQjIkKL_kUp9s9hdvI0tu8Kqr8ZwV',
+    venue: 'NIE Mysuru',
+    description: 'Explore the revolution of healthcare through automated systems, AI diagnostics, and biomedical innovations.',
+    regLink: 'https://social.nisb.in',
+  },
+  {
+    id: 'evt-top-1',
+    title: "Vigyaan'26",
+    category: 'NISB',
+    date: 'Jul 6, 2026',
+    image: 'https://lh3.googleusercontent.com/d/1NlxToDj9jmvVTiB-UR0u5oaq3Z7ICnsq',
+    venue: 'NIE Mysuru',
+    description: 'The flagship annual technical extravaganza of NIE IEEE Student Branch bringing competitions and project exhibitions.',
+    regLink: 'https://social.nisb.in',
+  },
+  {
+    id: 'evt-top-2',
+    title: 'Release of Manas 26 and Mosiac Chase',
+    category: 'EDITORIAL',
+    date: 'May 30, 2026',
+    image: 'https://lh3.googleusercontent.com/d/1qm0sJHLC6g2CRfXa9G8ZfTXdrWTmDbUZ',
+    venue: 'NIE Mysuru',
+    description: 'Annual magazine launch celebrating student literature, technical writing, and artistic brilliance.',
+    regLink: 'https://social.nisb.in',
+  },
+  {
+    id: 'evt-top-3',
+    title: 'THE HITCHHIKER’S GUIDE TO MLOps',
+    category: 'CS',
+    date: 'May 16, 2026',
+    image: 'https://lh3.googleusercontent.com/d/1NDwSbfg9h8u9X7EroiPtgqMyy4GNk0LW',
+    venue: 'NIE Mysuru',
+    description: 'Hands-on bootcamp on bridging Machine Learning model creation with continuous deployment pipelines.',
+    regLink: 'https://social.nisb.in',
+  },
+  {
+    id: 'evt-top-4',
+    title: 'CrossCurrent & Valedictory',
+    category: 'NISB',
+    date: 'May 7, 2026',
+    image: 'https://lh3.googleusercontent.com/d/1BJS7osF8v9BPipdJTev3sh9EKYJC35Li',
+    venue: 'NIE Mysuru',
+    description: 'The grand farewell, award recognitions, and annual leadership handover ceremony of NISB.',
+    regLink: 'https://social.nisb.in',
+  },
+  {
+    id: 'evt-top-5',
+    title: 'Cascade Sprint',
+    category: 'WIE',
+    date: 'May 6, 2026',
+    image: 'https://lh3.googleusercontent.com/d/1bBC1p57TTHiuiHVVpSEKAvXjSizNC7mn',
+    venue: 'NIE Mysuru',
+    description: 'Fast-paced coding and problem-solving sprint empowering technical women in engineering.',
+    regLink: 'https://social.nisb.in',
+  },
+];
+
+// Preload top event images in advance into browser memory & disk cache
+function preloadTopEventImages(items: EventItem[], count = 6) {
+  if (typeof window === 'undefined') return;
+  const topList = items.slice(0, count);
+  topList.forEach((evt) => {
+    if (!evt.image) return;
+    const img = new Image();
+    img.src = evt.image;
+
+    // Also prefetch the drive thumbnail fallback for seamless fallback switching
+    if (evt.image.includes('lh3.googleusercontent.com/d/')) {
+      const driveId = evt.image.split('lh3.googleusercontent.com/d/')[1];
+      const fallbackImg = new Image();
+      fallbackImg.src = `https://drive.google.com/thumbnail?id=${driveId}&sz=w1000`;
+    }
+  });
+}
+
+// Immediate browser evaluation preload
+if (typeof window !== 'undefined') {
+  preloadTopEventImages(INITIAL_TOP_EVENTS, 6);
+}
+
 export default function CinematicEventsSection() {
-  const [events, setEvents] = useState<EventItem[]>([]);
+  const [events, setEvents] = useState<EventItem[]>(INITIAL_TOP_EVENTS);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [activeCategory, setActiveCategory] = useState<string>('ALL');
   const [searchQuery, setSearchQuery] = useState('');
@@ -118,8 +205,8 @@ export default function CinematicEventsSection() {
 
   // Sheet Integration Inputs
   const [sheetInput, setSheetInput] = useState(`https://docs.google.com/spreadsheets/d/${OFFICIAL_SPREADSHEET_ID}/edit`);
-  const [isLoading, setIsLoading] = useState(true);
-  const [statusMsg, setStatusMsg] = useState('Fetching live Google Sheet...');
+  const [isLoading, setIsLoading] = useState(false);
+  const [statusMsg, setStatusMsg] = useState('');
 
   const fetchLiveSpreadsheet = async (sheetUrl?: string) => {
     setIsLoading(true);
@@ -141,6 +228,10 @@ export default function CinematicEventsSection() {
 
       if (parsed.length > 0) {
         setEvents(parsed);
+        preloadTopEventImages(parsed, 6);
+        try {
+          localStorage.setItem('nisb_events_cache_v2', JSON.stringify(parsed));
+        } catch (e) { }
         setCurrentIndex(0);
         setStatusMsg('');
       } else {
@@ -148,13 +239,29 @@ export default function CinematicEventsSection() {
       }
     } catch (err) {
       console.error('Failed to load Google Sheet:', err);
-      setStatusMsg('Failed to sync. Showing cached fallback events.');
+      setStatusMsg('Showing cached events.');
     } finally {
       setIsLoading(false);
     }
   };
 
   useEffect(() => {
+    // 1. Try instant restore from local cache
+    try {
+      const cached = localStorage.getItem('nisb_events_cache_v2');
+      if (cached) {
+        const parsed = JSON.parse(cached);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          setEvents(parsed);
+          preloadTopEventImages(parsed, 6);
+        }
+      }
+    } catch (e) { }
+
+    // 2. Preload top 6 images immediately in advance
+    preloadTopEventImages(INITIAL_TOP_EVENTS, 6);
+
+    // 3. Fetch latest updates in background
     fetchLiveSpreadsheet();
   }, []);
 
@@ -264,11 +371,7 @@ export default function CinematicEventsSection() {
           <div className="space-y-6">
             {/* Navigation Header */}
             <div className="flex items-center justify-between font-mono text-xs text-[var(--text-muted)]">
-              <div className="flex items-center gap-3 font-bold">
-                <span className="text-[var(--accent)]">EVENT #{String(currentIndex + 1).padStart(3, '0')}</span>
-                <span>/</span>
-                <span>TOTAL {String(filteredEvents.length).padStart(3, '0')} EVENTS</span>
-              </div>
+
 
               <div className="flex items-center gap-3">
                 <button
@@ -288,80 +391,147 @@ export default function CinematicEventsSection() {
               </div>
             </div>
 
-            {/* Slider Main Card */}
-            <div className="relative min-h-[480px] md:min-h-[540px] rounded-3xl overflow-hidden border border-[var(--border-main)] bg-[var(--card-bg)] shadow-2xl">
+            {/* ── BESPOKE FULL-POSTER EXHIBITION STAGE & CYBER-PASS CARD ── */}
+            <div className="relative min-h-[520px] rounded-3xl overflow-hidden border border-white/15 bg-[#060a14] shadow-[0_25px_70px_rgba(0,0,0,0.95)]">
               <AnimatePresence mode="wait">
                 {currentEvent && (
                   <motion.div
                     key={currentEvent.id || currentIndex}
-                    initial={{ opacity: 0, scale: 0.98, x: 20 }}
-                    animate={{ opacity: 1, scale: 1, x: 0 }}
-                    exit={{ opacity: 0, scale: 0.98, x: -20 }}
-                    transition={{ duration: 0.3, ease: 'easeOut' }}
-                    className="absolute inset-0 grid grid-cols-1 lg:grid-cols-12 gap-0 items-stretch"
+                    initial={{ opacity: 0, y: 15 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -15 }}
+                    transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                    className="grid grid-cols-1 lg:grid-cols-12 gap-0 items-stretch"
                   >
-                    {/* Event Banner Image with Clickable Full Poster Trigger */}
+                    {/* Left Column: 100% Full Uncropped Poster Exhibition Stage */}
                     <div
                       onClick={() => setSelectedPosterEvent(currentEvent)}
-                      className="lg:col-span-7 relative overflow-hidden min-h-[260px] md:min-h-[450px] cursor-pointer group/poster"
-                      title="Click to view full event poster"
+                      className="lg:col-span-6 relative p-5 sm:p-8 flex items-center justify-center bg-gradient-to-b from-[#080e1c] via-[#050812] to-[#020408] cursor-pointer group/poster overflow-hidden"
+                      title="Click to view full event poster in lightbox"
                     >
-                      <img
-                        src={currentEvent.image}
-                        alt={currentEvent.title}
-                        referrerPolicy="no-referrer"
-                        className="w-full h-full object-cover grayscale-[15%] group-hover/poster:grayscale-0 group-hover/poster:scale-105 transition-all duration-700"
-                        onError={(e) => {
-                          const target = e.target as HTMLImageElement;
-                          if (target.src.includes('lh3.googleusercontent.com/d/')) {
-                            const driveId = target.src.split('lh3.googleusercontent.com/d/')[1];
-                            target.src = `https://drive.google.com/thumbnail?id=${driveId}&sz=w1000`;
-                          } else {
-                            target.src = 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2070&auto=format&fit=crop';
-                          }
+                      {/* Ambient Ambilight Glow derived from the poster */}
+                      <div
+                        className="absolute inset-8 rounded-3xl blur-3xl opacity-30 group-hover/poster:opacity-50 transition-opacity duration-700 pointer-events-none scale-90"
+                        style={{
+                          backgroundImage: `url(${currentEvent.image})`,
+                          backgroundSize: 'cover',
+                          backgroundPosition: 'center',
                         }}
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[var(--card-bg)] via-transparent to-transparent lg:bg-gradient-to-r lg:from-transparent lg:to-[var(--card-bg)]" />
 
-                      <div className="absolute top-6 left-6 px-3.5 py-1 rounded-full bg-black/70 backdrop-blur-md border border-white/20 text-[10px] font-mono font-bold text-[var(--accent)] uppercase tracking-wider">
-                        {currentEvent.category}
-                      </div>
+                      {/* Physical Gallery Exhibition Mount */}
+                      <div className="relative z-10 w-full max-h-[500px] flex items-center justify-center rounded-2xl p-2.5 sm:p-3 bg-black/50 border border-white/15 shadow-[0_20px_50px_rgba(0,0,0,0.95)] backdrop-blur-md">
+                        {/* Machined Metal Corner Rivets */}
+                        <div className="absolute top-2 left-2 w-1.5 h-1.5 rounded-full bg-slate-300/80 ring-1 ring-black shadow-sm" />
+                        <div className="absolute top-2 right-2 w-1.5 h-1.5 rounded-full bg-slate-300/80 ring-1 ring-black shadow-sm" />
+                        <div className="absolute bottom-2 left-2 w-1.5 h-1.5 rounded-full bg-slate-300/80 ring-1 ring-black shadow-sm" />
+                        <div className="absolute bottom-2 right-2 w-1.5 h-1.5 rounded-full bg-slate-300/80 ring-1 ring-black shadow-sm" />
 
-                      <div className="absolute top-6 right-6 px-3 py-1 rounded-full bg-black/80 backdrop-blur border border-white/20 text-[10px] font-mono text-white/90 opacity-0 group-hover/poster:opacity-100 transition-opacity font-bold">
-                        Click for Full Poster
-                      </div>
+                        {/* 100% UNCROPPED FULL POSTER */}
+                        <img
+                          src={currentEvent.image}
+                          alt={currentEvent.title}
+                          loading="eager"
+                          decoding="async"
+                          referrerPolicy="no-referrer"
+                          className="max-h-[460px] w-auto max-w-full object-contain rounded-xl shadow-2xl transition-transform duration-500 group-hover/poster:scale-[1.02]"
+                          onError={(e) => {
+                            const target = e.target as HTMLImageElement;
+                            if (target.src.includes('lh3.googleusercontent.com/d/')) {
+                              const driveId = target.src.split('lh3.googleusercontent.com/d/')[1];
+                              target.src = `https://drive.google.com/thumbnail?id=${driveId}&sz=w1000`;
+                            } else {
+                              target.src = 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2070&auto=format&fit=crop';
+                            }
+                          }}
+                        />
 
-                      {currentEvent.venue && (
-                        <div className="absolute bottom-6 left-6 px-3.5 py-1 rounded-full bg-black/70 backdrop-blur-md border border-white/20 text-[10px] font-mono font-bold text-white/90">
-                          {currentEvent.venue}
+                        {/* Hover Magnify Tag */}
+                        <div className="absolute bottom-4 right-4 px-3 py-1.5 rounded-full bg-black/85 backdrop-blur-md border border-white/20 text-[10px] font-mono font-bold text-white opacity-0 group-hover/poster:opacity-100 transition-opacity flex items-center gap-1.5 shadow-xl">
+                          <span>FULL SIZE</span>
+                          <span className="text-[var(--accent)]">⤢</span>
                         </div>
-                      )}
+                      </div>
                     </div>
 
-                    {/* Event Info Details */}
-                    <div className="lg:col-span-5 p-8 md:p-12 flex flex-col justify-between space-y-6 relative z-10 bg-[var(--card-bg)]">
-                      <div className="space-y-4">
-                        <span className="text-xs font-mono text-[var(--accent)] font-bold block">
-                          DATE: {currentEvent.date}
-                        </span>
+                    {/* Right Column: High-End Cyber Event Pass & Telemetry Deck */}
+                    <div className="lg:col-span-6 p-6 sm:p-8 md:p-10 flex flex-col justify-between space-y-6 relative z-10 bg-gradient-to-br from-[#0c1424] via-[#080d18] to-[#04060c] border-t lg:border-t-0 lg:border-l border-white/15">
+                      <div className="space-y-6">
+                        {/* Top Ticket Header & Serial */}
 
-                        <h3 className="text-3xl md:text-5xl font-black uppercase text-[var(--star-white)] tracking-tight font-display leading-tight">
+
+                        {/* Formal Event Date & Category Header */}
+                        <div className="flex flex-wrap items-center justify-between gap-3 pb-1">
+                          <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-xl bg-white/[0.04] border border-white/15 backdrop-blur-md shadow-sm">
+                            <svg className="w-3.5 h-3.5 text-[var(--accent)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
+                            <span className="text-xs font-mono font-bold tracking-wider text-white">
+                              {currentEvent.date}
+                            </span>
+                          </div>
+
+                          <span className="px-3 py-1 rounded-full bg-[var(--accent)]/15 border border-[var(--accent)]/35 text-[10px] font-mono font-extrabold text-[var(--accent)] tracking-widest uppercase">
+                            NISB {currentEvent.category}
+                          </span>
+                        </div>
+
+                        <h3 className="text-2xl sm:text-3xl md:text-4xl font-black uppercase text-white tracking-tight font-display leading-tight">
                           {currentEvent.title}
                         </h3>
 
-                        <p className="text-xs font-sans text-[var(--text-muted)] leading-relaxed">
+                        <p className="text-xs sm:text-sm font-sans text-slate-300 leading-relaxed max-w-xl">
                           {currentEvent.description}
                         </p>
+
+                        {/* Telemetry Chips: Venue & Society */}
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-2">
+                          <div className="p-3 rounded-xl bg-white/[0.03] border border-white/10 font-mono">
+                            <span className="text-[9px] uppercase tracking-wider text-[var(--accent)] font-bold block">
+                              ORGANISER
+                            </span>
+                            <span className="text-xs font-bold text-white truncate block mt-0.5">
+                              NISB {currentEvent.category}
+                            </span>
+                          </div>
+
+                          {currentEvent.venue && (
+                            <div className="p-3 rounded-xl bg-white/[0.03] border border-white/10 font-mono">
+                              <span className="text-[9px] uppercase tracking-wider text-[var(--accent)] font-bold block">
+                                VENUE
+                              </span>
+                              <span className="text-xs font-bold text-white truncate block mt-0.5">
+                                {currentEvent.venue}
+                              </span>
+                            </div>
+                          )}
+                        </div>
                       </div>
 
-                      <div className="space-y-6 pt-6 border-t border-[var(--border-main)]">
-                        <div className="flex items-center justify-between text-xs font-mono text-[var(--text-muted)]">
-                          <span>ORGANISER: IEEE {currentEvent.category}</span>
+                      {/* Bottom Actions */}
+                      <div className="pt-6 border-t border-white/10 flex flex-wrap items-center justify-between gap-3">
+                        <button
+                          onClick={() => setSelectedPosterEvent(currentEvent)}
+                          className="px-5 py-2.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-xs font-mono font-bold text-white transition-all flex items-center gap-2 hover:scale-102"
+                        >
+                          <span>VIEW FULL POSTER</span>
+                          <span className="text-[var(--accent)]">⤢</span>
+                        </button>
+
+                        <div className="flex items-center gap-2">
                           <button
-                            onClick={() => setSelectedPosterEvent(currentEvent)}
-                            className="text-[var(--accent)] font-bold hover:underline"
+                            onClick={handlePrev}
+                            className="w-10 h-10 rounded-full bg-white/5 hover:bg-white/15 border border-white/15 flex items-center justify-center text-sm text-white transition-all"
+                            title="Previous Event"
                           >
-                            View Full Poster ➔
+                            ←
+                          </button>
+                          <button
+                            onClick={handleNext}
+                            className="w-10 h-10 rounded-full bg-[var(--accent)] hover:bg-sky-300 text-black font-bold flex items-center justify-center text-sm transition-all shadow-[0_0_15px_var(--accent-glow)]"
+                            title="Next Event"
+                          >
+                            →
                           </button>
                         </div>
                       </div>
@@ -372,21 +542,7 @@ export default function CinematicEventsSection() {
             </div>
 
             {/* Quick Event Thumbnail Fast-Scroller Bar */}
-            <div className="flex items-center gap-3 overflow-x-auto py-2 no-scrollbar scroll-smooth">
-              {filteredEvents.map((evt, idx) => (
-                <button
-                  key={evt.id || idx}
-                  onClick={() => setCurrentIndex(idx)}
-                  className={`shrink-0 flex items-center gap-3 px-4 py-2.5 rounded-2xl border transition-all ${currentIndex === idx
-                    ? 'border-[var(--accent)] bg-[var(--accent)]/15 text-[var(--accent)] font-bold scale-105'
-                    : 'border-white/10 bg-white/5 text-white/60 hover:text-white hover:border-white/20'
-                    }`}
-                >
-                  <span className="text-[10px] font-mono font-bold">#{String(idx + 1).padStart(3, '0')}</span>
-                  <span className="text-xs font-mono truncate max-w-[150px]">{evt.title}</span>
-                </button>
-              ))}
-            </div>
+
           </div>
         )}
 
@@ -404,6 +560,8 @@ export default function CinematicEventsSection() {
                     <img
                       src={evt.image}
                       alt={evt.title}
+                      loading={idx < 6 ? 'eager' : 'lazy'}
+                      decoding="async"
                       referrerPolicy="no-referrer"
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       onError={(e) => {

@@ -1,0 +1,1952 @@
+[
+  {
+    "id": "evt-0",
+    "title": "Automation in Healthcare",
+    "category": "RAS",
+    "date": "9-7-2026",
+    "image": "https://lh3.googleusercontent.com/d/1wxukQjIkKL_kUp9s9hdvI0tu8Kqr8ZwV",
+    "venue": "Online",
+    "description": "Organized by RAS at Online.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-1",
+    "title": "Vigyaan'26",
+    "category": "WIE",
+    "date": "6-7-2026",
+    "image": "https://lh3.googleusercontent.com/d/1NlxToDj9jmvVTiB-UR0u5oaq3Z7ICnsq",
+    "venue": "",
+    "description": "Organized by WIE at NIE Mysuru.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-2",
+    "title": "Release of Manas 26 and Mosiac Chase",
+    "category": "NISB",
+    "date": "30-5-2026",
+    "image": "https://lh3.googleusercontent.com/d/1qm0sJHLC6g2CRfXa9G8ZfTXdrWTmDbUZ",
+    "venue": "NIE GJB",
+    "description": "Organized by NISB at NIE GJB.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-3",
+    "title": "THE HITCHHIKER’S GUIDE TO MLOps",
+    "category": "CS",
+    "date": "16-5-2026",
+    "image": "https://lh3.googleusercontent.com/d/1NDwSbfg9h8u9X7EroiPtgqMyy4GNk0LW",
+    "venue": "NIE Admin",
+    "description": "Organized by CS at NIE Admin.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-4",
+    "title": "CrossCurrent & Valedictory",
+    "category": "CASS",
+    "date": "7-5-2026",
+    "image": "https://lh3.googleusercontent.com/d/1BJS7osF8v9BPipdJTev3sh9EKYJC35Li",
+    "venue": "NIE GJB",
+    "description": "Organized by CASS  at NIE GJB.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-5",
+    "title": "Cascade Sprint",
+    "category": "CASS",
+    "date": "6-5-2026",
+    "image": "https://lh3.googleusercontent.com/d/1bBC1p57TTHiuiHVVpSEKAvXjSizNC7mn",
+    "venue": "NIE GJB",
+    "description": "Organized by CASS at NIE GJB.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-6",
+    "title": "Matlab Quest",
+    "category": "CASS",
+    "date": "5-5-2026",
+    "image": "https://lh3.googleusercontent.com/d/1ye4lnfqSpyhf26Bo537nrti8SIVnFnFN",
+    "venue": "NIE GJB",
+    "description": "Organized by CASS at NIE GJB.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-7",
+    "title": "Illume 26 Inauguration & BuzzCraft",
+    "category": "CASS",
+    "date": "4-5-3036",
+    "image": "https://lh3.googleusercontent.com/d/1-Bb2GDU89wVp6brAcrDhwsJ5BUilVnvl",
+    "venue": "NIE NRN",
+    "description": "Organized by CASS at NIE NRN.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-8",
+    "title": "echnical Visit to the Indian Institute of Space Science and Technology and Vikram Sarabhai Space Centre",
+    "category": "GRSS",
+    "date": "11-5-2026",
+    "image": "https://lh3.googleusercontent.com/d/1eywSB5OHzSRW1jdcoJ78uglIAxot9OO_",
+    "venue": "",
+    "description": "Organized by GRSS at NIE Mysuru.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-9",
+    "title": "Blind Coding",
+    "category": "NISB",
+    "date": "30-4-2026",
+    "image": "https://lh3.googleusercontent.com/d/1Y8Ph77wM0E1VAU3qz84F33Ukvr_vNzpI",
+    "venue": "NIE NRN",
+    "description": "Organized by NISB at NIE NRN.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-10",
+    "title": "Industrial Visit to KSRSAC AND KSNDMC",
+    "category": "GRSS",
+    "date": "7-4-2026",
+    "image": "https://lh3.googleusercontent.com/d/1Q7y--tV3KjjyTjsLaYK3kz_q03JmB_8b",
+    "venue": "",
+    "description": "Organized by GRSS at NIE Mysuru.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-11",
+    "title": "API Quest",
+    "category": "WIE",
+    "date": "25-3-2026",
+    "image": "https://lh3.googleusercontent.com/d/142pmymP2jTG05z0a02PrYGvMxPbqJOu1",
+    "venue": "CS Lab 1",
+    "description": "Organized by WIE at CS Lab 1.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-12",
+    "title": "Vatsalya",
+    "category": "WIE",
+    "date": "24-3-2026",
+    "image": "https://lh3.googleusercontent.com/d/1OyIrUw443g3e2CJYHbewc--xkL6X_2cf",
+    "venue": "",
+    "description": "Organized by WIE at NIE Mysuru.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-13",
+    "title": "Refactor Roulette",
+    "category": "WIE",
+    "date": "24-3-2026",
+    "image": "https://lh3.googleusercontent.com/d/1GumMz6H-5oid8lKQqbMmA9SPFgO9Q6VE",
+    "venue": "CS Lab 1",
+    "description": "Organized by WIE at CS Lab 1.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-14",
+    "title": "Building AI Agents with AWS",
+    "category": "WIE",
+    "date": "23-3-2026",
+    "image": "https://lh3.googleusercontent.com/d/1ziJwDM3gfCfe6QjP1Vi3aaOeE5gigxG1",
+    "venue": "NIE GJB",
+    "description": "Organized by WIE at NIE GJB.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-15",
+    "title": "Inspiro'26 Inaugaration",
+    "category": "WIE",
+    "date": "23-3-2026",
+    "image": "https://lh3.googleusercontent.com/d/1nuSxm4RGuXWrtzVlztPnX5QY84ZhyldQ",
+    "venue": "NIE North Campus - Auditorium",
+    "description": "Organized by WIE at NIE North Campus - Auditorium.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-16",
+    "title": "Docker 101",
+    "category": "CS",
+    "date": "18-3-2026",
+    "image": "https://lh3.googleusercontent.com/d/12d1bzzgJScvvQwf2eHKcTFAsKm8ZoqyN",
+    "venue": "NIE North Campus - Auditorium",
+    "description": "Organized by CS at NIE North Campus - Auditorium.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-17",
+    "title": "VLSI and Embedded Systems: Interconnection and Career Opportunities",
+    "category": "NISB",
+    "date": "7-3-2026",
+    "image": "https://lh3.googleusercontent.com/d/1xQGNHRHaO5p1I-ZHRDCV1FHjRIimxdjG",
+    "venue": "Online",
+    "description": "Organized by NISB at Online.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-18",
+    "title": "Evolution of Robotics from Earth to Space",
+    "category": "RAS",
+    "date": "6-3-2026",
+    "image": "https://lh3.googleusercontent.com/d/1mgsI4-WHGCMEyW9pTPlS9xWI7Kpm6tWg",
+    "venue": "NIE GJB",
+    "description": "Organized by RAS at NIE GJB.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-19",
+    "title": "Adroit'26 Valedictory",
+    "category": "NISB",
+    "date": "27-2-2026",
+    "image": "https://lh3.googleusercontent.com/d/1FXdk-kN60FPqNaAmD83ejtJQNJ6J-zcQ",
+    "venue": "NIE GJB",
+    "description": "Organized by NISB at NIE GJB.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-20",
+    "title": "Fortress Protocol",
+    "category": "NISB",
+    "date": "27-2-2026",
+    "image": "https://lh3.googleusercontent.com/d/1oAq_C2tcx-XIc0Ay8Juka9iggvgI67i5",
+    "venue": "NIE North Campus - Auditorium",
+    "description": "Organized by NISB at NIE North Campus - Auditorium.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-21",
+    "title": "Electronika 23.0",
+    "category": "NISB",
+    "date": "26-2-2026",
+    "image": "https://lh3.googleusercontent.com/d/1A-gCOv-S6qaHhE3vS4wmb2TZA8dSVVzP",
+    "venue": "NIE GJB",
+    "description": "Organized by NISB at NIE GJB.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-22",
+    "title": "Ragaviz",
+    "category": "NISB",
+    "date": "25-2-2026",
+    "image": "https://lh3.googleusercontent.com/d/1Hm50BVVhhYOcLrqTVvt3I9AbibhKYbZi",
+    "venue": "NIE GJB",
+    "description": "Organized by NISB at NIE GJB.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-23",
+    "title": "Invisicode",
+    "category": "NISB",
+    "date": "24-2-2026",
+    "image": "https://lh3.googleusercontent.com/d/1_mIHY33iorNMGYfKZe3BtwbZoGjgRkJh",
+    "venue": "NIE GJB",
+    "description": "Organized by NISB at NIE GJB.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-24",
+    "title": "IPL 24.0",
+    "category": "NISB",
+    "date": "24-2-2026",
+    "image": "https://lh3.googleusercontent.com/d/19_Km4nd70lv4TMHRcoNOqzfnRTvWN5NK",
+    "venue": "NIE North Campus - Auditorium",
+    "description": "Organized by NISB at NIE North Campus - Auditorium.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-25",
+    "title": "Concept Canvas",
+    "category": "NISB",
+    "date": "23-2-2026",
+    "image": "https://lh3.googleusercontent.com/d/1D2G297php7J2bqTSSGAHEm9by6Z_r87a",
+    "venue": "NIE GJB",
+    "description": "Organized by NISB at NIE GJB.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-26",
+    "title": "Adriot'26 Inaugaration",
+    "category": "NISB",
+    "date": "23-2-2026",
+    "image": "https://lh3.googleusercontent.com/d/1w0pZg7CM_RbUnWbCffCKQOJAASN34l7Z",
+    "venue": "NIE North Campus - Auditorium",
+    "description": "Organized by NISB at NIE North Campus - Auditorium.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-27",
+    "title": "Cipher Circuit",
+    "category": "NISB",
+    "date": "18-2-2026",
+    "image": "https://lh3.googleusercontent.com/d/1d7TEk1-mOXomQryJY5CydWq02MUbCvo",
+    "venue": "NIE GJB",
+    "description": "Organized by NISB at NIE GJB.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-28",
+    "title": "School to Satellites",
+    "category": "GRSS",
+    "date": "20-1-2026",
+    "image": "https://lh3.googleusercontent.com/d/1ZIdxAV9X94MWC4fcSS1LVy2d3LQ-kMiq",
+    "venue": "NIE Admin",
+    "description": "Organized by GRSS at NIE Admin.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-29",
+    "title": "IntelliSight",
+    "category": "CS",
+    "date": "6-1-2026",
+    "image": "https://lh3.googleusercontent.com/d/1zwvGddjnNWbme5L0Q1mZWqeBkdLyEayq",
+    "venue": "AIML Lab 1",
+    "description": "Organized by CS at AIML Lab 1.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-30",
+    "title": "Circuit Cafe",
+    "category": "NISB",
+    "date": "5-1-2026",
+    "image": "https://lh3.googleusercontent.com/d/1Mf-VpDlHMTezw1VLKSPvIwOiFWYXVNns",
+    "venue": "NIE NRN",
+    "description": "Organized by NISB at NIE NRN.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-31",
+    "title": "Ankura'25 Valedictory",
+    "category": "NISB",
+    "date": "13-12-2025",
+    "image": "https://lh3.googleusercontent.com/d/14m2LiVkcSY4amaCxabfcRmlFMIzW3qms",
+    "venue": "NIE Admin",
+    "description": "Organized by NISB at NIE Admin.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-32",
+    "title": "The Case Wars",
+    "category": "NISB",
+    "date": "12-12-2025",
+    "image": "https://lh3.googleusercontent.com/d/1HbP4loL60rnNFeolr8mtqwqV_zqA3lyJ",
+    "venue": "NIE GJB",
+    "description": "Organized by NISB at NIE GJB.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-33",
+    "title": "Mapping the Unknown",
+    "category": "NISB",
+    "date": "12-12-2025",
+    "image": "https://lh3.googleusercontent.com/d/1zjXr5UHzeKzgBn5Nl8deVz1mhvACeyrB",
+    "venue": "NIE GJB",
+    "description": "Organized by NISB at NIE GJB.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-34",
+    "title": "ImpulseArena",
+    "category": "NISB",
+    "date": "11-12-2025",
+    "image": "https://lh3.googleusercontent.com/d/1kq2hWHkd3qHF-owXolU5bq1tyrb2SA00",
+    "venue": "NIE NRN",
+    "description": "Organized by NISB at NIE NRN.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-35",
+    "title": "Modular Rush",
+    "category": "NISB",
+    "date": "11-12-2025",
+    "image": "https://lh3.googleusercontent.com/d/1uUkX-otiRQi_hLGcUC5gVKTeTokzTWfi",
+    "venue": "NIE North Campus - Auditorium",
+    "description": "Organized by NISB at NIE North Campus - Auditorium.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-36",
+    "title": "Rhythm of Circuits",
+    "category": "NISB",
+    "date": "10-12-2025",
+    "image": "https://lh3.googleusercontent.com/d/1SOkfbSJoOpoMYw5he04-Xi8-NI79l_pJ",
+    "venue": "NIE NRN",
+    "description": "Organized by NISB at NIE NRN.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-37",
+    "title": "OScape",
+    "category": "NISB",
+    "date": "10-12-2025",
+    "image": "https://lh3.googleusercontent.com/d/1oxR16hKd7tNEAYhNtbpIDO3GnCi77-Vt",
+    "venue": "NIE North Campus - Auditorium",
+    "description": "Organized by NISB at NIE North Campus - Auditorium.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-38",
+    "title": "IEEE Programming League 23.0",
+    "category": "NISB",
+    "date": "09-12-2025",
+    "image": "https://lh3.googleusercontent.com/d/1cE3cBm5y2xVJOqtMq-oSJ_-z4QJAwWs2",
+    "venue": "NIE North Campus - Auditorium",
+    "description": "Organized by NISB at NIE North Campus - Auditorium.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-39",
+    "title": "Electronica 22.0",
+    "category": "NISB",
+    "date": "08-12-2025",
+    "image": "https://lh3.googleusercontent.com/d/1Fa5THnoI9GBrfxWwqbvwZmlNkON6GWkw",
+    "venue": "NIE GJB",
+    "description": "Organized by NISB at NIE GJB.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-40",
+    "title": "Ankura'25 Inauguration",
+    "category": "NISB",
+    "date": "08-12-2025",
+    "image": "https://lh3.googleusercontent.com/d/1hiP3lvi3Qu_GIJ88RujfRRhKsk8k4_RK",
+    "venue": "NIE North Campus - Auditorium",
+    "description": "Organized by NISB at NIE North Campus - Auditorium.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-41",
+    "title": "CEDA Inauguration",
+    "category": "NISB",
+    "date": "04-12-2025",
+    "image": "https://lh3.googleusercontent.com/d/1k_dbVSNgAgBfJZwlna_v4E5glGa7YLgG",
+    "venue": "NIE GJB",
+    "description": "Organized by NISB at NIE GJB.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-42",
+    "title": "Prakalp: Project Presentation",
+    "category": "NISB",
+    "date": "15-11-2025",
+    "image": "https://lh3.googleusercontent.com/d/1AiHuT6UKH7A-uIwIWc0mIkSQaGpSJGpY",
+    "venue": "NIE Admin",
+    "description": "Organized by NISB at NIE Admin.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-43",
+    "title": "Industry Outreach Activity",
+    "category": "GRSS",
+    "date": "14-11-2025",
+    "image": "https://lh3.googleusercontent.com/d/1Kh98XWAU7EZKKyPznv5DN6ey7NiYD3Ny",
+    "venue": "NIE GJB",
+    "description": "Organized by GRSS at NIE GJB.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-44",
+    "title": "CodeLabs Java",
+    "category": "CS",
+    "date": "13-11-2025",
+    "image": "https://lh3.googleusercontent.com/d/1C-4tqc7-Z-Bsad91fLv91-enJv3qe5uq",
+    "venue": "MCA Lab 1 (North)",
+    "description": "Organized by CS at MCA Lab 1 (North).",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-45",
+    "title": "Tech Symphony",
+    "category": "NISB",
+    "date": "11-11-2025",
+    "image": "https://lh3.googleusercontent.com/d/1p8HxuHHAy024P4SiR6csrTwzoQI3tVaO",
+    "venue": "NIE GJB",
+    "description": "Organized by NISB at NIE GJB.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-46",
+    "title": "AT&S IV",
+    "category": "NISB",
+    "date": "08-11-2025",
+    "image": "https://lh3.googleusercontent.com/d/16VsK_HNqKIZDF_FSYRoi4V9NkUC42IdY",
+    "venue": "",
+    "description": "Organized by NISB at NIE Mysuru.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-47",
+    "title": "Data Enigma",
+    "category": "NISB",
+    "date": "31-10-2025",
+    "image": "https://lh3.googleusercontent.com/d/1PdOAqsLG5b0gectjhMyIybfG8EJJxtfo",
+    "venue": "NIE GJB",
+    "description": "Organized by NISB at NIE GJB.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-48",
+    "title": "Mission Astra",
+    "category": "NISB",
+    "date": "29-10-2025",
+    "image": "https://lh3.googleusercontent.com/d/1MhX9yqWE822EwxJOkpU2VPz-46uIL3Tb",
+    "venue": "NIE GJB",
+    "description": "Organized by NISB at NIE GJB.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-49",
+    "title": "CodeFix-2.0",
+    "category": "NISB",
+    "date": "27-10-2025",
+    "image": "https://lh3.googleusercontent.com/d/13SSUGlAprdsEut7s2sYeMorXdT8NBhuJ",
+    "venue": "NIE GJB",
+    "description": "Organized by NISB at NIE GJB.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-50",
+    "title": "NISB Xtreme",
+    "category": "NISB",
+    "date": "24-10-2025",
+    "image": "https://lh3.googleusercontent.com/d/1r9fstm2E1ko9QZM_iigvkIyoWouv8Lwn",
+    "venue": "NIE GJB",
+    "description": "Organized by NISB at NIE GJB.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-51",
+    "title": "Electro Fusion",
+    "category": "NISB",
+    "date": "16-10-2025",
+    "image": "https://lh3.googleusercontent.com/d/1K1fEQQQxfGZJbz4DUN_OYRjjsqmhg8OK",
+    "venue": "NIE GJB",
+    "description": "Organized by NISB at NIE GJB.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-52",
+    "title": "Endpoint Engine",
+    "category": "NISB",
+    "date": "15-10-2025",
+    "image": "https://lh3.googleusercontent.com/d/18syVoYvLvmqLCQ1b3DV0jPC25shhDMIm",
+    "venue": "NIE North Campus - Auditorium",
+    "description": "Organized by NISB at NIE North Campus - Auditorium.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-53",
+    "title": "HacktoberFest'25",
+    "category": "NISB",
+    "date": "06-10-2025",
+    "image": "https://lh3.googleusercontent.com/d/11eS7Kejva81hTmH7R_9E9RkSEZ4N7nOp",
+    "venue": "Online",
+    "description": "Organized by NISB at Online.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-54",
+    "title": "Geoscience Research",
+    "category": "GRSS - WIE",
+    "date": "27-09-2025",
+    "image": "https://lh3.googleusercontent.com/d/1mtvVIT-1M38PrkOjO46ho6bttKfcilah",
+    "venue": "Online",
+    "description": "Organized by GRSS - WIE at Online.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-55",
+    "title": "Rubix'25 Valedictory",
+    "category": "CS",
+    "date": "23-09-2025",
+    "image": "https://lh3.googleusercontent.com/d/1K1ZfXEJh9cAINrlLkfgfNDQD1NNvWnvx",
+    "venue": "NIE GJB",
+    "description": "Organized by CS at NIE GJB.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-56",
+    "title": "Codegeeks 7.0",
+    "category": "CS",
+    "date": "23-09-2025",
+    "image": "https://lh3.googleusercontent.com/d/1kVu35j_zZJjh1_1bNyrh4EpVNW-IAePV",
+    "venue": "CS Lab 4 (North)",
+    "description": "Organized by CS at CS Lab 4 (North).",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-57",
+    "title": "Capture the Flag",
+    "category": "CS",
+    "date": "22-09-2025",
+    "image": "https://lh3.googleusercontent.com/d/1lPWTNtQgBOo15MlBUr1e7tXwNQZ3oA2U",
+    "venue": "NIE GJB",
+    "description": "Organized by CS at NIE GJB.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-58",
+    "title": "Reverse Coding 2.0",
+    "category": "CS",
+    "date": "22-09-2025",
+    "image": "https://lh3.googleusercontent.com/d/1NXRttF2g9c77kKpQhX8Rd7ClRNXEc2D7",
+    "venue": "CS Lab 4 (North)",
+    "description": "Organized by CS at CS Lab 4 (North).",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-59",
+    "title": "Rubix'25 Inauguration",
+    "category": "CS",
+    "date": "21-09-2025",
+    "image": "https://lh3.googleusercontent.com/d/1A6ZIy5grjPyZ22u7bqaLbE8_9bR2Ki1i",
+    "venue": "NIE GJB",
+    "description": "Organized by CS at NIE GJB.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-60",
+    "title": "i2i",
+    "category": "CASS",
+    "date": "20-09-2025",
+    "image": "https://lh3.googleusercontent.com/d/1k1TBrCf5WnF7QceqBq_pA793sBVZN5tU",
+    "venue": "NIE Admin",
+    "description": "Organized by CASS at NIE Admin.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-61",
+    "title": "PixelQuest",
+    "category": "NISB",
+    "date": "17-09-2025",
+    "image": "https://lh3.googleusercontent.com/d/17grTAXtk_AdjnuKalfym-jceWO-FQDTU",
+    "venue": "NIE GJB",
+    "description": "Organized by NISB at NIE GJB.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-62",
+    "title": "Insight'26",
+    "category": "NISB",
+    "date": "16-09-2025",
+    "image": "https://lh3.googleusercontent.com/d/1rPfTetxKfFjd53-pmPOqm3Lr-kqnMkVg",
+    "venue": "NIE GJB",
+    "description": "Organized by NISB at NIE GJB.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-63",
+    "title": "ElectroMatrix",
+    "category": "NISB",
+    "date": "10-09-2025",
+    "image": "https://lh3.googleusercontent.com/d/1UxqyPuBNvoenhV5o14A8txNklVnyRNef",
+    "venue": "NIE GJB",
+    "description": "Organized by NISB at NIE GJB.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-64",
+    "title": "The Analog Edge",
+    "category": "CASS",
+    "date": "29-08-2025",
+    "image": "https://lh3.googleusercontent.com/d/1SXW_LFCk_gmS44YaPIgeb9p-VOg7Lk4x",
+    "venue": "Online",
+    "description": "Organized by CASS at Online.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-65",
+    "title": "The Apex Gauntlet",
+    "category": "NISB",
+    "date": "28-08-2025",
+    "image": "https://lh3.googleusercontent.com/d/14skPio-yes3Jw6eAyorwlI6GCoyp1gNC",
+    "venue": "NIE GJB",
+    "description": "Organized by NISB at NIE GJB.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-66",
+    "title": "National Space Day Celebration",
+    "category": "GRSS",
+    "date": "23-08-2025",
+    "image": "https://lh3.googleusercontent.com/d/1zAM-lyGJwUWNwDOm7dpsCkM7xGMOzi-S",
+    "venue": "NIE GJB",
+    "description": "Organized by GRSS at NIE GJB.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-67",
+    "title": "SOLID Start: Principles of Robust Software Design",
+    "category": "NISB",
+    "date": "09-08-2025",
+    "image": "https://lh3.googleusercontent.com/d/1BhEbjqgCMaThRyzTNG_h-8QadjZYY0gm",
+    "venue": "Online",
+    "description": "Organized by NISB at Online.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-68",
+    "title": "Fluxon Bootcamp",
+    "category": "NISB",
+    "date": "04-08-2025",
+    "image": "https://lh3.googleusercontent.com/d/12XFcv5AO-uR9LuoHlyh-shzDnEmJoaaX",
+    "venue": "Online",
+    "description": "Organized by NISB at Online.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-69",
+    "title": "Ultra Low Power IC's for IOT",
+    "category": "RAS",
+    "date": "19-07-2025",
+    "image": "https://lh3.googleusercontent.com/d/19sXId3wJLZPFnN47diU-0mi2CgU86JsI",
+    "venue": "Online",
+    "description": "Organized by RAS at Online.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-70",
+    "title": "PCB Design Mastery",
+    "category": "CASS",
+    "date": "17-07-2025",
+    "image": "https://lh3.googleusercontent.com/d/1gWs0VOBQFvl8d0tnAcWpBy85933K7C73",
+    "venue": "Online",
+    "description": "Organized by CASS at Online.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-71",
+    "title": "Federated Learning",
+    "category": "NISB",
+    "date": "16-07-2025",
+    "image": "https://lh3.googleusercontent.com/d/1eeYmZmzzv8qArMnoGwAkJ0M9H43sFGWS",
+    "venue": "Online",
+    "description": "Organized by NISB at Online.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-72",
+    "title": "System design Essentials",
+    "category": "NISB",
+    "date": "12-07-2025",
+    "image": "https://lh3.googleusercontent.com/d/1gFNOIAL445BuZbqRLIzFazRBu48ZGGIM",
+    "venue": "Online",
+    "description": "Organized by NISB at Online.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-73",
+    "title": "Vigyaan'25",
+    "category": "WIE",
+    "date": "04-07-2025",
+    "image": "https://lh3.googleusercontent.com/d/1c0GeKnzWyVtN2ofugXpIad6GHa7pmz02",
+    "venue": "",
+    "description": "Organized by WIE at NIE Mysuru.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-74",
+    "title": "Decode, Strategize, Optimize",
+    "category": "CS",
+    "date": "31-05-2025",
+    "image": "https://lh3.googleusercontent.com/d/1N4UrW1KdMIV6xIxxyFpkPThXB6hBQO1j",
+    "venue": "Online",
+    "description": "Organized by CS at Online.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-75",
+    "title": "Release of Manas & The Vault of Time",
+    "category": "NISB",
+    "date": "30-05-2025",
+    "image": "https://lh3.googleusercontent.com/d/1dBBRXoEvVstDQ7d0YpkqyrjuXhISSnIw",
+    "venue": "NIE GJB",
+    "description": "Organized by NISB at NIE GJB.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-76",
+    "title": "Blind Coding 2025",
+    "category": "NISB",
+    "date": "24-05-2025",
+    "image": "https://lh3.googleusercontent.com/d/1X1z8l8Aw0Ldoyv1BQDWPVegCO753sGBk",
+    "venue": "NIE NRN",
+    "description": "Organized by NISB at NIE NRN.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-77",
+    "title": "Neurologic & Valedictory",
+    "category": "CASS",
+    "date": "20-05-2025",
+    "image": "https://lh3.googleusercontent.com/d/1M8PIeCa4JGfn0Yh3KMm0hGqgg_dY2oiq",
+    "venue": "NIE GJB",
+    "description": "Organized by CASS at NIE GJB.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-78",
+    "title": "CircuiLit",
+    "category": "CASS",
+    "date": "19-05-2025",
+    "image": "https://lh3.googleusercontent.com/d/1jtLPipImp4jH2WoNCeAgj6uO9eQ8I4Dh",
+    "venue": "NIE GJB",
+    "description": "Organized by CASS at NIE GJB.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-79",
+    "title": "STAverse",
+    "category": "CASS",
+    "date": "18-05-2025",
+    "image": "https://lh3.googleusercontent.com/d/1XFSq4wR6fWQX2YX8TFpSkZ4ceo0X65bh",
+    "venue": "Online",
+    "description": "Organized by CASS at Online.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-80",
+    "title": "Illume Inauguration",
+    "category": "CASS",
+    "date": "17-05-2025",
+    "image": "https://lh3.googleusercontent.com/d/1Ba9ylTNiIaR7uvMvkvnVgUJ9ZBOHaXqX",
+    "venue": "NIE NRN",
+    "description": "Organized by CASS at NIE NRN.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-81",
+    "title": "Electronics Essentials",
+    "category": "CASS",
+    "date": "21-04-2025",
+    "image": "https://lh3.googleusercontent.com/d/1-UCTYP5a7dA_bSgOTg-ByK4G0eQfeT87",
+    "venue": "NIE NRN",
+    "description": "Organized by CASS at NIE NRN.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-82",
+    "title": "Mock Placements",
+    "category": "NISB",
+    "date": "12-04-2025",
+    "image": "https://lh3.googleusercontent.com/d/17pgiV6cVjNnY9CR8hCaTLWU4n_B8zo4a",
+    "venue": "NIE GJB",
+    "description": "Organized by NISB at NIE GJB.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-83",
+    "title": "ROSphere",
+    "category": "RAS",
+    "date": "05-04-2025",
+    "image": "https://lh3.googleusercontent.com/d/1hzgazA5jxu5lUXD4jyTO67H73ai11d2q",
+    "venue": "NIE GJB",
+    "description": "Organized by RAS at NIE GJB.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-84",
+    "title": "Inspiro'25 Valedictory",
+    "category": "WIE",
+    "date": "22-03-2025",
+    "image": "https://lh3.googleusercontent.com/d/1UG5-Cb_yTG6c96BkqGndgaPesuajnq7d",
+    "venue": "NIE GJB",
+    "description": "Organized by WIE at NIE GJB.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-85",
+    "title": "Stalk the stock",
+    "category": "WIE",
+    "date": "21-03-2025",
+    "image": "https://lh3.googleusercontent.com/d/1tpqTdbLPbilK1-1WcSs9Leel7dt6nUgq",
+    "venue": "Online",
+    "description": "Organized by WIE at Online.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-86",
+    "title": "Promptly Yours",
+    "category": "WIE",
+    "date": "20-03-2025",
+    "image": "https://lh3.googleusercontent.com/d/1jWB8cGKTFcmrcw3ZaB0W8SSVCwrjuBjW",
+    "venue": "NIE GJB",
+    "description": "Organized by WIE at NIE GJB.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-87",
+    "title": "Aasha",
+    "category": "WIE",
+    "date": "20-03-2025",
+    "image": "https://lh3.googleusercontent.com/d/1G8q6LRlFBLaki5gMYm6ZRR_snpuJ4-q5",
+    "venue": "",
+    "description": "Organized by WIE at NIE Mysuru.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-88",
+    "title": "Silent Cipher",
+    "category": "WIE",
+    "date": "19-03-2025",
+    "image": "https://lh3.googleusercontent.com/d/1p-mXorE0J7-pK9QOudvD0xzBFp_YVo3N",
+    "venue": "NIE GJB",
+    "description": "Organized by WIE at NIE GJB.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-89",
+    "title": "Inspiro'25 Inauguration",
+    "category": "WIE",
+    "date": "18-03-2025",
+    "image": "https://lh3.googleusercontent.com/d/16nIu-WSZkSu86wV-EAPHLSYaQu57EAnR",
+    "venue": "NIE GJB",
+    "description": "Organized by WIE at NIE GJB.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-90",
+    "title": "TechPrepX",
+    "category": "CS",
+    "date": "13-03-2025",
+    "image": "https://lh3.googleusercontent.com/d/1_QqYCy4_OWJIKfdBTPS_7fIzuXTeOU_V",
+    "venue": "Online",
+    "description": "Organized by CS at Online.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-91",
+    "title": "Silicon Spectrum",
+    "category": "CASS",
+    "date": "08-05-2025",
+    "image": "https://lh3.googleusercontent.com/d/1BSfwKjRELwbQTBhS4Lt0s7F1-yFC9Xm1",
+    "venue": "Online",
+    "description": "Organized by CASS at Online.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-92",
+    "title": "Deep Learning Algorithm",
+    "category": "GRSS",
+    "date": "07-05-2025",
+    "image": "https://lh3.googleusercontent.com/d/1LadyEjwBNFT_NDFV8ldf6a9kh8WehP3D",
+    "venue": "NIE Admin",
+    "description": "Organized by GRSS at NIE Admin.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-93",
+    "title": "Smart Chip Design",
+    "category": "WIE",
+    "date": "05-03-2025",
+    "image": "https://lh3.googleusercontent.com/d/1SWNrzaX_GSgSyk9JueHpu9QlJxojJWIq",
+    "venue": "Online",
+    "description": "Organized by WIE at Online.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-94",
+    "title": "NIGST Technical Visit",
+    "category": "GRSS",
+    "date": "03-03-2025",
+    "image": "https://lh3.googleusercontent.com/d/1xe4fCxl5FsSIJvE5FGUeGVvMhUmlNw3s",
+    "venue": "",
+    "description": "Organized by GRSS at NIE Mysuru.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-95",
+    "title": "The Mobile Robot Technology",
+    "category": "RAS",
+    "date": "27-02-2025",
+    "image": "https://lh3.googleusercontent.com/d/1VkabqR7gkiTalYiitUaFXIofGTHmbH9X",
+    "venue": "Online",
+    "description": "Organized by RAS at Online.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-96",
+    "title": "Exploring AI & Generative AI",
+    "category": "WIE",
+    "date": "24-02-2025",
+    "image": "https://lh3.googleusercontent.com/d/1yL35syb0Csb6gAHbqZ6rbI09GcMHOvo8",
+    "venue": "Online",
+    "description": "Organized by WIE at Online.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-97",
+    "title": "Adroit'25 Valedictory",
+    "category": "NISB",
+    "date": "21-02-2025",
+    "image": "https://lh3.googleusercontent.com/d/1tSjww9zqyX5tv3aWioXnjB0SCB-m-AYs",
+    "venue": "NIE GJB",
+    "description": "Organized by NISB at NIE GJB.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-98",
+    "title": "Build Off",
+    "category": "NISB",
+    "date": "21-02-2025",
+    "image": "https://lh3.googleusercontent.com/d/14PnR1rXDmyDvMuukbHSSWSo8rq2oYmb3",
+    "venue": "NIE North Campus - Auditorium",
+    "description": "Organized by NISB at NIE North Campus - Auditorium.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-99",
+    "title": "Circuit Quest",
+    "category": "NISB",
+    "date": "20-02-2025",
+    "image": "https://lh3.googleusercontent.com/d/1rJJ0aQ0v1nlt9yWE3dx14yAQWKVPcvPl",
+    "venue": "NIE NRN",
+    "description": "Organized by NISB at NIE NRN.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-100",
+    "title": "Linking the Web",
+    "category": "NISB",
+    "date": "20-02-2025",
+    "image": "https://lh3.googleusercontent.com/d/1Vqh6OFXfK558RLNatca_p3mGC_a37wDh",
+    "venue": "NIE North Campus - Auditorium",
+    "description": "Organized by NISB at NIE North Campus - Auditorium.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-101",
+    "title": "Arm Storm",
+    "category": "NISB",
+    "date": "19-02-2025",
+    "image": "https://lh3.googleusercontent.com/d/1RJfpO38rMiHYxKhoAo0ZRrtRPilBivQ4",
+    "venue": "NIE NRN",
+    "description": "Organized by NISB at NIE NRN.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-102",
+    "title": "Electronika 21.0",
+    "category": "NISB",
+    "date": "18-02-2025",
+    "image": "https://lh3.googleusercontent.com/d/19WHzgEkWP2cZ9ky4YepT-95eYApeAy_Z",
+    "venue": "NIE GJB",
+    "description": "Organized by NISB at NIE GJB.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-103",
+    "title": "Dialogflow Dojo",
+    "category": "NISB",
+    "date": "18-02-2025",
+    "image": "https://lh3.googleusercontent.com/d/1veZg8etj1I7QQNFpZ3Le6z8Iy5sNjXeN",
+    "venue": "NIE North Campus - Auditorium",
+    "description": "Organized by NISB at NIE North Campus - Auditorium.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-104",
+    "title": "IPL 22.0",
+    "category": "NISB",
+    "date": "17-02-2025",
+    "image": "https://lh3.googleusercontent.com/d/1PNa0JqZ7DJnaTTzdD-EO_3iGsONXsxEX",
+    "venue": "NIE GJB",
+    "description": "Organized by NISB at NIE GJB.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-105",
+    "title": "Inauguration of Adroit '25",
+    "category": "NISB",
+    "date": "17-02-2025",
+    "image": "https://lh3.googleusercontent.com/d/1Lb9CXT93Avm8RDyZ1H4gLrAvdhym2khA",
+    "venue": "NIE North Campus - Auditorium",
+    "description": "Organized by NISB at NIE North Campus - Auditorium.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-106",
+    "title": "The Heart of Recommendations",
+    "category": "NISB",
+    "date": "11-02-2025",
+    "image": "https://lh3.googleusercontent.com/d/1CjmZAbZnfg5QTzlnjc8PMTCmRP8uCqBm",
+    "venue": "Online",
+    "description": "Organized by NISB at Online.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-107",
+    "title": "Industrial Visit to IISc",
+    "category": "NISB",
+    "date": "31-01-2025",
+    "image": "https://lh3.googleusercontent.com/d/1eErlSEF8cNjLrPitaxNV6GWD3aFcYDdb",
+    "venue": "",
+    "description": "Organized by NISB at NIE Mysuru.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-108",
+    "title": "Wired Reality",
+    "category": "NISB",
+    "date": "10-01-2025",
+    "image": "https://lh3.googleusercontent.com/d/1L3pBQ6pp4CRIc0e4DoFLS7AehX6esqlZ",
+    "venue": "NIE NRN",
+    "description": "Organized by NISB at NIE NRN.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-109",
+    "title": "C++ STL Odyssey",
+    "category": "CS",
+    "date": "10-01-2025",
+    "image": "https://lh3.googleusercontent.com/d/1oxh43Zr-r-Y9sQrTgUa6rpnaHLZDaB5p",
+    "venue": "NIE North Campus - Auditorium",
+    "description": "Organized by CS at NIE North Campus - Auditorium.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-110",
+    "title": "Silver Jubilee Celebration",
+    "category": "NISB",
+    "date": "14-12-2024",
+    "image": "https://lh3.googleusercontent.com/d/1gjKIBt-kAT6Gt9k4fC-EFENJA9p5exny",
+    "venue": "NIE Admin",
+    "description": "Organized by NISB at NIE Admin.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-111",
+    "title": "Valedictory & Release of Jijnasa",
+    "category": "NISB",
+    "date": "13-12-2024",
+    "image": "https://lh3.googleusercontent.com/d/1bhLnPLw9j1Nzq1AUM9yiSOefX_6kbd0Y",
+    "venue": "NIE Admin",
+    "description": "Organized by NISB at NIE Admin.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-112",
+    "title": "The Circuit Showdown",
+    "category": "NISB",
+    "date": "13-12-2024",
+    "image": "https://lh3.googleusercontent.com/d/1XSu71WDFNyhntL6C6fmzzkmB2l22WfLO",
+    "venue": "NIE NRN",
+    "description": "Organized by NISB at NIE NRN.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-113",
+    "title": "Magic",
+    "category": "NISB",
+    "date": "13-12-2024",
+    "image": "https://lh3.googleusercontent.com/d/1CGHfYZWdam5SbMhelhUy5Yk_rG1HJsie",
+    "venue": "NIE NRN",
+    "description": "Organized by NISB at NIE NRN.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-114",
+    "title": "Mini World Assembly",
+    "category": "NISB",
+    "date": "12-12-2024",
+    "image": "https://lh3.googleusercontent.com/d/1JlW9YZvKA9Hnzt9loiAcZN3UxYNtoGdm",
+    "venue": "NIE GJB",
+    "description": "Organized by NISB at NIE GJB.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-115",
+    "title": "Talk on Quantum Machine Learning",
+    "category": "NISB",
+    "date": "12-12-2024",
+    "image": "https://lh3.googleusercontent.com/d/1xxlG251Ax6m0ayFkpZkakK6AXz31WNX2",
+    "venue": "NIE NRN",
+    "description": "Organized by NISB at NIE NRN.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-116",
+    "title": "IEEE Programming League 21.0",
+    "category": "NISB",
+    "date": "11-12-2024",
+    "image": "https://lh3.googleusercontent.com/d/1o_6pd5RGjKa4GTjNoR1sa0B7aOxVe7oh",
+    "venue": "NIE GJB",
+    "description": "Organized by NISB at NIE GJB.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-117",
+    "title": "Adversarial Dome",
+    "category": "NISB",
+    "date": "10-11-2024",
+    "image": "https://lh3.googleusercontent.com/d/1gAKQuaLT6cd2n6-4k34WxPbcbzkdG-Fx",
+    "venue": "NIE North Campus - Auditorium",
+    "description": "Organized by NISB at NIE North Campus - Auditorium.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-118",
+    "title": "Authentication 360",
+    "category": "NISB",
+    "date": "10-11-2024",
+    "image": "https://lh3.googleusercontent.com/d/1mQkVbVahBftZZar-N8GuQF3-Oho7HnM5",
+    "venue": "NIE North Campus - Auditorium",
+    "description": "Organized by NISB at NIE North Campus - Auditorium.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-119",
+    "title": "Electronika 20.0",
+    "category": "NISB",
+    "date": "9-12-2024",
+    "image": "https://lh3.googleusercontent.com/d/1gf1mV3pq7kc4B7VGREkSR1TffeR7AQvp",
+    "venue": "NIE GJB",
+    "description": "Organized by NISB at NIE GJB.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-120",
+    "title": "Ankura Inauguration & Design Lab",
+    "category": "NISB",
+    "date": "9-12-2024",
+    "image": "https://lh3.googleusercontent.com/d/1B4IZtUcWs0d84CWO_ppvZyAt8o7I50xx",
+    "venue": "NIE GJB",
+    "description": "Organized by NISB at NIE GJB.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-121",
+    "title": "Satellite Tracking & Communication",
+    "category": "GRSS",
+    "date": "30-11-2024",
+    "image": "https://lh3.googleusercontent.com/d/1zr-Cv96Yjb5thclI5cK-2uFSdSPX-QMk",
+    "venue": "NIE GJB",
+    "description": "Organized by GRSS at NIE GJB.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-122",
+    "title": "Spark Tank",
+    "category": "NISB",
+    "date": "26-11-2024",
+    "image": "https://lh3.googleusercontent.com/d/1NjsGLC3lYt1OuHlSEb0jWOfsVLM08JxW",
+    "venue": "NIE GJB",
+    "description": "Organized by NISB at NIE GJB.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-123",
+    "title": "Ctrl+Alt+Fun",
+    "category": "NISB",
+    "date": "25-11-2024",
+    "image": "https://lh3.googleusercontent.com/d/1dRhU-Lr4iUjljoYKw6El8V-1IAIWX960",
+    "venue": "NIE GJB",
+    "description": "Organized by NISB at NIE GJB.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-124",
+    "title": "Beyond Localhost",
+    "category": "NISB",
+    "date": "21-11-2024",
+    "image": "https://lh3.googleusercontent.com/d/12JaUsSaD_X4LUD04JWf6dy4PtvL5Dws4",
+    "venue": "NIE North Campus - Auditorium",
+    "description": "Organized by NISB at NIE North Campus - Auditorium.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-125",
+    "title": "CodeLabs",
+    "category": "NISB",
+    "date": "15-11-2024",
+    "image": "https://lh3.googleusercontent.com/d/19U03b3CsNjaM9FaTmsW_didjG4geHVsq",
+    "venue": "NIE GJB",
+    "description": "Organized by NISB at NIE GJB.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-126",
+    "title": "Apocalypse",
+    "category": "NISB",
+    "date": "12-11-2024",
+    "image": "https://lh3.googleusercontent.com/d/1gDdWgpQ72KS-rIgCu2awuj1toO-OXuYB",
+    "venue": "NIE GJB",
+    "description": "Organized by NISB at NIE GJB.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-127",
+    "title": "Technical Workshop on DGPS",
+    "category": "CS",
+    "date": "25-10-2024",
+    "image": "https://lh3.googleusercontent.com/d/1qr50jauXt2E58ZE7GFNiQFbmTCNKAb1G",
+    "venue": "NIE GJB",
+    "description": "Organized by CS at NIE GJB.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-128",
+    "title": "Technical Debate & Valedictory",
+    "category": "CS",
+    "date": "25-10-2024",
+    "image": "https://lh3.googleusercontent.com/d/1rJcWX-ICChkBDn8ZPMfMZp_rkCnGl9kp",
+    "venue": "NIE North Campus - Auditorium",
+    "description": "Organized by CS at NIE North Campus - Auditorium.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-129",
+    "title": "Rubix Hackathon",
+    "category": "CS",
+    "date": "25-10-2024",
+    "image": "https://lh3.googleusercontent.com/d/1aTex7wgLSV7hadnPytvmlEnk8RJTffmN",
+    "venue": "NIE North Campus - Auditorium",
+    "description": "Organized by CS at NIE North Campus - Auditorium.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-130",
+    "title": "Linux 101",
+    "category": "CS",
+    "date": "24-10-2024",
+    "image": "https://lh3.googleusercontent.com/d/1fYa6uX5RX81UqvZ9E02dhLfjN_UFBiHA",
+    "venue": "NIE North Campus - Auditorium",
+    "description": "Organized by CS at NIE North Campus - Auditorium.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-131",
+    "title": "CodeFix",
+    "category": "CS",
+    "date": "24-10-2023",
+    "image": "https://lh3.googleusercontent.com/d/15jfKnsp9PdQta-sKy99HnDQ7jroDfAkG",
+    "venue": "NIE North Campus - Auditorium",
+    "description": "Organized by CS at NIE North Campus - Auditorium.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-132",
+    "title": "Reverse Coding",
+    "category": "CS",
+    "date": "23-10-2024",
+    "image": "https://lh3.googleusercontent.com/d/1KebGYyjbh062uP_l-5hQUbwxkJIvnRk8",
+    "venue": "NIE North Campus - Auditorium",
+    "description": "Organized by CS at NIE North Campus - Auditorium.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-133",
+    "title": "Rubix Inauguration & Tech Talk",
+    "category": "CS",
+    "date": "23-10-2024",
+    "image": "https://lh3.googleusercontent.com/d/1MMerwnVgs5K4TVF5QPdG9qij9cYIXsLg",
+    "venue": "NIE North Campus - Auditorium",
+    "description": "Organized by CS at NIE North Campus - Auditorium.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-134",
+    "title": "Logic - Craft",
+    "category": "NISB",
+    "date": "19-10-2023",
+    "image": "https://lh3.googleusercontent.com/d/1XASpjVt88mop2BS2zt6efufNNf1AlbMS",
+    "venue": "NIE Admin",
+    "description": "Organized by NISB at NIE Admin.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-135",
+    "title": "Insight '25",
+    "category": "NISB",
+    "date": "18-10-2024",
+    "image": "https://lh3.googleusercontent.com/d/12zGXkB-5w5eywBW8nKt9Ctj4of5_m9vj",
+    "venue": "NIE GJB",
+    "description": "Organized by NISB at NIE GJB.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-136",
+    "title": "HacktoberFest",
+    "category": "NISB",
+    "date": "09-10-2024",
+    "image": "https://lh3.googleusercontent.com/d/1JMzkBPZS1WE6LfDpm3AO5EYyhLR5R2pA",
+    "venue": "NIE GJB",
+    "description": "Organized by NISB at NIE GJB.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-137",
+    "title": "NISB Xtreme",
+    "category": "NISB",
+    "date": "04-10-2024",
+    "image": "https://lh3.googleusercontent.com/d/1C5rjxGPQ6tUqysEpxQel5gevMid1m8nc",
+    "venue": "NIE GJB",
+    "description": "Organized by NISB at NIE GJB.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-138",
+    "title": "Narrating Through Light",
+    "category": "NISB",
+    "date": "03-10-2024",
+    "image": "https://lh3.googleusercontent.com/d/1kktDQCvdy4lRmLxHxrIJMsGUHOUc78AN",
+    "venue": "NIE GJB",
+    "description": "Organized by NISB at NIE GJB.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-139",
+    "title": "Technical Training on Geoinformatics & Water Resources",
+    "category": "GRSS",
+    "date": "28-09-2024",
+    "image": "https://lh3.googleusercontent.com/d/163nNXCWDC_lcu9Pzr1Sc_KB_PWZA6nfO",
+    "venue": "NIE Admin",
+    "description": "Organized by GRSS at NIE Admin.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-140",
+    "title": "Neuro vision",
+    "category": "NISB",
+    "date": "26-08-2024",
+    "image": "https://lh3.googleusercontent.com/d/1UwMUdUdAhNVVkOSvjqPnTDIYXw1tUlxN",
+    "venue": "NIE North Campus - Auditorium",
+    "description": "Organized by NISB at NIE North Campus - Auditorium.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-141",
+    "title": "Logic Loom",
+    "category": "NISB",
+    "date": "23-09-2024",
+    "image": "https://lh3.googleusercontent.com/d/1QdQLTDYZSOoKHhd1AhTNN99cBdFIYnl3",
+    "venue": "NIE NRN",
+    "description": "Organized by NISB at NIE NRN.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-142",
+    "title": "The Heist Challenge",
+    "category": "NISB",
+    "date": "20-09-2024",
+    "image": "https://lh3.googleusercontent.com/d/1y1cGD2pZjL8FcVBoCAdA273tag5oFWKw",
+    "venue": "NIE GJB",
+    "description": "Organized by NISB at NIE GJB.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-143",
+    "title": "Figmaverse",
+    "category": "NISB",
+    "date": "19-09-2024",
+    "image": "https://lh3.googleusercontent.com/d/1e8vNIOz4LgM3FPB0jDJy8TUb9DSN5hSH",
+    "venue": "NIE North Campus - Auditorium",
+    "description": "Organized by NISB at NIE North Campus - Auditorium.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-144",
+    "title": "Reaching the Clouds",
+    "category": "NISB",
+    "date": "14-09-2024",
+    "image": "https://lh3.googleusercontent.com/d/1BEPgfLLZ03PfP2l9fX1sdZfn2yKeuJrY",
+    "venue": "Online",
+    "description": "Organized by NISB at Online.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-145",
+    "title": "Antenna Design Mastery",
+    "category": "WIE",
+    "date": "14-09-2024",
+    "image": "https://lh3.googleusercontent.com/d/1xjyLA7GGAONYu9_qcVhp_tZSMDg14eCx",
+    "venue": "NIE NRN",
+    "description": "Organized by WIE at NIE NRN.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-146",
+    "title": "Simulate & Innovate",
+    "category": "RAS",
+    "date": "13-09-2024",
+    "image": "https://lh3.googleusercontent.com/d/1_fmGC5r-AZ-RpOosv2Vl-5oW-gD-I8OX",
+    "venue": "NIE GJB",
+    "description": "Organized by RAS at NIE GJB.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-147",
+    "title": "Academic Visit to NITK",
+    "category": "GRSS",
+    "date": "12-09-2024",
+    "image": "https://lh3.googleusercontent.com/d/1w9186-aemCBhWG7ZwmNAUhFhhTOIckj9",
+    "venue": "NITK",
+    "description": "Organized by GRSS at NITK.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-148",
+    "title": "Blind Coding",
+    "category": "NISB",
+    "date": "11-09-2024",
+    "image": "https://lh3.googleusercontent.com/d/1s9O4XezxOaJJIcUS2CcexyJCiGsqvjMQ",
+    "venue": "NIE NRN",
+    "description": "Organized by NISB at NIE NRN.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-149",
+    "title": "Kubernetes Essentials",
+    "category": "NISB",
+    "date": "31-08-2024",
+    "image": "https://lh3.googleusercontent.com/d/1rRNMCpgQUXeg88reEnvgeltk5Do7667v",
+    "venue": "Online",
+    "description": "Organized by NISB at Online.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-150",
+    "title": "Technical Evaluation",
+    "category": "NISB",
+    "date": "26-08-2024",
+    "image": "https://lh3.googleusercontent.com/d/10ymNE556By-3vx4UlC0iQ050MXrAu9Rb",
+    "venue": "Online",
+    "description": "Organized by NISB at Online.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-151",
+    "title": "Containerization using Docker",
+    "category": "NISB",
+    "date": "25-08-2024",
+    "image": "https://lh3.googleusercontent.com/d/103ORwbtp9mkI3u3q52bZtw1azHeS4WYt",
+    "venue": "Online",
+    "description": "Organized by NISB at Online.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-152",
+    "title": "Path to Placement",
+    "category": "NISB",
+    "date": "24-08-2024",
+    "image": "https://lh3.googleusercontent.com/d/1n1aPLWPb5cqUS5TblBKdajZsNZHvFYkm",
+    "venue": "Online",
+    "description": "Organized by NISB at Online.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-153",
+    "title": "Tech Talk on Satellites",
+    "category": "NISB",
+    "date": "23-08-2024",
+    "image": "https://lh3.googleusercontent.com/d/1-p0dYPOmCzDsezAOY4ntc58TYieUZUcE",
+    "venue": "NIE Admin",
+    "description": "Organized by NISB at NIE Admin.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-154",
+    "title": "Mastering Github",
+    "category": "NISB",
+    "date": "08-08-2024",
+    "image": "https://lh3.googleusercontent.com/d/1vCUQ0FeJ09zvjlRXbYHKJbihfd2xbnRc",
+    "venue": "Online",
+    "description": "Organized by NISB at Online.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-155",
+    "title": "Navigating The Code",
+    "category": "NISB",
+    "date": "14-07-2024",
+    "image": "https://lh3.googleusercontent.com/d/1L3LyZMna_x0ljwMcCZWmfSHhqeyq2DuG",
+    "venue": "Online",
+    "description": "Organized by NISB at Online.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-156",
+    "title": "Tech Trivia Royal",
+    "category": "NISB",
+    "date": "09-07-2024",
+    "image": "https://lh3.googleusercontent.com/d/1OEfYaEsA3jAzI5TQ7Hgfe8RaiLnCrRHQ",
+    "venue": "NIE GJB",
+    "description": "Organized by NISB at NIE GJB.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-157",
+    "title": "Release of Manas & Tech Talk",
+    "category": "NISB",
+    "date": "07-07-2024",
+    "image": "https://lh3.googleusercontent.com/d/1EzmbmmyrETus3J_igyvPzEUbPlAF_VHr",
+    "venue": "Online",
+    "description": "Organized by NISB at Online.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-158",
+    "title": "Valedictory of illume - Knowledge Quest",
+    "category": "CASS",
+    "date": "14-06-2024",
+    "image": "https://lh3.googleusercontent.com/d/1h0vn6HKHaRaOdldnwccEJ4I0E1W-rVa_",
+    "venue": "NIE GJB",
+    "description": "Organized by CASS at NIE GJB.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-159",
+    "title": "Dive Into Xilinx",
+    "category": "CASS",
+    "date": "14-06-2024",
+    "image": "https://lh3.googleusercontent.com/d/1BMl5_JLpoxqISGO9Fizb8Agbkfh-OSTm",
+    "venue": "NIE NRN",
+    "description": "Organized by CASS at NIE NRN.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-160",
+    "title": "Treasure Hunt",
+    "category": "CASS",
+    "date": "13-06-2024",
+    "image": "https://lh3.googleusercontent.com/d/1xxAX-rm0ml8xkNtHhAqoJpSqeD1AobCT",
+    "venue": "NIE GJB",
+    "description": "Organized by CASS at NIE GJB.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-161",
+    "title": "Virtuoso - Electronic Fantasy",
+    "category": "CASS",
+    "date": "13-06-2024",
+    "image": "https://lh3.googleusercontent.com/d/1RhfaUZBY-GvkZTLAyojmMnTM-a4koywf",
+    "venue": "NIE NRN",
+    "description": "Organized by CASS at NIE NRN.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-162",
+    "title": "PCB Designing",
+    "category": "CASS",
+    "date": "12-06-2024",
+    "image": "https://lh3.googleusercontent.com/d/1e57yZypfsYBTz4mbcbRZnfMp9fbFPonB",
+    "venue": "NIE GJB",
+    "description": "Organized by CASS at NIE GJB.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-163",
+    "title": "Inauguration of Illume",
+    "category": "CASS",
+    "date": "12-06-2024",
+    "image": "https://lh3.googleusercontent.com/d/1gcFrZxcZItGdEAShbDajRSRJxB2MPak_",
+    "venue": "NIE GJB",
+    "description": "Organized by CASS at NIE GJB.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-164",
+    "title": "Whoz The Killerrr? 2.0",
+    "category": "NISB",
+    "date": "07-06-2024",
+    "image": "https://lh3.googleusercontent.com/d/17tC2xjKjk1xmmF8c_Aa5T65_FzM0QNSE",
+    "venue": "NIE North Campus - Auditorium",
+    "description": "Organized by NISB at NIE North Campus - Auditorium.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-165",
+    "title": "Query Quest",
+    "category": "NISB",
+    "date": "05-06-2024",
+    "image": "https://lh3.googleusercontent.com/d/1FsLR3M63FQcyACOLTf2F7NTZLVec8Jcs",
+    "venue": "NIE North Campus - Auditorium",
+    "description": "Organized by NISB at NIE North Campus - Auditorium.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-166",
+    "title": "IoT and Industry 4.0",
+    "category": "RAS",
+    "date": "03-06-2024",
+    "image": "https://lh3.googleusercontent.com/d/1vto_JyDdFkdWM9FIGDIJjO70Y2n2uDlO",
+    "venue": "NIE GJB",
+    "description": "Organized by RAS at NIE GJB.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-167",
+    "title": "Industrial visit - ISRO and IISC",
+    "category": "GRSS",
+    "date": "24-05-2024",
+    "image": "https://lh3.googleusercontent.com/d/1Q6VWXFHndtImT1CymMSO-8JcqeGcCB9i",
+    "venue": "ISRO",
+    "description": "Organized by GRSS at ISRO.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-168",
+    "title": "Introduction to VLSI",
+    "category": "NISB",
+    "date": "23-05-2024",
+    "image": "https://lh3.googleusercontent.com/d/1ucv0eCZ0nIHuCwnuTYKKi6SH28iR4k69",
+    "venue": "NIE GJB",
+    "description": "Organized by NISB at NIE GJB.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-169",
+    "title": "Mastering the maze",
+    "category": "NISB",
+    "date": "26-04-2024",
+    "image": "https://lh3.googleusercontent.com/d/1_bzZXY0TiA_iAadTctzUzqfJu1pIU9RJ",
+    "venue": "Online",
+    "description": "Organized by NISB at Online.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-170",
+    "title": "Ideathon",
+    "category": "NISB",
+    "date": "19-04-2024",
+    "image": "https://lh3.googleusercontent.com/d/1D47j_kk1KSSfHyDYzidp13dacHcfVVHb",
+    "venue": "NIE Admin",
+    "description": "Organized by NISB at NIE Admin.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-171",
+    "title": "Sampark - Induscon",
+    "category": "NISB",
+    "date": "19-04-2024",
+    "image": "https://lh3.googleusercontent.com/d/1oNmeuK7sx2o2edNRjETytpgKKuDt9S3X",
+    "venue": "NIE Admin",
+    "description": "Organized by NISB at NIE Admin.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-172",
+    "title": "Valedictory of Inspiro",
+    "category": "WIE",
+    "date": "28-03-2024",
+    "image": "https://lh3.googleusercontent.com/d/1Kg_9uT70DnNgw8f5oXCQVwGWMSsUAKme",
+    "venue": "NIE GJB",
+    "description": "Organized by WIE at NIE GJB.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-173",
+    "title": "Prerana",
+    "category": "WIE",
+    "date": "28-03-2024",
+    "image": "https://lh3.googleusercontent.com/d/1NW7nJ-8xwI6zysy8_By8UJvfts1T4BtG",
+    "venue": "",
+    "description": "Organized by WIE at NIE Mysuru.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-174",
+    "title": "Shunya",
+    "category": "WIE",
+    "date": "27-03-2024",
+    "image": "https://lh3.googleusercontent.com/d/1HyRH_3gG4l6CGTS3YURdkXyKodoCOWg5",
+    "venue": "NIE North Campus - Auditorium",
+    "description": "Organized by WIE at NIE North Campus - Auditorium.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-175",
+    "title": "Namaste Machine Learning",
+    "category": "WIE",
+    "date": "27-03-2024",
+    "image": "https://lh3.googleusercontent.com/d/19sBtrZMSgUVB8_vNRfF8Us-cNosfN3FO",
+    "venue": "NIE North Campus - Auditorium",
+    "description": "Organized by WIE at NIE North Campus - Auditorium.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-176",
+    "title": "Code Craft",
+    "category": "WIE",
+    "date": "26-03-2024",
+    "image": "https://lh3.googleusercontent.com/d/1SBVyfnM_asej-bqNzdxHBxZtN0J6oISR",
+    "venue": "NIE GJB",
+    "description": "Organized by WIE at NIE GJB.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-177",
+    "title": "Panel Discussion",
+    "category": "WIE",
+    "date": "26-03-2024",
+    "image": "https://lh3.googleusercontent.com/d/1p-ZlsHvndNfccg6oGD88pIlU2g_SJzCe",
+    "venue": "NIE GJB",
+    "description": "Organized by WIE at NIE GJB.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-178",
+    "title": "Inauguration of Inspiro '24",
+    "category": "WIE",
+    "date": "26-03-2024",
+    "image": "https://lh3.googleusercontent.com/d/1rW5t4Iz5noOBuaHCWM9UavXzhfiH3RM5",
+    "venue": "NIE GJB",
+    "description": "Organized by WIE at NIE GJB.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-179",
+    "title": "CommuNIEty Discord Server",
+    "category": "NISB",
+    "date": "2025–2026",
+    "image": "https://lh3.googleusercontent.com/d/1_WeCMbDu4UbzuX5MDj7VXZZB6XppriCc",
+    "venue": "Online",
+    "description": "Organized by NISB at Online.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-180",
+    "title": "Blood Donation Camp",
+    "category": "WIE",
+    "date": "25-01-2024",
+    "image": "https://lh3.googleusercontent.com/d/1MxKxupdH6cYMsotc5YR_Lr4TiNINvpA3",
+    "venue": "NIE DJB",
+    "description": "Organized by WIE at NIE DJB.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-181",
+    "title": "Valedictory of Adroit '24",
+    "category": "NISB",
+    "date": "20-01-2024",
+    "image": "https://lh3.googleusercontent.com/d/1KcRUsSHkNPCh8lIcxQkwT4cL66BOUYGY",
+    "venue": "NIE GJB",
+    "description": "Organized by NISB at NIE GJB.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-182",
+    "title": "Devops and Cloud Computing",
+    "category": "NISB",
+    "date": "19-01-2024",
+    "image": "https://lh3.googleusercontent.com/d/1gwHPfGNE9N6EY3tBNiQTJjqAgnM_bXr7",
+    "venue": "NIE GJB",
+    "description": "Organized by NISB at NIE GJB.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-183",
+    "title": "Personal Finance in 20s",
+    "category": "NISB",
+    "date": "19-01-2024",
+    "image": "https://lh3.googleusercontent.com/d/1lrwG8g_oY8sSvxqbMcSVMcTGsXCHFGw2",
+    "venue": "NIE GJB",
+    "description": "Organized by NISB at NIE GJB.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-184",
+    "title": "Electronika 19.0",
+    "category": "NISB",
+    "date": "18-01-2024",
+    "image": "https://lh3.googleusercontent.com/d/115U3vPTu_7AGPrRMzgj2TgkbrmyzoHpe",
+    "venue": "NIE GJB",
+    "description": "Organized by NISB at NIE GJB.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-185",
+    "title": "Advanced Programming and Applications of Arduino",
+    "category": "NISB",
+    "date": "18-01-2024",
+    "image": "https://lh3.googleusercontent.com/d/1MbT-jwLrhTDBCrUxGqcQ2qAERdNfnKwh",
+    "venue": "NIE GJB",
+    "description": "Organized by NISB at NIE GJB.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-186",
+    "title": "Tomorrow Canvas",
+    "category": "NISB",
+    "date": "17-01-2024",
+    "image": "https://lh3.googleusercontent.com/d/1bPVy85vNPIz-rFsLrdBBRqiXOc7IaLS_",
+    "venue": "Online",
+    "description": "Organized by NISB at Online.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-187",
+    "title": "Flutter 101",
+    "category": "NISB",
+    "date": "17-01-2024",
+    "image": "https://lh3.googleusercontent.com/d/1hlYR-wQIbG-TEeK40mlJvCfSBVznbMyx",
+    "venue": "NIE GJB",
+    "description": "Organized by NISB at NIE GJB.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-188",
+    "title": "Indian Cities-Spatio-Temporal Evolution And Growth Analysis Using Open Source Geospatial Data",
+    "category": "NISB",
+    "date": "17-01-2024",
+    "image": "https://lh3.googleusercontent.com/d/1RYboXrntsu44CjjjAQWVjCJ-28hZfTgl",
+    "venue": "NIE GJB",
+    "description": "Organized by NISB at NIE GJB.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-189",
+    "title": "IPL 20.0",
+    "category": "NISB",
+    "date": "16-01-2024",
+    "image": "https://lh3.googleusercontent.com/d/19gKlJbyq7Jrybug84_EQIi8j_0zGXj3N",
+    "venue": "NIE GJB",
+    "description": "Organized by NISB at NIE GJB.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-190",
+    "title": "Inauguration of Adroit '24",
+    "category": "NISB",
+    "date": "16-01-2024",
+    "image": "https://lh3.googleusercontent.com/d/1IYRCjpCrL-_tB0HdPGXxYDd13u0u2mH9",
+    "venue": "NIE GJB",
+    "description": "Organized by NISB at NIE GJB.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-191",
+    "title": "Flask Fundamentals",
+    "category": "CS",
+    "date": "03-01-2024",
+    "image": "https://lh3.googleusercontent.com/d/1Krod9W1HzsptnRQoIvM0LQpsytS0nFBg",
+    "venue": "NIE North Campus - Auditorium",
+    "description": "Organized by CS at NIE North Campus - Auditorium.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-192",
+    "title": "Code Maze",
+    "category": "NISB",
+    "date": "29-12-2023",
+    "image": "https://lh3.googleusercontent.com/d/1RM8KLLI239rLcqmRATY6_b6m8agUXZUN",
+    "venue": "NIE North Campus - Auditorium",
+    "description": "Organized by NISB at NIE North Campus - Auditorium.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-193",
+    "title": "Electronics Essentials",
+    "category": "CASS",
+    "date": "28-12-2023",
+    "image": "https://lh3.googleusercontent.com/d/1ILZoPmdlY2NkwTthU_waxg9MxwqD7c_j",
+    "venue": "NIE NRN",
+    "description": "Organized by CASS at NIE NRN.",
+    "regLink": "https://social.nisb.in"
+  },
+  {
+    "id": "evt-194",
+    "title": "Industrial Visit to Bosch",
+    "category": "NISB",
+    "date": "7-12-2023",
+    "image": "https://lh3.googleusercontent.com/d/1ZAf8OOs4fqd-x99BAxTUBga5nWlTbnYp",
+    "venue": "",
+    "description": "Organized by NISB at NIE Mysuru.",
+    "regLink": "https://social.nisb.in"
+  }
+]

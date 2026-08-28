@@ -54,7 +54,17 @@ export default function SolarLegacySection() {
 
   const smoothProgress = useSpring(scrollYProgress, { stiffness: 120, damping: 40 });
 
-  const words = "NISB is the IEEE student branch of National Institute of Engineering. More than 25 years of raw innovation. We host ADROIT, ANKURA, and Electronika. This isn't just a branch; it's a powerhouse of engineering legacy.".split(" ");
+  const paragraph1 =
+    "For generations of students, NISB has been a space where curiosity becomes capability and ideas become impact. Through a year-round calendar of technical initiatives, we bring together engineering, creativity, competition, and collaboration."
+      .split(/\s+/)
+      .filter(Boolean);
+
+  const paragraph2 =
+    "This is more than an IEEE Student Branch. It is a legacy of ideas, a community of innovators, and a tradition of engineering excellence that continues to move forward."
+      .split(/\s+/)
+      .filter(Boolean);
+
+  const totalWords = paragraph1.length + paragraph2.length;
 
   const legacyVideoUrl = 'https://drive.google.com/drive/folders/1OQU1uT4141Y4wj7bw2r3G2WvNrw6mdhk';
 
@@ -90,17 +100,32 @@ export default function SolarLegacySection() {
               </h2>
             </div>
 
-            <div className="flex flex-wrap gap-x-3 gap-y-2 md:gap-x-4 md:gap-y-3 pt-2">
-              {words.map((word, i) => (
-                <Word
-                  key={i}
-                  word={word}
-                  i={i}
-                  total={words.length}
-                  progress={smoothProgress}
-                  isMobile={isMobile}
-                />
-              ))}
+            <div className="space-y-6 pt-2">
+              <div className="flex flex-wrap gap-x-3 gap-y-2 md:gap-x-4 md:gap-y-3">
+                {paragraph1.map((word, i) => (
+                  <Word
+                    key={`p1-${i}`}
+                    word={word}
+                    i={i}
+                    total={totalWords}
+                    progress={smoothProgress}
+                    isMobile={isMobile}
+                  />
+                ))}
+              </div>
+
+              <div className="flex flex-wrap gap-x-3 gap-y-2 md:gap-x-4 md:gap-y-3">
+                {paragraph2.map((word, i) => (
+                  <Word
+                    key={`p2-${i}`}
+                    word={word}
+                    i={paragraph1.length + i}
+                    total={totalWords}
+                    progress={smoothProgress}
+                    isMobile={isMobile}
+                  />
+                ))}
+              </div>
             </div>
           </div>
 
@@ -110,6 +135,9 @@ export default function SolarLegacySection() {
               { label: 'Founded', val: '1999', sub: '25+ Years of Tradition' },
               { label: 'Recognition', val: 'TOP R10', sub: 'Best Student Chapter' },
               { label: 'Flagships', val: 'ADROIT • ANKURA', sub: 'Premier Tech Symposia' },
+              { label: '2025 Honours', val: 'GRSS • CS', sub: 'Chapter Awards & Distinctions' },
+              { label: 'Legacy', val: '2018 • 2021 • 2023', sub: 'Outstanding Branch Recognitions' },
+              { label: 'Impact', val: '70+', sub: 'Events Every Year' },
             ].map((stat, i) => (
               <motion.div
                 key={i}

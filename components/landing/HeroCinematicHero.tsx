@@ -118,7 +118,7 @@ export default function HeroCinematicHero() {
 
               <h1 className="text-5xl sm:text-7xl md:text-8xl lg:text-[8.5rem] font-black tracking-tight leading-none uppercase text-[#0d0e12] flex items-baseline gap-1 sm:gap-2">
                 <span className="inline-block tracking-tight font-display">NISB</span>
-                <span className="text-lg sm:text-2xl md:text-4xl text-amber-700 font-mono font-extrabold select-none">©</span>
+
               </h1>
 
               <p className="text-sm sm:text-base md:text-lg font-serif italic text-amber-950/80 font-medium max-w-xl leading-relaxed">
@@ -225,37 +225,57 @@ export default function HeroCinematicHero() {
         </div>
 
         {/* ── BOTTOM SHOWCASE HERO CARD ── */}
-        <div className="relative aspect-[4/3] sm:aspect-[16/7] md:aspect-[21/8] overflow-hidden group">
+        <div className="relative min-h-[300px] sm:min-h-[260px] md:aspect-[21/8] overflow-hidden group">
           <img
             src="/fonts/image.png"
             alt="NISB Engineering Showcase"
             loading="lazy"
             decoding="async"
-            className="w-full h-full object-cover grayscale-[20%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700 opacity-70"
+            className="w-full h-full object-cover grayscale-[20%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700 opacity-70 absolute inset-0"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[var(--void)] via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[var(--void)] via-[var(--void)]/70 md:via-[var(--void)]/40 to-transparent" />
 
           {/* Overlay Banner Labels */}
-          <div className="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 right-4 sm:right-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 z-10">
-            <div>
-              <span className="text-[9px] sm:text-[10px] font-mono uppercase tracking-[0.3em] sm:tracking-[0.4em] text-[var(--accent)] font-bold">
-                FLAGSHIP Events &amp; FESTS
-              </span>
-              <h3 className="text-xl sm:text-2xl md:text-4xl font-black uppercase text-white font-display tracking-tight mt-0.5">
-                ANKURA • ADROIT • ELECTRONIKA
-              </h3>
+          <div className="relative md:absolute md:bottom-0 md:inset-x-0 p-4 sm:p-6 md:p-8 flex flex-col xl:flex-row items-start xl:items-end justify-between gap-6 z-10">
+            {/* Two Section Division */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 w-full xl:max-w-4xl">
+              {/* Section 1: ANKURA & ADROIT Annual Fest */}
+              <div className="flex flex-col items-center justify-center text-center p-4 sm:p-5 rounded-xl bg-black/65 backdrop-blur-md border border-white/15 hover:border-[var(--accent)]/50 transition-all duration-300 shadow-xl group/card">
+                <span className="text-[9px] sm:text-[10px] font-mono uppercase tracking-[0.25em] text-[var(--accent)] font-bold mb-1.5">
+                  ANNUAL FESTS
+                </span>
+                <h3 className="text-xl sm:text-2xl md:text-3xl font-black uppercase text-white font-display tracking-tight group-hover/card:text-[var(--accent)] transition-colors">
+                  ANKURA • ADROIT
+                </h3>
+                <p className="text-[11px] sm:text-xs font-mono text-white/70 mt-2">
+                  Annual Flagship Fests
+                </p>
+              </div>
+
+              {/* Section 2: ELECTRONIKA & IPL */}
+              <div className="flex flex-col items-center justify-center text-center p-4 sm:p-5 rounded-xl bg-black/65 backdrop-blur-md border border-white/15 hover:border-[var(--accent)]/50 transition-all duration-300 shadow-xl group/card">
+                <span className="text-[9px] sm:text-[10px] font-mono uppercase tracking-[0.25em] text-[var(--accent)] font-bold mb-1.5">
+                  Flagship Event
+                </span>
+                <h3 className="text-xl sm:text-2xl md:text-3xl font-black uppercase text-white font-display tracking-tight group-hover/card:text-[var(--accent)] transition-colors">
+                  ELECTRONIKA • IPL
+                </h3>
+                <p className="text-[11px] sm:text-xs font-mono text-white/70 mt-2">
+                  IEEE Programming League
+                </p>
+              </div>
             </div>
 
             {/* Quick Stats Pills */}
-            <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
-              <div className="px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-black/70 backdrop-blur-md border border-white/20 text-[10px] sm:text-xs font-mono text-white shadow-xl">
+            <div className="flex items-center gap-2 sm:gap-3 flex-wrap shrink-0">
+              <div className="px-3.5 sm:px-4 py-2 rounded-full bg-black/75 backdrop-blur-md border border-white/20 text-[10px] sm:text-xs font-mono text-white shadow-xl">
                 R10 Best Student Chapter
               </div>
-              <div className="px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-black/70 backdrop-blur-md border border-white/20 text-[10px] sm:text-xs font-mono text-white shadow-xl">
+              <div className="px-3.5 sm:px-4 py-2 rounded-full bg-black/75 backdrop-blur-md border border-white/20 text-[10px] sm:text-xs font-mono text-white shadow-xl">
                 25+ Years Legacy
               </div>
-              <div className="px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-black/70 backdrop-blur-md border border-white/20 text-[10px] sm:text-xs font-mono text-white shadow-xl">
-                50+ Annual Events
+              <div className="px-3.5 sm:px-4 py-2 rounded-full bg-black/75 backdrop-blur-md border border-white/20 text-[10px] sm:text-xs font-mono text-white shadow-xl">
+                70+ Annual Events
               </div>
             </div>
           </div>

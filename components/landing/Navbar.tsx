@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { MobileNavbarThemeDial } from './RadialThemeDial';
 
 const NAV_ROUTES = [
   { label: 'Home', href: '#hero' },
@@ -18,21 +19,8 @@ export default function Navbar() {
   const [visible, setVisible] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [currentTheme, setCurrentTheme] = useState<'obsidian' | 'cyan' | 'emerald' | 'violet' | 'clay' | 'blue'>('clay');
-
-  const changeTheme = (theme: 'obsidian' | 'cyan' | 'emerald' | 'violet' | 'clay' | 'blue') => {
-    setCurrentTheme(theme);
-    if (theme === 'obsidian') {
-      document.documentElement.removeAttribute('data-theme');
-    } else {
-      document.documentElement.setAttribute('data-theme', theme);
-    }
-  };
 
   useEffect(() => {
-    // Set default theme to Warm Clay (#84937e)
-    document.documentElement.setAttribute('data-theme', 'clay');
-
     // Triggered by landing page after intro ends
     const handler = () => setVisible(true);
     window.addEventListener('nisb:landingReady', handler);
@@ -90,6 +78,11 @@ export default function Navbar() {
             </div>
           </a>
 
+          {/* ── MOBILE THEME ICON: EXACTLY IN THE MIDDLE OF THE NAVBAR ── */}
+          <div className="lg:hidden flex items-center justify-center mx-auto">
+            <MobileNavbarThemeDial />
+          </div>
+
           {/* Desktop Links (Visible lg+) */}
           <nav className="hidden lg:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 border border-white/10">
             {NAV_ROUTES.map(({ label, href }) => (
@@ -104,29 +97,8 @@ export default function Navbar() {
             ))}
           </nav>
 
-          {/* Right Action Bar (Theme Selector & CTA & Mobile Toggle) */}
-          <div className="flex items-center gap-3">
-            {/* Theme Selector */}
-            <div className="hidden sm:flex items-center gap-1.5 px-2.5 py-1.5 rounded-full bg-white/5 border border-white/10">
-              {[
-                { id: 'cyan', color: '#06b6d4', title: 'Cyber Cyan' },
-                { id: 'blue', color: '#2563eb', title: 'Electric Blue' },
-                { id: 'emerald', color: '#10b981', title: 'Emerald' },
-                { id: 'violet', color: '#a855f7', title: 'Violet' },
-                { id: 'clay', color: '#84937e', title: 'Warm Clay' },
-                { id: 'obsidian', color: '#999999', title: 'Obsidian' },
-              ].map((t) => (
-                <button
-                  key={t.id}
-                  onClick={() => changeTheme(t.id as any)}
-                  title={`Switch to ${t.title} Theme`}
-                  className={`w-3.5 h-3.5 rounded-full transition-all duration-300 ${currentTheme === t.id ? 'scale-125 ring-2 ring-white shadow-md' : 'opacity-60 hover:opacity-100'
-                    }`}
-                  style={{ background: t.color }}
-                />
-              ))}
-            </div>
-
+          {/* Right Action Bar (CTA & Mobile Drawer Toggle) */}
+          <div className="flex items-center gap-2.5">
             {/* Membership CTA Button */}
             <a
               href="https://tinyurl.com/MEMBERSHIPDRIVE26"
@@ -241,35 +213,8 @@ export default function Navbar() {
                 ))}
               </motion.div>
 
-              {/* Theme Color Switcher & Action CTA */}
+              {/* Action CTA */}
               <div className="pt-4 border-t border-white/10 flex flex-col gap-3.5 relative z-10">
-                <div className="flex items-center justify-between px-1">
-                  <div className="flex items-center gap-1.5 text-[10px] font-mono text-white/60 font-bold uppercase tracking-wider">
-                    <span>SYSTEM ACCENT:</span>
-                    <span className="text-[var(--accent)] uppercase font-extrabold">{currentTheme}</span>
-                  </div>
-                  <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/[0.04] border border-white/10">
-                    {[
-                      { id: 'cyan', color: '#06b6d4', title: 'Cyber Cyan' },
-                      { id: 'blue', color: '#2563eb', title: 'Electric Blue' },
-                      { id: 'emerald', color: '#10b981', title: 'Emerald' },
-                      { id: 'violet', color: '#a855f7', title: 'Violet' },
-                      { id: 'clay', color: '#84937e', title: 'Warm Clay' },
-                      { id: 'obsidian', color: '#999999', title: 'Obsidian' },
-                    ].map((t) => (
-                      <button
-                        key={t.id}
-                        onClick={() => changeTheme(t.id as any)}
-                        title={`Switch to ${t.title} Theme`}
-                        className={`w-4 h-4 rounded-full transition-all duration-300 ${currentTheme === t.id
-                          ? 'scale-125 ring-2 ring-white shadow-[0_0_12px_rgba(255,255,255,0.7)]'
-                          : 'opacity-40 hover:opacity-100'
-                          }`}
-                        style={{ background: t.color }}
-                      />
-                    ))}
-                  </div>
-                </div>
 
                 <a
                   href="https://tinyurl.com/MEMBERSHIPDRIVE26"

@@ -4,7 +4,7 @@ import "./cinematic-events.css";
 import "./legacy-scroll.css";
 
 export const metadata: Metadata = {
-  title: "NISB — National Institute of Engineering",
+  title: "NISB",
   description: "NISB — Powering curiosity, igniting innovation. The premier IEEE student branch at National Institute of Engineering, Mysuru. Awarded Region 10 Best Student Chapter.",
   keywords: ["IEEE", "NISB", "NIE Mysuru", "National Institute of Engineering", "Student Branch", "Engineering", "Innovation", "Region 10"],
   icons: {
@@ -26,13 +26,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" data-theme="blue">
+    <html lang="en" data-theme="cyan">
       <head>
         <link rel="icon" href="/image.png" type="image/png" />
         <link rel="shortcut icon" href="/image.png" />
         <link rel="apple-touch-icon" href="/image.png" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://lh3.googleusercontent.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://lh3.googleusercontent.com" />
+        <link rel="preconnect" href="https://docs.google.com" />
+        <link rel="dns-prefetch" href="https://docs.google.com" />
       </head>
       <body>{children}</body>
     </html>

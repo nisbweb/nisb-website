@@ -27,7 +27,7 @@ const ACTIVITIES = [
   },
   {
     title: 'Focus Groups',
-    image: '/WhatsApp Image 2026-08-08 at 22.33.56.jpeg',
+    image: '/image copy 2.png',
     tag: 'HANDS-ON LABS',
     destinations: 'AVR Atmega • Deep Learning • Web Dev • Python',
     body: 'Peer-to-peer technical circles where students build real-world firmware applications, neural networks, web platforms, and embedded prototypes.',
@@ -112,7 +112,7 @@ export default function ActivitiesBentoGrid() {
 
                 </div>
                 <div className="pt-4 border-t border-white/10 flex items-center justify-between text-[11px] font-mono text-[var(--accent)] font-bold">
-                  <span className="truncate max-w-[80%]">{a.destinations}</span>
+
                   <span className="text-base group-hover:translate-x-1 transition-transform"></span>
                 </div>
               </div>

@@ -492,16 +492,7 @@ export default function FluidDotMorphCanvas({
         letterBounds.forEach((lb) => {
           ctx.font = `800 ${lb.fontSize}px 'Plus Jakarta Sans', sans-serif`;
 
-          // Layer 1: Ambient Back Glow (Wide soft light blue bloom)
-          ctx.shadowColor = '#38BDF8';
-          ctx.shadowBlur = 40 * solidAlpha;
-          ctx.fillStyle = `rgba(56, 189, 248, ${(0.35 * solidAlpha).toFixed(3)})`;
-          ctx.fillText(lb.char, lb.x, lb.y);
-
-          // Layer 2: Core Luminous Metallic Gradient Fill (No overlapping stroke wireframes!)
-          ctx.shadowColor = '#BAE6FD';
-          ctx.shadowBlur = 18 * solidAlpha;
-
+          // Core Luminous Metallic Gradient Fill (Hardware accelerated, no heavy shadowBlur stalls)
           const textGrad = ctx.createLinearGradient(
             lb.x,
             lb.y - lb.fontSize * 0.45,
@@ -516,15 +507,14 @@ export default function FluidDotMorphCanvas({
           ctx.fillStyle = textGrad;
           ctx.fillText(lb.char, lb.x, lb.y);
 
-          // Layer 3: Top Specular Crest Reflection (Adds metallic depth & luxury 3D sheen)
-          ctx.shadowBlur = 0;
+          // Top Specular Crest Reflection
           const crestGrad = ctx.createLinearGradient(
             lb.x,
             lb.y - lb.fontSize * 0.45,
             lb.x,
             lb.y
           );
-          crestGrad.addColorStop(0.0, `rgba(255, 255, 255, ${(0.55 * solidAlpha).toFixed(3)})`);
+          crestGrad.addColorStop(0.0, `rgba(255, 255, 255, ${(0.6 * solidAlpha).toFixed(3)})`);
           crestGrad.addColorStop(0.4, `rgba(255, 255, 255, 0)`);
           ctx.fillStyle = crestGrad;
           ctx.fillText(lb.char, lb.x, lb.y);

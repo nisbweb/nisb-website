@@ -11,13 +11,13 @@ export default function StarfieldBackground() {
 
   const { positions, sizes } = useMemo(() => {
     const positions = new Float32Array(STAR_COUNT * 3);
-    const sizes     = new Float32Array(STAR_COUNT);
+    const sizes = new Float32Array(STAR_COUNT);
 
     for (let i = 0; i < STAR_COUNT; i++) {
-      positions[i * 3]     = (Math.random() - 0.5) * 50;
+      positions[i * 3] = (Math.random() - 0.5) * 50;
       positions[i * 3 + 1] = (Math.random() - 0.5) * 50;
       positions[i * 3 + 2] = (Math.random() - 0.5) * 30 - 5;
-      sizes[i]             = Math.random() * 1.5 + 0.3;
+      sizes[i] = Math.random() * 1.5 + 0.3;
     }
 
     return { positions, sizes };

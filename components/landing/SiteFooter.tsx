@@ -179,8 +179,17 @@ export default function SiteFooter() {
                     STUDENT BRANCH
                   </p>
                   <p className="text-sm font-bold text-[var(--star-white)] mt-1">
-                    NIE IEEE Branch
+                    NIE IEEE Student Branch
                   </p>
+                  <a
+                    href="https://mail.google.com/mail/?view=cm&fs=1&to=nisb@nie.ac.in"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[var(--accent)] font-bold hover:underline block text-[11px] mt-0.5"
+                    title="Send Email via Gmail"
+                  >
+                    nisb@nie.ac.in ↗
+                  </a>
                   <p className="text-[var(--text-muted)] text-[11px] mt-0.5">
                     NIE Mysuru — 570008
                   </p>
@@ -200,10 +209,13 @@ export default function SiteFooter() {
                     +91 86603 18339
                   </a>
                   <a
-                    href="mailto:sagarks@ieee.org"
+                    href="https://mail.google.com/mail/?view=cm&fs=1&to=sagarks@ieee.org"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="text-[var(--accent)] font-bold hover:underline block text-[11px] mt-0.5"
+                    title="Send Email via Gmail"
                   >
-                    sagarks@ieee.org
+                    sagarks@ieee.org ↗
                   </a>
                 </div>
               </div>
