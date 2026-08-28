@@ -62,12 +62,12 @@ export default function HeroCinematicHero() {
         className="w-full max-w-[88rem] mx-auto flex flex-col gap-0 border border-[var(--border-main)] rounded-2xl sm:rounded-3xl overflow-hidden bg-[var(--card-bg)] shadow-2xl relative z-10"
         style={{ scale: finalScale }}
       >
-        {/* â”€â”€ TOP QUADRANT GRID â”€â”€ */}
+        {/* -- TOP QUADRANT GRID -- */}
         <div className="grid grid-cols-1 lg:grid-cols-12 border-b border-[var(--border-main)]">
           {/* Block 1 (Top-Left): Est 1999 & Mission */}
           <div className="lg:col-span-5 p-6 md:p-10 border-b lg:border-b-0 lg:border-r border-[var(--border-main)] flex flex-col justify-between gap-6 bg-gradient-to-br from-white/[0.02] to-transparent">
             <div className="flex items-center justify-between text-xs font-mono tracking-widest uppercase text-[var(--text-muted)]">
-              <span>EST â€” 1999</span>
+              <span>EST — 1999</span>
               <span className="px-2.5 py-0.5 rounded-full border border-[var(--accent)] text-[10px] font-bold text-[var(--accent)] bg-[var(--accent)]/10">
                 NIE MYSURU
               </span>
@@ -75,7 +75,7 @@ export default function HeroCinematicHero() {
 
             <div className="space-y-2">
               <p className="text-xs font-mono uppercase tracking-widest text-[var(--accent)] font-bold">
-                Student Branch â€¢ Bangalore Section
+                Student Branch • Bangalore Section
               </p>
               <p className="text-sm md:text-base leading-relaxed text-[var(--star-white)]/80 max-w-md font-sans">
                 Our mission is preserving long-term engineering traditions while pioneering state-of-the-art technological innovation for over 25 years.
@@ -87,7 +87,6 @@ export default function HeroCinematicHero() {
           <div className="lg:col-span-7 p-5 sm:p-8 md:p-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-gradient-to-bl from-[var(--accent)]/[0.08] via-transparent to-white/[0.02]">
             <div className="space-y-2">
               <div className="flex items-center gap-2 text-[10px] sm:text-xs font-mono uppercase tracking-widest text-[var(--accent)] font-bold">
-
               </div>
               <h2 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight sm:tracking-tighter uppercase leading-[1.08] sm:leading-[0.95] font-display text-[var(--star-white)]">
                 Advancing Technology <br className="hidden sm:inline" />
@@ -95,11 +94,10 @@ export default function HeroCinematicHero() {
                 <span className="text-[var(--accent)] drop-shadow-[0_0_20px_var(--accent-glow)]">HUMANITY</span>
               </h2>
             </div>
-
           </div>
         </div>
 
-        {/* â”€â”€ MIDDLE QUADRANT GRID â”€â”€ */}
+        {/* -- MIDDLE QUADRANT GRID -- */}
         <div className="grid grid-cols-1 lg:grid-cols-12 border-b border-[var(--border-main)]">
           {/* Block 3 (Middle-Left): Massive Brand Title with Rich Cream Background */}
           <div className="lg:col-span-7 p-6 sm:p-8 md:p-12 border-b lg:border-b-0 lg:border-r border-amber-900/10 flex flex-col justify-between gap-6 md:gap-8 bg-gradient-to-br from-[#FFFDF5] via-[#FAF5EA] to-[#F2EADA] text-[#0d0e12] relative overflow-hidden shadow-2xl">
@@ -109,7 +107,7 @@ export default function HeroCinematicHero() {
             <div className="space-y-4 relative z-10">
               <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
                 <span className="px-3 py-1 rounded-full bg-[#0d0e12] text-[#FFFDF5] text-[9px] sm:text-[10px] font-mono font-extrabold uppercase tracking-[0.2em] sm:tracking-[0.3em] shadow-md">
-                  EST. 1999 â€¢ REGION 10
+                  EST. 1999 • REGION 10
                 </span>
                 <span className="text-[10px] sm:text-xs font-mono font-bold text-amber-900/70 uppercase">
                   NATIONAL INSTITUTE OF ENGINEERING
@@ -118,11 +116,10 @@ export default function HeroCinematicHero() {
 
               <h1 className="text-5xl sm:text-7xl md:text-8xl lg:text-[8.5rem] font-black tracking-tight leading-none uppercase text-[#0d0e12] flex items-baseline gap-1 sm:gap-2">
                 <span className="inline-block tracking-tight font-display">NISB</span>
-
               </h1>
 
               <p className="text-sm sm:text-base md:text-lg font-serif italic text-amber-950/80 font-medium max-w-xl leading-relaxed">
-                NIE IEEE Student Branch â€” Fostering 25+ years of raw engineering innovation, technical research, and student leadership at NIE Mysuru.
+                NIE IEEE Student Branch — Fostering 25+ years of raw engineering innovation, technical research, and student leadership at NIE Mysuru.
               </p>
             </div>
 
@@ -132,7 +129,7 @@ export default function HeroCinematicHero() {
                 className="text-xs font-mono uppercase tracking-widest text-[#0d0e12] hover:text-amber-700 transition-colors flex items-center gap-3 font-extrabold"
               >
                 <span>( explore legacy story )</span>
-                <span className="text-lg">âž”</span>
+                <span className="text-lg">➔</span>
               </a>
 
               <a
@@ -141,7 +138,7 @@ export default function HeroCinematicHero() {
                 rel="noopener noreferrer"
                 className="w-full sm:w-auto px-7 py-3.5 rounded-full bg-[#0d0e12] text-[#FFFDF5] text-xs font-mono font-extrabold uppercase tracking-wider hover:scale-105 hover:bg-amber-600 hover:text-white transition-all shadow-xl text-center"
               >
-                Join NISB â†—
+                Join NISB ↗
               </a>
             </div>
           </div>
@@ -150,7 +147,7 @@ export default function HeroCinematicHero() {
           <div className="lg:col-span-5 p-6 md:p-8 flex flex-col justify-between gap-4 bg-gradient-to-br from-white/[0.03] to-black/60 relative overflow-hidden min-h-[320px] sm:min-h-[360px] md:min-h-[400px]">
             <div className="flex items-center justify-between z-10">
               <span className="text-xs font-mono uppercase tracking-widest text-[var(--text-muted)] font-bold">
-                NISB CHAPTERS,COUNCILS AND AFFINITY GROUP
+                NISB CHAPTERS, COUNCILS AND AFFINITY GROUP
               </span>
               <span className="px-2.5 py-0.5 rounded-full bg-[var(--accent)]/20 border border-[var(--accent)]/40 text-xs font-mono text-[var(--accent)] font-bold">
                 (06 CHAPTERS)
@@ -176,7 +173,7 @@ export default function HeroCinematicHero() {
                 />
               </a>
 
-              {/* 360Â° CSS Rotating Orbit Wrapper for 6 Radial Society Nodes */}
+              {/* 360° CSS Rotating Orbit Wrapper for 6 Radial Society Nodes */}
               <div className="absolute inset-0 z-20 pointer-events-none animate-[spin_30s_linear_infinite] hover:[animation-play-state:paused]">
                 {SOCIETIES_STRIP.map((soc, i) => {
                   const angle = (i * 60 - 90) * (Math.PI / 180);
@@ -208,9 +205,6 @@ export default function HeroCinematicHero() {
                             className="w-full h-full object-contain filter drop-shadow-sm group-hover/node:scale-110 transition-transform"
                           />
                         </div>
-
-                        {/* Floating Tooltip on Hover */}
-
                       </a>
                     </div>
                   );
@@ -219,16 +213,22 @@ export default function HeroCinematicHero() {
             </div>
 
             <p className="text-[10px] sm:text-[11px] font-mono text-[var(--text-muted)] text-center relative z-10">
-              CS â€¢ WIE â€¢ CASS â€¢ RAS â€¢ GRSS â€¢ CEDA â€” Fostering domain expertise across engineering disciplines.
+              CS • WIE • CASS • RAS • GRSS • CEDA — Fostering domain expertise across engineering disciplines.
             </p>
           </div>
         </div>
 
-        {/* ── BOTTOM SHOWCASE HERO CARD ── */}
+        {/* -- BOTTOM SHOWCASE HERO CARD -- */}
 
         {/* MOBILE ONLY: visible image banner */}
         <div className="md:hidden relative h-[160px] sm:h-[180px] overflow-hidden rounded-xl">
-          <img src="/fonts/image.png" alt="NISB Engineering Showcase" loading="lazy" decoding="async" className="w-full h-full object-cover object-center grayscale-[15%] opacity-95" />
+          <img
+            src="/fonts/image.png"
+            alt="NISB Engineering Showcase"
+            loading="lazy"
+            decoding="async"
+            className="w-full h-full object-cover object-center grayscale-[15%] opacity-95"
+          />
           <div className="absolute inset-0 bg-gradient-to-t from-[var(--void)]/80 via-transparent to-transparent" />
           <div className="absolute bottom-3 inset-x-3 flex items-center gap-1.5 flex-wrap justify-center">
             <div className="px-2.5 py-1 rounded-full bg-black/70 backdrop-blur-md border border-white/20 text-[9px] font-mono text-white">R10 Best Student Chapter</div>
@@ -247,13 +247,19 @@ export default function HeroCinematicHero() {
           <div className="flex flex-col items-center justify-center text-center p-3 rounded-xl bg-white/5 border border-white/15 hover:border-[var(--accent)]/50 transition-all duration-300 group/card">
             <span className="text-[8px] font-mono uppercase tracking-[0.2em] text-[var(--accent)] font-bold mb-1">FLAGSHIP EVENT</span>
             <h3 className="text-base font-black uppercase text-white font-display tracking-tight group-hover/card:text-[var(--accent)] transition-colors">ELECTRONIKA • IPL</h3>
-
+            <p className="text-[10px] font-mono text-white/60 mt-1">IPL &amp; Tech Symposia</p>
           </div>
         </div>
 
         {/* DESKTOP md+: overlay layout */}
         <div className="hidden md:block relative md:aspect-[21/8] overflow-hidden group">
-          <img src="/fonts/image.png" alt="NISB Engineering Showcase" loading="lazy" decoding="async" className="w-full h-full object-cover grayscale-[20%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700 opacity-70 absolute inset-0" />
+          <img
+            src="/fonts/image.png"
+            alt="NISB Engineering Showcase"
+            loading="lazy"
+            decoding="async"
+            className="w-full h-full object-cover grayscale-[20%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700 opacity-70 absolute inset-0"
+          />
           <div className="absolute inset-0 bg-gradient-to-t from-[var(--void)] via-[var(--void)]/40 to-transparent" />
           <div className="absolute bottom-0 inset-x-0 p-6 md:p-8 flex flex-col xl:flex-row items-start xl:items-end justify-between gap-6 z-10">
             <div className="grid grid-cols-2 gap-6 w-full xl:max-w-4xl">
