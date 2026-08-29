@@ -47,7 +47,6 @@ export default function RobotWalkingDivider({
     let height = 0;
     let lastTimestamp = 0;
 
-    // Theme color detector
     const getAccentColors = () => {
       if (typeof window === 'undefined') return { glow: '#00d2ff', dark: '#0066aa' };
       const accent = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
@@ -78,8 +77,8 @@ export default function RobotWalkingDivider({
 
     const state = {
       time: 0,
-      robotX: isR2L ? 0 : 0,
-      scale: 0.65,
+      robotX: 0,
+      scale: 0.28,
     };
 
     function resize() {
@@ -87,7 +86,7 @@ export default function RobotWalkingDivider({
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
       const rect = containerRef.current.getBoundingClientRect();
       width = rect.width || window.innerWidth;
-      height = rect.height || 140;
+      height = rect.height || 75;
 
       canvas.width = width * dpr;
       canvas.height = height * dpr;
@@ -97,11 +96,11 @@ export default function RobotWalkingDivider({
       ctx!.setTransform(1, 0, 0, 1, 0, 0);
       ctx!.scale(dpr, dpr);
 
-      // Responsive scale based on height
-      state.scale = Math.min(0.72, Math.max(0.48, height / 220));
+      // Scaled so the entire robot (head to toe + antenna) fits inside the divider height with headroom
+      state.scale = Math.min(0.32, Math.max(0.22, height / 270));
 
       if (state.robotX === 0) {
-        state.robotX = isR2L ? width + 100 : -100;
+        state.robotX = isR2L ? width + 60 : -60;
       }
     }
 
@@ -191,14 +190,14 @@ export default function RobotWalkingDivider({
       ctx!.save();
       ctx!.translate(x, y);
 
-      const grad = ctx!.createRadialGradient(0, 0, 8, 0, 0, 75 * sc);
+      const grad = ctx!.createRadialGradient(0, 0, 6, 0, 0, 65 * sc);
       grad.addColorStop(0, 'rgba(0, 0, 0, 0.45)');
       grad.addColorStop(0.6, 'rgba(0, 0, 0, 0.15)');
       grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
 
       ctx!.fillStyle = grad;
       ctx!.beginPath();
-      ctx!.ellipse(0, 0, 68 * sc, 12 * sc, 0, 0, Math.PI * 2);
+      ctx!.ellipse(0, 0, 58 * sc, 10 * sc, 0, 0, Math.PI * 2);
       ctx!.fill();
 
       [footL, footR].forEach((f) => {
@@ -206,7 +205,7 @@ export default function RobotWalkingDivider({
         if (liftFade > 0.05) {
           ctx!.fillStyle = `rgba(0, 0, 0, ${0.4 * liftFade})`;
           ctx!.beginPath();
-          ctx!.ellipse(f.x * sc, 0, 22 * sc * (1 - Math.abs(f.y) * 0.012), 6 * sc, 0, 0, Math.PI * 2);
+          ctx!.ellipse(f.x * sc, 0, 20 * sc * (1 - Math.abs(f.y) * 0.012), 5 * sc, 0, 0, Math.PI * 2);
           ctx!.fill();
         }
       });
@@ -594,12 +593,12 @@ export default function RobotWalkingDivider({
       const dt = Math.min((timestamp - lastTimestamp) / 1000, 0.1);
       lastTimestamp = timestamp;
 
-      const cycleSpeed = 4.0 * speed;
+      const cycleSpeed = 4.2 * speed;
       state.time += dt * cycleSpeed;
 
-      const moveSpeed = 135 * speed;
+      const moveSpeed = 120 * speed;
 
-      const wrapPadding = 120;
+      const wrapPadding = 80;
       if (isR2L) {
         state.robotX -= moveSpeed * dt;
         if (state.robotX < -wrapPadding) {
@@ -612,27 +611,27 @@ export default function RobotWalkingDivider({
         }
       }
 
-      const groundY = height * 0.78;
+      const footLevel = height * 0.88;
 
       ctx!.clearRect(0, 0, width, height);
 
-      // Subtle track glowing guideline
+      // Subtle track guideline
       ctx!.save();
       const trackGrad = ctx!.createLinearGradient(0, 0, width, 0);
       trackGrad.addColorStop(0, 'rgba(255,255,255,0)');
-      trackGrad.addColorStop(0.15, 'rgba(255,255,255,0.06)');
-      trackGrad.addColorStop(0.5, 'rgba(255,255,255,0.12)');
-      trackGrad.addColorStop(0.85, 'rgba(255,255,255,0.06)');
+      trackGrad.addColorStop(0.2, 'rgba(255,255,255,0.04)');
+      trackGrad.addColorStop(0.5, 'rgba(255,255,255,0.08)');
+      trackGrad.addColorStop(0.8, 'rgba(255,255,255,0.04)');
       trackGrad.addColorStop(1, 'rgba(255,255,255,0)');
       ctx!.fillStyle = trackGrad;
-      ctx!.fillRect(0, groundY + 1, width, 1);
+      ctx!.fillRect(0, footLevel + 1, width, 1);
       ctx!.restore();
 
       const walkPhase = state.time;
       const leftPhase = walkPhase;
       const rightPhase = walkPhase + Math.PI;
 
-      const bodyBob = Math.sin(walkPhase * 2) * 5.5;
+      const bodyBob = Math.sin(walkPhase * 2) * 4.5;
       const torsoLean = 0.09 + Math.sin(walkPhase) * 0.035;
       const armSwing = Math.sin(walkPhase) * 0.55;
 
@@ -640,21 +639,22 @@ export default function RobotWalkingDivider({
       const footR = getFootTrajectory(rightPhase, CUTE_BOT.strideWidth, CUTE_BOT.strideLift);
 
       const rootX = state.robotX;
-      const rootY = groundY - CUTE_BOT.pelvisHeight + bodyBob;
 
       // 1. Soft Floor Contact Shadow
-      drawGroundContactShadow(rootX, groundY, footL, footR, state.scale);
+      drawGroundContactShadow(rootX, footLevel, footL, footR, state.scale);
 
-      // 2. Render Bot
+      // 2. Render Bot anchored cleanly at ground contact level
       ctx!.save();
-      ctx!.translate(rootX, rootY);
+      ctx!.translate(rootX, footLevel + bodyBob * state.scale);
 
-      // If moving left-to-right, horizontally mirror the bot so it faces & walks towards the right!
       if (!isR2L) {
         ctx!.scale(-state.scale, state.scale);
       } else {
         ctx!.scale(state.scale, state.scale);
       }
+
+      // Offset upward by pelvis height so the feet contact exactly at footLevel (y = 0)
+      ctx!.translate(0, -CUTE_BOT.pelvisHeight);
 
       // Far Layer
       drawCuteArm(12, -70, -armSwing, true);
@@ -684,13 +684,13 @@ export default function RobotWalkingDivider({
   return (
     <div
       ref={containerRef}
-      className={`relative w-full h-[120px] sm:h-[145px] md:h-[160px] overflow-hidden select-none pointer-events-none ${className}`}
+      className={`relative w-full h-[64px] sm:h-[76px] md:h-[84px] overflow-hidden select-none pointer-events-none ${className}`}
       aria-hidden="true"
     >
       <canvas ref={canvasRef} className="absolute inset-0 w-full h-full block" />
 
       {label && (
-        <div className="absolute top-2 left-6 z-10 opacity-30 text-[9px] font-mono tracking-widest uppercase text-white/50 pointer-events-none">
+        <div className="absolute top-1 left-6 z-10 opacity-30 text-[8px] font-mono tracking-widest uppercase text-white/50 pointer-events-none">
           {label}
         </div>
       )}
