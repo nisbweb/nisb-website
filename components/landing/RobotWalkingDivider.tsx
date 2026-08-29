@@ -17,17 +17,17 @@ export default function RobotWalkingDivider({
 }: RobotWalkingDividerProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
     const el = containerRef.current;
-    if (!el) return;
+    if (!el || typeof IntersectionObserver === 'undefined') return;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
         setIsVisible(entry.isIntersecting);
       },
-      { rootMargin: '120px' }
+      { rootMargin: '200px' }
     );
 
     observer.observe(el);
@@ -37,7 +37,8 @@ export default function RobotWalkingDivider({
   useEffect(() => {
     if (!isVisible) return;
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    const container = containerRef.current;
+    if (!canvas || !container) return;
 
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
@@ -82,15 +83,15 @@ export default function RobotWalkingDivider({
       isWaving: false,
       waveTimer: 0,
       hasWaved: false,
-      turnProgress: 0, // 0 = profile side walking, 1 = front-facing waving
+      turnProgress: 0,
     };
 
     function resize() {
       if (!canvas || !containerRef.current) return;
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
       const rect = containerRef.current.getBoundingClientRect();
-      width = rect.width || window.innerWidth;
-      height = rect.height || 100;
+      width = rect.width > 0 ? rect.width : (typeof window !== 'undefined' ? window.innerWidth : 800);
+      height = rect.height > 0 ? rect.height : 100;
 
       canvas.width = width * dpr;
       canvas.height = height * dpr;
@@ -108,7 +109,22 @@ export default function RobotWalkingDivider({
     }
 
     resize();
+
+    // Attach ResizeObserver to handle parent container becoming visible / resizing
+    let resizeObserver: ResizeObserver | null = null;
+    if (typeof ResizeObserver !== 'undefined' && container) {
+      resizeObserver = new ResizeObserver(() => {
+        resize();
+      });
+      resizeObserver.observe(container);
+    }
+
     window.addEventListener('resize', resize);
+    window.addEventListener('nisb:landingReady', resize);
+
+    // Initial delayed resize to guarantee non-zero dimensions after cross-fade
+    const timer1 = setTimeout(resize, 100);
+    const timer2 = setTimeout(resize, 1200);
 
     function solveIK(ox: number, oy: number, tx: number, ty: number, l1: number, l2: number, bendDir = 1) {
       const dx = tx - ox;
@@ -204,7 +220,6 @@ export default function RobotWalkingDivider({
       ctx!.fill();
 
       if (isFront) {
-        // Two standing foot shadows
         [-18, 18].forEach((fx) => {
           ctx!.fillStyle = 'rgba(0, 0, 0, 0.4)';
           ctx!.beginPath();
@@ -226,7 +241,6 @@ export default function RobotWalkingDivider({
       ctx!.restore();
     }
 
-    // ── SIDE PROFILE DRAW ROUTINES (WALKING) ──
     function drawCuteLeg(hipX: number, hipY: number, footRel: { x: number; y: number; pitch: number }, isFar: boolean) {
       const dir = -1;
       const targetX = hipX + footRel.x * dir;
@@ -606,25 +620,21 @@ export default function RobotWalkingDivider({
 
       // 1. Standing Legs (Symmetrical Front)
       [-18, 18].forEach((lx) => {
-        // Hip Socket
         ctx!.fillStyle = '#334155';
         ctx!.beginPath();
         ctx!.arc(lx, 0, 11, 0, Math.PI * 2);
         ctx!.fill();
 
-        // Thigh
         ctx!.fillStyle = createGlossyWhiteGrad(lx, 35, 16);
         ctx!.beginPath();
         ctx!.roundRect(lx - 9, 4, 18, 54, 9);
         ctx!.fill();
 
-        // Knee Disc
         ctx!.fillStyle = createChromeGrad(lx - 8, 56, lx + 8, 72);
         ctx!.beginPath();
         ctx!.arc(lx, 64, 8.5, 0, Math.PI * 2);
         ctx!.fill();
 
-        // Shin
         ctx!.fillStyle = createGlossyWhiteGrad(lx, 98, 18);
         ctx!.beginPath();
         ctx!.moveTo(lx - 8, 70);
@@ -634,13 +644,11 @@ export default function RobotWalkingDivider({
         ctx!.closePath();
         ctx!.fill();
 
-        // Chunky Boot (Front Facing)
         ctx!.fillStyle = createGlossyWhiteGrad(lx, 138, 22);
         ctx!.beginPath();
         ctx!.roundRect(lx - 14, 130, 28, 18, [8, 8, 6, 6]);
         ctx!.fill();
 
-        // Sole
         ctx!.fillStyle = '#1e293b';
         ctx!.beginPath();
         ctx!.roundRect(lx - 15, 144, 30, 4, 2);
@@ -653,24 +661,20 @@ export default function RobotWalkingDivider({
       ctx!.ellipse(0, -8, 24, 16, 0, 0, Math.PI * 2);
       ctx!.fill();
 
-      // Waist Joint
       ctx!.fillStyle = '#334155';
       ctx!.fillRect(-14, -30, 28, 12);
 
-      // Chest Torso (Symmetrical Egg)
       const chestY = -54;
       ctx!.fillStyle = createGlossyWhiteGrad(0, chestY, 36);
       ctx!.beginPath();
       ctx!.ellipse(0, chestY, 30, 26, 0, 0, Math.PI * 2);
       ctx!.fill();
 
-      // Chest Specular Sheen
       ctx!.fillStyle = 'rgba(255, 255, 255, 0.7)';
       ctx!.beginPath();
       ctx!.ellipse(-10, chestY - 10, 10, 5, -0.3, 0, Math.PI * 2);
       ctx!.fill();
 
-      // Glowing Center Core Reactor
       ctx!.fillStyle = '#334155';
       ctx!.beginPath();
       ctx!.arc(0, chestY + 3, 11, 0, Math.PI * 2);
@@ -703,7 +707,7 @@ export default function RobotWalkingDivider({
       ctx!.roundRect(-8, neckY - 7, 16, 10, 3);
       ctx!.fill();
 
-      // 4. Left Arm (Resting on side)
+      // 4. Left Arm
       const lShX = -32;
       const lShY = chestY - 12;
       ctx!.fillStyle = createGlossyWhiteGrad(lShX, lShY, 13);
@@ -721,7 +725,6 @@ export default function RobotWalkingDivider({
       ctx!.arc(lShX, lShY + 46, 6.5, 0, Math.PI * 2);
       ctx!.fill();
 
-      // Left hand
       ctx!.fillStyle = '#e2e8f0';
       ctx!.beginPath();
       ctx!.ellipse(lShX, lShY + 56, 5.5, 6, 0, 0, Math.PI * 2);
@@ -735,7 +738,6 @@ export default function RobotWalkingDivider({
       ctx!.arc(rShX, rShY, 11, 0, Math.PI * 2);
       ctx!.fill();
 
-      // Upper arm raised up diagonally
       const rElbowX = rShX + 22;
       const rElbowY = rShY - 28;
 
@@ -749,16 +751,13 @@ export default function RobotWalkingDivider({
       ctx!.fill();
       ctx!.restore();
 
-      // Elbow Chrome Joint
       ctx!.fillStyle = createChromeGrad(rElbowX - 7, rElbowY - 7, rElbowX + 7, rElbowY + 7);
       ctx!.beginPath();
       ctx!.arc(rElbowX, rElbowY, 7.5, 0, Math.PI * 2);
       ctx!.fill();
 
-      // Forearm & Waving Hand
       ctx!.save();
       ctx!.translate(rElbowX, rElbowY);
-      // Oscillate forearm left and right
       ctx!.rotate(-Math.PI / 2 + waveAngle);
 
       ctx!.fillStyle = createGlossyWhiteGrad(16, 0, 14);
@@ -766,13 +765,11 @@ export default function RobotWalkingDivider({
       ctx!.roundRect(2, -6, 28, 12, 6);
       ctx!.fill();
 
-      // Wrist Chrome ring
       ctx!.fillStyle = createChromeGrad(28, -5, 34, 5);
       ctx!.beginPath();
       ctx!.arc(30, 0, 5, 0, Math.PI * 2);
       ctx!.fill();
 
-      // Cute Open Waving Hand & Fingers
       ctx!.fillStyle = '#ffffff';
       ctx!.beginPath();
       ctx!.ellipse(36, 0, 6, 6.5, 0, 0, Math.PI * 2);
@@ -781,14 +778,12 @@ export default function RobotWalkingDivider({
       ctx!.strokeStyle = '#cbd5e1';
       ctx!.lineWidth = 2.5;
       ctx!.lineCap = 'round';
-      // Splayed fingers
       [-4, -1.5, 1.5, 4].forEach((fy) => {
         ctx!.beginPath();
         ctx!.moveTo(38, fy);
         ctx!.lineTo(44, fy * 1.3);
         ctx!.stroke();
       });
-      // Thumb
       ctx!.beginPath();
       ctx!.moveTo(35, 5);
       ctx!.lineTo(39, 9);
@@ -796,7 +791,7 @@ export default function RobotWalkingDivider({
 
       ctx!.restore();
 
-      // 6. Cute Head (Front Facing)
+      // 6. Head
       const headY = neckY - 36;
       ctx!.save();
       ctx!.translate(0, headY);
@@ -817,19 +812,19 @@ export default function RobotWalkingDivider({
       ctx!.fill();
       ctx!.shadowBlur = 0;
 
-      // Outer Dome Helmet (Front)
+      // Dome Helmet
       ctx!.fillStyle = createGlossyWhiteGrad(0, -6, CUTE_BOT.headRadius + 8);
       ctx!.beginPath();
       ctx!.ellipse(0, 0, CUTE_BOT.headRadius + 4, CUTE_BOT.headRadius - 3, 0, 0, Math.PI * 2);
       ctx!.fill();
 
-      // Top Specular Crescent
+      // Specular Crescent
       ctx!.fillStyle = 'rgba(255, 255, 255, 0.75)';
       ctx!.beginPath();
       ctx!.ellipse(-6, -20, 20, 8, -0.2, 0, Math.PI * 2);
       ctx!.fill();
 
-      // Ears (Headphone pods on left & right)
+      // Ears
       [-1, 1].forEach((dir) => {
         const ex = dir * (CUTE_BOT.headRadius + 4);
         ctx!.fillStyle = createGlossyWhiteGrad(ex, 0, 16);
@@ -846,7 +841,7 @@ export default function RobotWalkingDivider({
         ctx!.shadowBlur = 0;
       });
 
-      // Visor Screen (Front Centered)
+      // Visor Screen
       ctx!.fillStyle = '#0f172a';
       ctx!.beginPath();
       ctx!.roundRect(-30, -14, 60, 28, 13);
@@ -866,7 +861,7 @@ export default function RobotWalkingDivider({
       ctx!.closePath();
       ctx!.fill();
 
-      // Happy Smiling / Winking Glowing Eyes! ("^ ^" happy curve or big sparkle eyes)
+      // Happy Glowing Eyes
       const eyeBounce = Math.sin(state.time * 6) * 0.5;
 
       [-14, 14].forEach((eyeX) => {
@@ -874,7 +869,6 @@ export default function RobotWalkingDivider({
         ctx!.shadowBlur = 14;
         ctx!.fillStyle = glowColor;
 
-        // Cute joyful wide eyes
         ctx!.beginPath();
         ctx!.ellipse(eyeX, eyeBounce, 8.5, 10.5, 0, 0, Math.PI * 2);
         ctx!.fill();
@@ -888,7 +882,6 @@ export default function RobotWalkingDivider({
         ctx!.ellipse(eyeX, eyeBounce, 7.5, 9.5, 0, 0, Math.PI * 2);
         ctx!.fill();
 
-        // Big Anime Sparkle Glints
         ctx!.shadowBlur = 0;
         ctx!.fillStyle = '#ffffff';
         ctx!.beginPath();
@@ -900,7 +893,7 @@ export default function RobotWalkingDivider({
         ctx!.fill();
       });
 
-      ctx!.restore(); // End head
+      ctx!.restore();
 
       // ── 7. HOLOGRAPHIC "Hii! 👋" SPEECH BUBBLE ──
       if (speechPop > 0.05) {
@@ -914,7 +907,6 @@ export default function RobotWalkingDivider({
         const bX = -bubbleW / 2;
         const bY = -bubbleH / 2;
 
-        // Bubble Shadow & Background
         ctx!.shadowColor = glowColor;
         ctx!.shadowBlur = 16 * speechPop;
         ctx!.fillStyle = 'rgba(4, 9, 20, 0.94)';
@@ -926,7 +918,6 @@ export default function RobotWalkingDivider({
         ctx!.fill();
         ctx!.stroke();
 
-        // Bottom Arrow pointer towards bot's head
         ctx!.beginPath();
         ctx!.moveTo(-6, bY + bubbleH);
         ctx!.lineTo(-12, bY + bubbleH + 8);
@@ -937,7 +928,6 @@ export default function RobotWalkingDivider({
 
         ctx!.shadowBlur = 0;
 
-        // "Hii! 👋" Text
         ctx!.font = '900 13px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, monospace';
         ctx!.textAlign = 'center';
         ctx!.textBaseline = 'middle';
@@ -957,7 +947,6 @@ export default function RobotWalkingDivider({
       const moveSpeed = 120 * speed;
       const wrapPadding = 60;
 
-      // Check if robot has reached center to trigger waving sequence
       const centerX = width * 0.5;
       if (!state.hasWaved && Math.abs(state.robotX - centerX) < 20) {
         state.isWaving = true;
@@ -969,21 +958,17 @@ export default function RobotWalkingDivider({
 
       if (state.isWaving) {
         state.waveTimer += dt;
-        state.time += dt * 3.5; // Continue eye bounce / antenna pulse
+        state.time += dt * 3.5;
 
-        // Smoothly transition into front view (0 -> 1) over 0.25s
         if (state.waveTimer < 0.25) {
           state.turnProgress = Math.min(1, state.waveTimer / 0.25);
         } else if (state.waveTimer < 2.0) {
           state.turnProgress = 1;
-          // Pop speech bubble in and hold
           speechPop = Math.min(1, (state.waveTimer - 0.25) * 5);
         } else if (state.waveTimer < 2.3) {
-          // Fade out speech and turn back to walking profile (1 -> 0)
           state.turnProgress = Math.max(0, 1 - (state.waveTimer - 2.0) / 0.3);
           speechPop = Math.max(0, 1 - (state.waveTimer - 2.0) * 5);
         } else {
-          // Wave complete! Resume walking
           state.isWaving = false;
           state.turnProgress = 0;
           speechPop = 0;
@@ -996,13 +981,13 @@ export default function RobotWalkingDivider({
           state.robotX -= moveSpeed * dt;
           if (state.robotX < -wrapPadding) {
             state.robotX = width + wrapPadding;
-            state.hasWaved = false; // Reset so bot waves on next crossing
+            state.hasWaved = false;
           }
         } else {
           state.robotX += moveSpeed * dt;
           if (state.robotX > width + wrapPadding) {
             state.robotX = -wrapPadding;
-            state.hasWaved = false; // Reset for next pass
+            state.hasWaved = false;
           }
         }
       }
@@ -1044,12 +1029,10 @@ export default function RobotWalkingDivider({
       ctx!.translate(rootX, footLevel + bodyBob * state.scale);
 
       if (state.turnProgress > 0.5) {
-        // 🌟 FRONT FACING WAVING POSE ("Hii! 👋")
         ctx!.scale(state.scale, state.scale);
         ctx!.translate(0, -CUTE_BOT.pelvisHeight);
         drawFrontFacingWavingBot(themeColors.glow, themeColors.dark, state.waveTimer, speechPop);
       } else {
-        // 🚶 SIDE PROFILE WALKING POSE
         if (!isR2L) {
           ctx!.scale(-state.scale, state.scale);
         } else {
@@ -1058,14 +1041,9 @@ export default function RobotWalkingDivider({
 
         ctx!.translate(0, -CUTE_BOT.pelvisHeight);
 
-        // Far Layer
         drawCuteArm(12, -70, -armSwing, true);
         drawCuteLeg(4, 0, footR, true);
-
-        // Mid Layer
         drawCuteTorsoAndHead(0, 0, torsoLean, themeColors.glow, themeColors.dark);
-
-        // Near Layer
         drawCuteLeg(0, 0, footL, false);
         drawCuteArm(-12, -70, armSwing, false);
       }
@@ -1079,7 +1057,11 @@ export default function RobotWalkingDivider({
 
     return () => {
       cancelAnimationFrame(animId);
+      if (resizeObserver) resizeObserver.disconnect();
+      clearTimeout(timer1);
+      clearTimeout(timer2);
       window.removeEventListener('resize', resize);
+      window.removeEventListener('nisb:landingReady', resize);
       window.removeEventListener('nisb:themeChange', handleThemeChange);
     };
   }, [isVisible, direction, speed]);
@@ -1087,7 +1069,7 @@ export default function RobotWalkingDivider({
   return (
     <div
       ref={containerRef}
-      className={`relative w-full h-[80px] sm:h-[100px] md:h-[115px] overflow-hidden select-none pointer-events-none ${className}`}
+      className={`relative w-full z-10 overflow-hidden select-none pointer-events-none h-[80px] sm:h-[100px] md:h-[115px] ${className}`}
       aria-hidden="true"
     >
       <canvas ref={canvasRef} className="absolute inset-0 w-full h-full block" />
