@@ -78,7 +78,7 @@ export default function RobotWalkingDivider({
     const state = {
       time: 0,
       robotX: 0,
-      scale: 0.16,
+      scale: 0.22,
     };
 
     function resize() {
@@ -86,7 +86,7 @@ export default function RobotWalkingDivider({
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
       const rect = containerRef.current.getBoundingClientRect();
       width = rect.width || window.innerWidth;
-      height = rect.height || 45;
+      height = rect.height || 100;
 
       canvas.width = width * dpr;
       canvas.height = height * dpr;
@@ -96,11 +96,11 @@ export default function RobotWalkingDivider({
       ctx!.setTransform(1, 0, 0, 1, 0, 0);
       ctx!.scale(dpr, dpr);
 
-      // Scaled so the cute robot acts as an ultra-compact, sleek mascot
-      state.scale = Math.min(0.18, Math.max(0.12, height / 270));
+      // Scaled so the robot is ~52-58px height, sitting comfortably with plenty of breathing room
+      state.scale = Math.min(0.24, Math.max(0.18, height / 440));
 
       if (state.robotX === 0) {
-        state.robotX = isR2L ? width + 45 : -45;
+        state.robotX = isR2L ? width + 60 : -60;
       }
     }
 
@@ -598,7 +598,7 @@ export default function RobotWalkingDivider({
 
       const moveSpeed = 120 * speed;
 
-      const wrapPadding = 45;
+      const wrapPadding = 60;
       if (isR2L) {
         state.robotX -= moveSpeed * dt;
         if (state.robotX < -wrapPadding) {
@@ -611,7 +611,7 @@ export default function RobotWalkingDivider({
         }
       }
 
-      const footLevel = height * 0.88;
+      const footLevel = height * 0.78;
 
       ctx!.clearRect(0, 0, width, height);
 
@@ -619,9 +619,9 @@ export default function RobotWalkingDivider({
       ctx!.save();
       const trackGrad = ctx!.createLinearGradient(0, 0, width, 0);
       trackGrad.addColorStop(0, 'rgba(255,255,255,0)');
-      trackGrad.addColorStop(0.2, 'rgba(255,255,255,0.03)');
-      trackGrad.addColorStop(0.5, 'rgba(255,255,255,0.06)');
-      trackGrad.addColorStop(0.8, 'rgba(255,255,255,0.03)');
+      trackGrad.addColorStop(0.2, 'rgba(255,255,255,0.04)');
+      trackGrad.addColorStop(0.5, 'rgba(255,255,255,0.08)');
+      trackGrad.addColorStop(0.8, 'rgba(255,255,255,0.04)');
       trackGrad.addColorStop(1, 'rgba(255,255,255,0)');
       ctx!.fillStyle = trackGrad;
       ctx!.fillRect(0, footLevel + 1, width, 1);
@@ -631,7 +631,7 @@ export default function RobotWalkingDivider({
       const leftPhase = walkPhase;
       const rightPhase = walkPhase + Math.PI;
 
-      const bodyBob = Math.sin(walkPhase * 2) * 3.5;
+      const bodyBob = Math.sin(walkPhase * 2) * 4.0;
       const torsoLean = 0.09 + Math.sin(walkPhase) * 0.035;
       const armSwing = Math.sin(walkPhase) * 0.55;
 
@@ -684,13 +684,13 @@ export default function RobotWalkingDivider({
   return (
     <div
       ref={containerRef}
-      className={`relative w-full h-[38px] sm:h-[44px] md:h-[50px] overflow-hidden select-none pointer-events-none ${className}`}
+      className={`relative w-full h-[80px] sm:h-[100px] md:h-[115px] overflow-hidden select-none pointer-events-none ${className}`}
       aria-hidden="true"
     >
       <canvas ref={canvasRef} className="absolute inset-0 w-full h-full block" />
 
       {label && (
-        <div className="absolute top-1 left-6 z-10 opacity-30 text-[8px] font-mono tracking-widest uppercase text-white/50 pointer-events-none">
+        <div className="absolute top-2 left-6 z-10 opacity-30 text-[8px] font-mono tracking-widest uppercase text-white/50 pointer-events-none">
           {label}
         </div>
       )}
