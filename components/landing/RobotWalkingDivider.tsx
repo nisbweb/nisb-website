@@ -79,6 +79,10 @@ export default function RobotWalkingDivider({
       time: 0,
       robotX: 0,
       scale: 0.22,
+      isWaving: false,
+      waveTimer: 0,
+      hasWaved: false,
+      turnProgress: 0, // 0 = profile side walking, 1 = front-facing waving
     };
 
     function resize() {
@@ -96,7 +100,6 @@ export default function RobotWalkingDivider({
       ctx!.setTransform(1, 0, 0, 1, 0, 0);
       ctx!.scale(dpr, dpr);
 
-      // Scaled so the robot is ~52-58px height, sitting comfortably with plenty of breathing room
       state.scale = Math.min(0.24, Math.max(0.18, height / 440));
 
       if (state.robotX === 0) {
@@ -186,7 +189,7 @@ export default function RobotWalkingDivider({
       return grad;
     }
 
-    function drawGroundContactShadow(x: number, y: number, footL: { x: number; y: number }, footR: { x: number; y: number }, sc: number) {
+    function drawGroundContactShadow(x: number, y: number, footL: { x: number; y: number }, footR: { x: number; y: number }, sc: number, isFront = false) {
       ctx!.save();
       ctx!.translate(x, y);
 
@@ -197,22 +200,33 @@ export default function RobotWalkingDivider({
 
       ctx!.fillStyle = grad;
       ctx!.beginPath();
-      ctx!.ellipse(0, 0, 58 * sc, 10 * sc, 0, 0, Math.PI * 2);
+      ctx!.ellipse(0, 0, (isFront ? 64 : 58) * sc, 10 * sc, 0, 0, Math.PI * 2);
       ctx!.fill();
 
-      [footL, footR].forEach((f) => {
-        const liftFade = Math.max(0, 1 - Math.abs(f.y) / 30);
-        if (liftFade > 0.05) {
-          ctx!.fillStyle = `rgba(0, 0, 0, ${0.4 * liftFade})`;
+      if (isFront) {
+        // Two standing foot shadows
+        [-18, 18].forEach((fx) => {
+          ctx!.fillStyle = 'rgba(0, 0, 0, 0.4)';
           ctx!.beginPath();
-          ctx!.ellipse(f.x * sc, 0, 20 * sc * (1 - Math.abs(f.y) * 0.012), 5 * sc, 0, 0, Math.PI * 2);
+          ctx!.ellipse(fx * sc, 0, 14 * sc, 5 * sc, 0, 0, Math.PI * 2);
           ctx!.fill();
-        }
-      });
+        });
+      } else {
+        [footL, footR].forEach((f) => {
+          const liftFade = Math.max(0, 1 - Math.abs(f.y) / 30);
+          if (liftFade > 0.05) {
+            ctx!.fillStyle = `rgba(0, 0, 0, ${0.4 * liftFade})`;
+            ctx!.beginPath();
+            ctx!.ellipse(f.x * sc, 0, 20 * sc * (1 - Math.abs(f.y) * 0.012), 5 * sc, 0, 0, Math.PI * 2);
+            ctx!.fill();
+          }
+        });
+      }
 
       ctx!.restore();
     }
 
+    // ── SIDE PROFILE DRAW ROUTINES (WALKING) ──
     function drawCuteLeg(hipX: number, hipY: number, footRel: { x: number; y: number; pitch: number }, isFar: boolean) {
       const dir = -1;
       const targetX = hipX + footRel.x * dir;
@@ -350,7 +364,6 @@ export default function RobotWalkingDivider({
       const shoulderAngle = Math.PI / 2 + armSwingAngle * 0.7 - 0.2;
       const elbowX = shoulderX + Math.cos(shoulderAngle) * upperLength;
       const elbowY = shoulderY + Math.sin(shoulderAngle) * upperLength;
-
       const elbowAngle = shoulderAngle + 0.5 + Math.sin(armSwingAngle) * 0.25;
 
       ctx!.save();
@@ -527,7 +540,6 @@ export default function RobotWalkingDivider({
       ctx!.closePath();
       ctx!.fill();
 
-      // Expressive glowing Eyes
       const eyeBlink = Math.abs(Math.sin(state.time * 0.5)) > 0.98 ? 0.15 : 1.0;
 
       function drawCuteOcularEye(ex: number, ey: number, rX: number, rY: number) {
@@ -588,26 +600,410 @@ export default function RobotWalkingDivider({
       ctx!.restore();
     }
 
+    // ── 🌟 FRONT-FACING WAVING BOT ROUTINE ("Hii! 👋") ──
+    function drawFrontFacingWavingBot(glowColor: string, glowDark: string, waveProgress: number, speechPop: number) {
+      const waveAngle = Math.sin(state.time * 11) * 0.42;
+
+      // 1. Standing Legs (Symmetrical Front)
+      [-18, 18].forEach((lx) => {
+        // Hip Socket
+        ctx!.fillStyle = '#334155';
+        ctx!.beginPath();
+        ctx!.arc(lx, 0, 11, 0, Math.PI * 2);
+        ctx!.fill();
+
+        // Thigh
+        ctx!.fillStyle = createGlossyWhiteGrad(lx, 35, 16);
+        ctx!.beginPath();
+        ctx!.roundRect(lx - 9, 4, 18, 54, 9);
+        ctx!.fill();
+
+        // Knee Disc
+        ctx!.fillStyle = createChromeGrad(lx - 8, 56, lx + 8, 72);
+        ctx!.beginPath();
+        ctx!.arc(lx, 64, 8.5, 0, Math.PI * 2);
+        ctx!.fill();
+
+        // Shin
+        ctx!.fillStyle = createGlossyWhiteGrad(lx, 98, 18);
+        ctx!.beginPath();
+        ctx!.moveTo(lx - 8, 70);
+        ctx!.lineTo(lx + 8, 70);
+        ctx!.lineTo(lx + 11, 130);
+        ctx!.lineTo(lx - 11, 130);
+        ctx!.closePath();
+        ctx!.fill();
+
+        // Chunky Boot (Front Facing)
+        ctx!.fillStyle = createGlossyWhiteGrad(lx, 138, 22);
+        ctx!.beginPath();
+        ctx!.roundRect(lx - 14, 130, 28, 18, [8, 8, 6, 6]);
+        ctx!.fill();
+
+        // Sole
+        ctx!.fillStyle = '#1e293b';
+        ctx!.beginPath();
+        ctx!.roundRect(lx - 15, 144, 30, 4, 2);
+        ctx!.fill();
+      });
+
+      // 2. Pelvis & Torso (Front Symmetrical)
+      ctx!.fillStyle = createGlossyWhiteGrad(0, -8, 24);
+      ctx!.beginPath();
+      ctx!.ellipse(0, -8, 24, 16, 0, 0, Math.PI * 2);
+      ctx!.fill();
+
+      // Waist Joint
+      ctx!.fillStyle = '#334155';
+      ctx!.fillRect(-14, -30, 28, 12);
+
+      // Chest Torso (Symmetrical Egg)
+      const chestY = -54;
+      ctx!.fillStyle = createGlossyWhiteGrad(0, chestY, 36);
+      ctx!.beginPath();
+      ctx!.ellipse(0, chestY, 30, 26, 0, 0, Math.PI * 2);
+      ctx!.fill();
+
+      // Chest Specular Sheen
+      ctx!.fillStyle = 'rgba(255, 255, 255, 0.7)';
+      ctx!.beginPath();
+      ctx!.ellipse(-10, chestY - 10, 10, 5, -0.3, 0, Math.PI * 2);
+      ctx!.fill();
+
+      // Glowing Center Core Reactor
+      ctx!.fillStyle = '#334155';
+      ctx!.beginPath();
+      ctx!.arc(0, chestY + 3, 11, 0, Math.PI * 2);
+      ctx!.fill();
+
+      ctx!.fillStyle = createChromeGrad(-10, chestY - 7, 10, chestY + 13);
+      ctx!.beginPath();
+      ctx!.arc(0, chestY + 3, 9, 0, Math.PI * 2);
+      ctx!.fill();
+
+      const rPulse = 0.95 + Math.sin(state.time * 5) * 0.12;
+      ctx!.save();
+      ctx!.shadowColor = glowColor;
+      ctx!.shadowBlur = 14 * rPulse;
+      ctx!.fillStyle = glowColor;
+      ctx!.beginPath();
+      ctx!.arc(0, chestY + 3, 6 * rPulse, 0, Math.PI * 2);
+      ctx!.fill();
+      ctx!.restore();
+
+      ctx!.fillStyle = '#ffffff';
+      ctx!.beginPath();
+      ctx!.arc(-2, chestY + 1, 2, 0, Math.PI * 2);
+      ctx!.fill();
+
+      // 3. Neck
+      const neckY = chestY - 26;
+      ctx!.fillStyle = createChromeGrad(-8, neckY - 5, 8, neckY + 5);
+      ctx!.beginPath();
+      ctx!.roundRect(-8, neckY - 7, 16, 10, 3);
+      ctx!.fill();
+
+      // 4. Left Arm (Resting on side)
+      const lShX = -32;
+      const lShY = chestY - 12;
+      ctx!.fillStyle = createGlossyWhiteGrad(lShX, lShY, 13);
+      ctx!.beginPath();
+      ctx!.arc(lShX, lShY, 11, 0, Math.PI * 2);
+      ctx!.fill();
+
+      ctx!.fillStyle = createGlossyWhiteGrad(lShX - 4, lShY + 25, 14);
+      ctx!.beginPath();
+      ctx!.roundRect(lShX - 7, lShY + 4, 14, 40, 7);
+      ctx!.fill();
+
+      ctx!.fillStyle = createChromeGrad(lShX - 6, lShY + 40, lShX + 6, lShY + 52);
+      ctx!.beginPath();
+      ctx!.arc(lShX, lShY + 46, 6.5, 0, Math.PI * 2);
+      ctx!.fill();
+
+      // Left hand
+      ctx!.fillStyle = '#e2e8f0';
+      ctx!.beginPath();
+      ctx!.ellipse(lShX, lShY + 56, 5.5, 6, 0, 0, Math.PI * 2);
+      ctx!.fill();
+
+      // 5. Right Arm (WAVING UP IN AIR! 👋)
+      const rShX = 32;
+      const rShY = chestY - 12;
+      ctx!.fillStyle = createGlossyWhiteGrad(rShX, rShY, 13);
+      ctx!.beginPath();
+      ctx!.arc(rShX, rShY, 11, 0, Math.PI * 2);
+      ctx!.fill();
+
+      // Upper arm raised up diagonally
+      const rElbowX = rShX + 22;
+      const rElbowY = rShY - 28;
+
+      ctx!.save();
+      ctx!.translate(rShX, rShY);
+      const upperAngle = Math.atan2(rElbowY - rShY, rElbowX - rShX);
+      ctx!.rotate(upperAngle);
+      ctx!.fillStyle = createGlossyWhiteGrad(18, 0, 14);
+      ctx!.beginPath();
+      ctx!.roundRect(2, -6.5, 32, 13, 6);
+      ctx!.fill();
+      ctx!.restore();
+
+      // Elbow Chrome Joint
+      ctx!.fillStyle = createChromeGrad(rElbowX - 7, rElbowY - 7, rElbowX + 7, rElbowY + 7);
+      ctx!.beginPath();
+      ctx!.arc(rElbowX, rElbowY, 7.5, 0, Math.PI * 2);
+      ctx!.fill();
+
+      // Forearm & Waving Hand
+      ctx!.save();
+      ctx!.translate(rElbowX, rElbowY);
+      // Oscillate forearm left and right
+      ctx!.rotate(-Math.PI / 2 + waveAngle);
+
+      ctx!.fillStyle = createGlossyWhiteGrad(16, 0, 14);
+      ctx!.beginPath();
+      ctx!.roundRect(2, -6, 28, 12, 6);
+      ctx!.fill();
+
+      // Wrist Chrome ring
+      ctx!.fillStyle = createChromeGrad(28, -5, 34, 5);
+      ctx!.beginPath();
+      ctx!.arc(30, 0, 5, 0, Math.PI * 2);
+      ctx!.fill();
+
+      // Cute Open Waving Hand & Fingers
+      ctx!.fillStyle = '#ffffff';
+      ctx!.beginPath();
+      ctx!.ellipse(36, 0, 6, 6.5, 0, 0, Math.PI * 2);
+      ctx!.fill();
+
+      ctx!.strokeStyle = '#cbd5e1';
+      ctx!.lineWidth = 2.5;
+      ctx!.lineCap = 'round';
+      // Splayed fingers
+      [-4, -1.5, 1.5, 4].forEach((fy) => {
+        ctx!.beginPath();
+        ctx!.moveTo(38, fy);
+        ctx!.lineTo(44, fy * 1.3);
+        ctx!.stroke();
+      });
+      // Thumb
+      ctx!.beginPath();
+      ctx!.moveTo(35, 5);
+      ctx!.lineTo(39, 9);
+      ctx!.stroke();
+
+      ctx!.restore();
+
+      // 6. Cute Head (Front Facing)
+      const headY = neckY - 36;
+      ctx!.save();
+      ctx!.translate(0, headY);
+
+      // Antenna
+      ctx!.strokeStyle = '#94a3b8';
+      ctx!.lineWidth = 2.5;
+      ctx!.beginPath();
+      ctx!.moveTo(0, -CUTE_BOT.headRadius + 2);
+      ctx!.lineTo(0, -CUTE_BOT.headRadius - 20);
+      ctx!.stroke();
+
+      ctx!.fillStyle = glowColor;
+      ctx!.shadowColor = glowColor;
+      ctx!.shadowBlur = 10;
+      ctx!.beginPath();
+      ctx!.arc(0, -CUTE_BOT.headRadius - 21, 5, 0, Math.PI * 2);
+      ctx!.fill();
+      ctx!.shadowBlur = 0;
+
+      // Outer Dome Helmet (Front)
+      ctx!.fillStyle = createGlossyWhiteGrad(0, -6, CUTE_BOT.headRadius + 8);
+      ctx!.beginPath();
+      ctx!.ellipse(0, 0, CUTE_BOT.headRadius + 4, CUTE_BOT.headRadius - 3, 0, 0, Math.PI * 2);
+      ctx!.fill();
+
+      // Top Specular Crescent
+      ctx!.fillStyle = 'rgba(255, 255, 255, 0.75)';
+      ctx!.beginPath();
+      ctx!.ellipse(-6, -20, 20, 8, -0.2, 0, Math.PI * 2);
+      ctx!.fill();
+
+      // Ears (Headphone pods on left & right)
+      [-1, 1].forEach((dir) => {
+        const ex = dir * (CUTE_BOT.headRadius + 4);
+        ctx!.fillStyle = createGlossyWhiteGrad(ex, 0, 16);
+        ctx!.beginPath();
+        ctx!.ellipse(ex, 0, 6, 14, 0, 0, Math.PI * 2);
+        ctx!.fill();
+
+        ctx!.fillStyle = glowColor;
+        ctx!.shadowColor = glowColor;
+        ctx!.shadowBlur = 6;
+        ctx!.beginPath();
+        ctx!.ellipse(ex, 0, 2.5, 8, 0, 0, Math.PI * 2);
+        ctx!.fill();
+        ctx!.shadowBlur = 0;
+      });
+
+      // Visor Screen (Front Centered)
+      ctx!.fillStyle = '#0f172a';
+      ctx!.beginPath();
+      ctx!.roundRect(-30, -14, 60, 28, 13);
+      ctx!.fill();
+
+      ctx!.strokeStyle = '#475569';
+      ctx!.lineWidth = 1.8;
+      ctx!.stroke();
+
+      // Visor Glare
+      ctx!.fillStyle = 'rgba(255, 255, 255, 0.12)';
+      ctx!.beginPath();
+      ctx!.moveTo(-22, -10);
+      ctx!.lineTo(6, -10);
+      ctx!.lineTo(-8, 8);
+      ctx!.lineTo(-26, 8);
+      ctx!.closePath();
+      ctx!.fill();
+
+      // Happy Smiling / Winking Glowing Eyes! ("^ ^" happy curve or big sparkle eyes)
+      const eyeBounce = Math.sin(state.time * 6) * 0.5;
+
+      [-14, 14].forEach((eyeX) => {
+        ctx!.shadowColor = glowColor;
+        ctx!.shadowBlur = 14;
+        ctx!.fillStyle = glowColor;
+
+        // Cute joyful wide eyes
+        ctx!.beginPath();
+        ctx!.ellipse(eyeX, eyeBounce, 8.5, 10.5, 0, 0, Math.PI * 2);
+        ctx!.fill();
+
+        const eyeGrad = ctx!.createRadialGradient(eyeX, eyeBounce, 2, eyeX, eyeBounce, 8.5);
+        eyeGrad.addColorStop(0, '#ffffff');
+        eyeGrad.addColorStop(0.4, glowColor);
+        eyeGrad.addColorStop(1, glowDark);
+        ctx!.fillStyle = eyeGrad;
+        ctx!.beginPath();
+        ctx!.ellipse(eyeX, eyeBounce, 7.5, 9.5, 0, 0, Math.PI * 2);
+        ctx!.fill();
+
+        // Big Anime Sparkle Glints
+        ctx!.shadowBlur = 0;
+        ctx!.fillStyle = '#ffffff';
+        ctx!.beginPath();
+        ctx!.arc(eyeX - 2.5, eyeBounce - 3, 2.8, 0, Math.PI * 2);
+        ctx!.fill();
+
+        ctx!.beginPath();
+        ctx!.arc(eyeX + 2.5, eyeBounce + 3, 1.4, 0, Math.PI * 2);
+        ctx!.fill();
+      });
+
+      ctx!.restore(); // End head
+
+      // ── 7. HOLOGRAPHIC "Hii! 👋" SPEECH BUBBLE ──
+      if (speechPop > 0.05) {
+        ctx!.save();
+        const bubbleY = headY - CUTE_BOT.headRadius - 52;
+        ctx!.translate(12, bubbleY);
+        ctx!.scale(speechPop, speechPop);
+
+        const bubbleW = 100;
+        const bubbleH = 34;
+        const bX = -bubbleW / 2;
+        const bY = -bubbleH / 2;
+
+        // Bubble Shadow & Background
+        ctx!.shadowColor = glowColor;
+        ctx!.shadowBlur = 16 * speechPop;
+        ctx!.fillStyle = 'rgba(4, 9, 20, 0.94)';
+        ctx!.strokeStyle = glowColor;
+        ctx!.lineWidth = 1.8;
+
+        ctx!.beginPath();
+        ctx!.roundRect(bX, bY, bubbleW, bubbleH, 12);
+        ctx!.fill();
+        ctx!.stroke();
+
+        // Bottom Arrow pointer towards bot's head
+        ctx!.beginPath();
+        ctx!.moveTo(-6, bY + bubbleH);
+        ctx!.lineTo(-12, bY + bubbleH + 8);
+        ctx!.lineTo(0, bY + bubbleH);
+        ctx!.closePath();
+        ctx!.fill();
+        ctx!.stroke();
+
+        ctx!.shadowBlur = 0;
+
+        // "Hii! 👋" Text
+        ctx!.font = '900 13px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, monospace';
+        ctx!.textAlign = 'center';
+        ctx!.textBaseline = 'middle';
+        ctx!.fillStyle = '#ffffff';
+        ctx!.fillText('Hii! 👋', 0, 0);
+
+        ctx!.restore();
+      }
+    }
+
     function animate(timestamp: number) {
       if (!lastTimestamp) lastTimestamp = timestamp;
       const dt = Math.min((timestamp - lastTimestamp) / 1000, 0.1);
       lastTimestamp = timestamp;
 
       const cycleSpeed = 4.2 * speed;
-      state.time += dt * cycleSpeed;
-
       const moveSpeed = 120 * speed;
-
       const wrapPadding = 60;
-      if (isR2L) {
-        state.robotX -= moveSpeed * dt;
-        if (state.robotX < -wrapPadding) {
-          state.robotX = width + wrapPadding;
+
+      // Check if robot has reached center to trigger waving sequence
+      const centerX = width * 0.5;
+      if (!state.hasWaved && Math.abs(state.robotX - centerX) < 20) {
+        state.isWaving = true;
+        state.waveTimer = 0;
+        state.hasWaved = true;
+      }
+
+      let speechPop = 0;
+
+      if (state.isWaving) {
+        state.waveTimer += dt;
+        state.time += dt * 3.5; // Continue eye bounce / antenna pulse
+
+        // Smoothly transition into front view (0 -> 1) over 0.25s
+        if (state.waveTimer < 0.25) {
+          state.turnProgress = Math.min(1, state.waveTimer / 0.25);
+        } else if (state.waveTimer < 2.0) {
+          state.turnProgress = 1;
+          // Pop speech bubble in and hold
+          speechPop = Math.min(1, (state.waveTimer - 0.25) * 5);
+        } else if (state.waveTimer < 2.3) {
+          // Fade out speech and turn back to walking profile (1 -> 0)
+          state.turnProgress = Math.max(0, 1 - (state.waveTimer - 2.0) / 0.3);
+          speechPop = Math.max(0, 1 - (state.waveTimer - 2.0) * 5);
+        } else {
+          // Wave complete! Resume walking
+          state.isWaving = false;
+          state.turnProgress = 0;
+          speechPop = 0;
         }
       } else {
-        state.robotX += moveSpeed * dt;
-        if (state.robotX > width + wrapPadding) {
-          state.robotX = -wrapPadding;
+        state.time += dt * cycleSpeed;
+        state.turnProgress = 0;
+
+        if (isR2L) {
+          state.robotX -= moveSpeed * dt;
+          if (state.robotX < -wrapPadding) {
+            state.robotX = width + wrapPadding;
+            state.hasWaved = false; // Reset so bot waves on next crossing
+          }
+        } else {
+          state.robotX += moveSpeed * dt;
+          if (state.robotX > width + wrapPadding) {
+            state.robotX = -wrapPadding;
+            state.hasWaved = false; // Reset for next pass
+          }
         }
       }
 
@@ -631,7 +1027,7 @@ export default function RobotWalkingDivider({
       const leftPhase = walkPhase;
       const rightPhase = walkPhase + Math.PI;
 
-      const bodyBob = Math.sin(walkPhase * 2) * 4.0;
+      const bodyBob = state.isWaving ? Math.sin(state.time * 6) * 1.8 : Math.sin(walkPhase * 2) * 4.0;
       const torsoLean = 0.09 + Math.sin(walkPhase) * 0.035;
       const armSwing = Math.sin(walkPhase) * 0.55;
 
@@ -641,31 +1037,38 @@ export default function RobotWalkingDivider({
       const rootX = state.robotX;
 
       // 1. Soft Floor Contact Shadow
-      drawGroundContactShadow(rootX, footLevel, footL, footR, state.scale);
+      drawGroundContactShadow(rootX, footLevel, footL, footR, state.scale, state.turnProgress > 0.5);
 
-      // 2. Render Bot anchored cleanly at ground contact level
+      // 2. Render Bot
       ctx!.save();
       ctx!.translate(rootX, footLevel + bodyBob * state.scale);
 
-      if (!isR2L) {
-        ctx!.scale(-state.scale, state.scale);
-      } else {
+      if (state.turnProgress > 0.5) {
+        // 🌟 FRONT FACING WAVING POSE ("Hii! 👋")
         ctx!.scale(state.scale, state.scale);
+        ctx!.translate(0, -CUTE_BOT.pelvisHeight);
+        drawFrontFacingWavingBot(themeColors.glow, themeColors.dark, state.waveTimer, speechPop);
+      } else {
+        // 🚶 SIDE PROFILE WALKING POSE
+        if (!isR2L) {
+          ctx!.scale(-state.scale, state.scale);
+        } else {
+          ctx!.scale(state.scale, state.scale);
+        }
+
+        ctx!.translate(0, -CUTE_BOT.pelvisHeight);
+
+        // Far Layer
+        drawCuteArm(12, -70, -armSwing, true);
+        drawCuteLeg(4, 0, footR, true);
+
+        // Mid Layer
+        drawCuteTorsoAndHead(0, 0, torsoLean, themeColors.glow, themeColors.dark);
+
+        // Near Layer
+        drawCuteLeg(0, 0, footL, false);
+        drawCuteArm(-12, -70, armSwing, false);
       }
-
-      // Offset upward by pelvis height so the feet contact exactly at footLevel (y = 0)
-      ctx!.translate(0, -CUTE_BOT.pelvisHeight);
-
-      // Far Layer
-      drawCuteArm(12, -70, -armSwing, true);
-      drawCuteLeg(4, 0, footR, true);
-
-      // Mid Layer
-      drawCuteTorsoAndHead(0, 0, torsoLean, themeColors.glow, themeColors.dark);
-
-      // Near Layer
-      drawCuteLeg(0, 0, footL, false);
-      drawCuteArm(-12, -70, armSwing, false);
 
       ctx!.restore();
 
