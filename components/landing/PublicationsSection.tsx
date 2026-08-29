@@ -19,7 +19,7 @@ const PUBLICATIONS = [
     subtitle: 'NISB Half Yearly Newsletter',
     edition: '2025–26 Edition',
     cover: 'https://raw.githubusercontent.com/nisbweb/nisbweb.github.io/master/assets/images/Manas%2026.png',
-    desc: 'Comprehensive highlights of technical workshops, student accomplishments, research articles, and chapter achievements.',
+    desc: "A vibrant compilation of NISB's events, initiatives, member achievements, technical activities and memorable moments from the first half of the year",
     cta: 'Read Edition →',
     featured: false,
   },

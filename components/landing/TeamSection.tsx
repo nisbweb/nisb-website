@@ -257,9 +257,7 @@ export default function TeamSection() {
             </span>
           </h2>
 
-          <p className="text-xs sm:text-sm font-sans text-[var(--text-muted)] max-w-xl mx-auto">
-            Meet the dedicated core committee and coordinators steering Region 10’s premier IEEE student branch.
-          </p>
+
         </div>
 
         {/* ── All 21 Team Members in Clean, High-Speed Responsive Grid ── */}

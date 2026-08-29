@@ -66,7 +66,7 @@ export default function SolarLegacySection() {
 
   const totalWords = paragraph1.length + paragraph2.length;
 
-  const legacyVideoUrl = 'https://drive.google.com/drive/folders/1OQU1uT4141Y4wj7bw2r3G2WvNrw6mdhk';
+  const legacyVideoUrl = 'https://www.youtube.com/watch?v=2sM8orzFsZo';
 
   return (
     <section
@@ -96,7 +96,7 @@ export default function SolarLegacySection() {
 
               <h2 className="text-4xl xs:text-5xl md:text-7xl lg:text-8xl font-black text-white leading-[0.92] sm:leading-[0.88] tracking-[-0.05em] uppercase font-display">
                 The <span className="text-transparent stroke-white" style={{ WebkitTextStroke: '2px white' }}>Unmatched</span> <br />
-                <span className="text-[var(--accent)]">Legacy.</span>
+                <span className="text-[var(--accent)]">Legacy</span>
               </h2>
             </div>
 
@@ -133,8 +133,8 @@ export default function SolarLegacySection() {
           <div className="lg:col-span-4 flex flex-col justify-start gap-4 lg:border-l border-white/10 lg:pl-10">
             {[
               { label: 'Founded', val: '1999', sub: '25+ Years of Tradition' },
-              { label: 'Recognition', val: 'TOP R10', sub: 'Best Student Chapter' },
-              { label: 'Flagships', val: 'ADROIT • ANKURA', sub: 'Premier Tech Symposia' },
+              { label: 'Recognition', val: 'R10', sub: 'Best Student Chapter' },
+              { label: 'Flagships', val: 'ADROIT • ANKURA', sub: '' },
               { label: '2025 Honours', val: 'GRSS • CS', sub: 'Chapter Awards & Distinctions' },
               { label: 'Legacy', val: '2018 • 2021 • 2023', sub: 'Outstanding Branch Recognitions' },
               { label: 'Impact', val: '70+', sub: 'Events Every Year' },
@@ -158,7 +158,7 @@ export default function SolarLegacySection() {
                     {stat.sub}
                   </p>
                 </div>
-                <span className="text-xl font-mono text-[var(--accent)] opacity-0 group-hover:opacity-100 transition-opacity">➔</span>
+
               </motion.div>
             ))}
           </div>
@@ -193,11 +193,9 @@ export default function SolarLegacySection() {
             <div className="absolute top-4 sm:top-6 left-4 sm:left-8 right-4 sm:right-8 flex items-center justify-between pointer-events-none z-10">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/15 text-[9px] sm:text-[10.5px] font-mono uppercase tracking-[0.25em] text-[var(--accent)] font-bold">
                 <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
-                <span>NISB CINEMATIC ARCHIVE // 1999 — 2026</span>
+                <span>NISB CINEMATIC ARCHIVE • 1999 — 2026</span>
               </div>
-              <span className="hidden sm:inline-block px-3 py-1 rounded-full bg-white/5 backdrop-blur-md border border-white/10 text-[10px] font-mono tracking-widest text-white/80">
-                25 YEARS • SPECIAL FEATURE
-              </span>
+
             </div>
 
             {/* Center Luminous Play Button Linking to Google Drive Video */}
@@ -220,7 +218,7 @@ export default function SolarLegacySection() {
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-[var(--star-white)] hover:bg-[var(--accent)] text-[var(--void)] hover:text-black text-xs font-mono font-extrabold uppercase tracking-wider transition-all duration-300 shadow-xl hover:scale-105 active:scale-95 shrink-0"
               >
-                <span>Open Archive Drive</span>
+                <span>Open in Youtube</span>
                 <span>↗</span>
               </a>
             </div>

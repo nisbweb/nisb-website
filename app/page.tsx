@@ -16,6 +16,7 @@ const TeamSection           = dynamic(() => import('@/components/landing/TeamSec
 const ChaptersSection       = dynamic(() => import('@/components/landing/ChaptersSection'), { ssr: false });
 const SiteFooter            = dynamic(() => import('@/components/landing/SiteFooter'));
 const RadialThemeDial       = dynamic(() => import('@/components/landing/RadialThemeDial'), { ssr: false });
+const RobotWalkingDivider   = dynamic(() => import('@/components/landing/RobotWalkingDivider'), { ssr: false });
 
 // Heavy / SSR-unsafe components loaded dynamically
 const IntroSequence = dynamic(() => import('@/components/intro/IntroSequence'), {
@@ -99,11 +100,17 @@ export default function HomePage() {
             {/* 2 ── Full-screen cinematic hero */}
             <HeroCinematicHero />
 
+            {/* ── Astro-Bot Divider: Right to Left ── */}
+            <RobotWalkingDivider direction="right-to-left" speed={1.0} />
+
             {/* 3 ── Scroll-pinned word-reveal legacy story */}
             <LegacyScrollSection />
 
             {/* 4 ── Horizontal scroll event showcase */}
             <CinematicEventsSection />
+
+            {/* ── Astro-Bot Divider: Left to Right ── */}
+            <RobotWalkingDivider direction="left-to-right" speed={1.05} />
 
             {/* 5 ── All-round development bento grid */}
             <ActivitiesBentoGrid />
@@ -111,16 +118,22 @@ export default function HomePage() {
             {/* 6 ── Publications */}
             <PublicationsSection />
 
+            {/* ── Astro-Bot Divider: Right to Left ── */}
+            <RobotWalkingDivider direction="right-to-left" speed={0.95} />
+
             {/* 7 ── NISB Blogs & Tech and Tales Podcast */}
             <BlogsAndPodcastSection />
 
             {/* 8 ── Executive Committee / Team */}
             <TeamSection />
 
-            {/* 8 ── IEEE Chapters / Societies */}
+            {/* ── Astro-Bot Divider: Left to Right ── */}
+            <RobotWalkingDivider direction="left-to-right" speed={1.1} />
+
+            {/* 9 ── IEEE Chapters / Societies */}
             <ChaptersSection />
 
-            {/* 9 ── Footer */}
+            {/* 10 ── Footer */}
             <SiteFooter />
           </div>
         </div>

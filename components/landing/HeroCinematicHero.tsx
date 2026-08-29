@@ -67,7 +67,7 @@ export default function HeroCinematicHero() {
           {/* Block 1 (Top-Left): Est 1999 & Mission */}
           <div className="lg:col-span-5 p-6 md:p-10 border-b lg:border-b-0 lg:border-r border-[var(--border-main)] flex flex-col justify-between gap-6 bg-gradient-to-br from-white/[0.02] to-transparent">
             <div className="flex items-center justify-between text-xs font-mono tracking-widest uppercase text-[var(--text-muted)]">
-              <span>EST — 1999</span>
+              <span>EST.1999</span>
               <span className="px-2.5 py-0.5 rounded-full border border-[var(--accent)] text-[10px] font-bold text-[var(--accent)] bg-[var(--accent)]/10">
                 NIE MYSURU
               </span>
@@ -247,7 +247,7 @@ export default function HeroCinematicHero() {
           <div className="flex flex-col items-center justify-center text-center p-3 rounded-xl bg-white/5 border border-white/15 hover:border-[var(--accent)]/50 transition-all duration-300 group/card">
             <span className="text-[8px] font-mono uppercase tracking-[0.2em] text-[var(--accent)] font-bold mb-1">FLAGSHIP EVENT</span>
             <h3 className="text-base font-black uppercase text-white font-display tracking-tight group-hover/card:text-[var(--accent)] transition-colors">ELECTRONIKA • IPL</h3>
-            <p className="text-[10px] font-mono text-white/60 mt-1">IPL &amp; Tech Symposia</p>
+            <p className="text-[10px] font-mono text-white/60 mt-1">IEEE Programming League</p>
           </div>
         </div>
 
