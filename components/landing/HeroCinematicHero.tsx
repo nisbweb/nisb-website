@@ -75,7 +75,7 @@ export default function HeroCinematicHero() {
 
             <div className="space-y-2">
               <p className="text-xs font-mono uppercase tracking-widest text-[var(--accent)] font-bold">
-                Student Branch • Bangalore Section
+                Student Branch, Bangalore Section
               </p>
               <p className="text-sm md:text-base leading-relaxed text-[var(--star-white)]/80 max-w-md font-sans">
                 Our mission is preserving long-term engineering traditions while pioneering state-of-the-art technological innovation for over 25 years.
@@ -107,7 +107,7 @@ export default function HeroCinematicHero() {
             <div className="space-y-4 relative z-10">
               <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
                 <span className="px-3 py-1 rounded-full bg-[#0d0e12] text-[#FFFDF5] text-[9px] sm:text-[10px] font-mono font-extrabold uppercase tracking-[0.2em] sm:tracking-[0.3em] shadow-md">
-                  EST. 1999 • REGION 10
+                  EST. 1999, REGION 10
                 </span>
                 <span className="text-[10px] sm:text-xs font-mono font-bold text-amber-900/70 uppercase">
                   NATIONAL INSTITUTE OF ENGINEERING
@@ -213,7 +213,7 @@ export default function HeroCinematicHero() {
             </div>
 
             <p className="text-[10px] sm:text-[11px] font-mono text-[var(--text-muted)] text-center relative z-10">
-              CS • WIE • CASS • RAS • GRSS • CEDA — Fostering domain expertise across engineering disciplines.
+              CS, WIE, CASS, RAS, GRSS, CEDA — Fostering domain expertise across engineering disciplines.
             </p>
           </div>
         </div>
@@ -237,17 +237,32 @@ export default function HeroCinematicHero() {
           </div>
         </div>
 
-        {/* MOBILE ONLY: event cards below image */}
-        <div className="md:hidden grid grid-cols-2 gap-3 mt-3">
-          <div className="flex flex-col items-center justify-center text-center p-3 rounded-xl bg-white/5 border border-white/15 hover:border-[var(--accent)]/50 transition-all duration-300 group/card">
-            <span className="text-[8px] font-mono uppercase tracking-[0.2em] text-[var(--accent)] font-bold mb-1">ANNUAL FESTS</span>
-            <h3 className="text-base font-black uppercase text-white font-display tracking-tight group-hover/card:text-[var(--accent)] transition-colors">ANKURA • ADROIT</h3>
-            <p className="text-[10px] font-mono text-white/60 mt-1">Annual Flagship Fests</p>
+        {/* -- BOTTOM SHOWCASE HERO CARD -- */}
+
+        {/* MOBILE ONLY: visible image banner */}
+        <div className="md:hidden relative h-[160px] sm:h-[180px] overflow-hidden rounded-xl">
+          <img
+            src="/fonts/image.png"
+            alt="NISB Engineering Showcase"
+            loading="lazy"
+            decoding="async"
+            className="w-full h-full object-cover object-center grayscale-[15%] opacity-95"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-[var(--void)]/80 via-transparent to-transparent" />
+          {/* Stats pills over image */}
+          <div className="absolute bottom-3 inset-x-3 flex items-center gap-1.5 flex-wrap justify-center">
+            <div className="px-2.5 py-1 rounded-full bg-black/70 backdrop-blur-md border border-white/20 text-[9px] font-mono text-white">R10 Best Student Chapter</div>
+            <div className="px-2.5 py-1 rounded-full bg-black/70 backdrop-blur-md border border-white/20 text-[9px] font-mono text-white">25+ Years Legacy</div>
+            <div className="px-2.5 py-1 rounded-full bg-black/70 backdrop-blur-md border border-white/20 text-[9px] font-mono text-white">70+ Annual Events</div>
           </div>
-          <div className="flex flex-col items-center justify-center text-center p-3 rounded-xl bg-white/5 border border-white/15 hover:border-[var(--accent)]/50 transition-all duration-300 group/card">
-            <span className="text-[8px] font-mono uppercase tracking-[0.2em] text-[var(--accent)] font-bold mb-1">FLAGSHIP EVENT</span>
-            <h3 className="text-base font-black uppercase text-white font-display tracking-tight group-hover/card:text-[var(--accent)] transition-colors">ELECTRONIKA • IPL</h3>
-            <p className="text-[10px] font-mono text-white/60 mt-1">IEEE Programming League</p>
+        </div>
+
+        {/* MOBILE ONLY: single flagship card below image */}
+        <div className="md:hidden w-full mt-3">
+          <div className="flex flex-col items-center justify-center text-center p-3.5 rounded-xl bg-white/5 border border-white/15 hover:border-[var(--accent)]/50 transition-all duration-300 group/card">
+            <span className="text-[8px] font-mono uppercase tracking-[0.2em] text-[var(--accent)] font-bold mb-1">ANNUAL FLAGSHIPS</span>
+            <h3 className="text-base font-black uppercase text-white font-display tracking-tight group-hover/card:text-[var(--accent)] transition-colors">ANKURA, ADROIT</h3>
+            <p className="text-[10px] font-mono text-white/60 mt-1">State-Level &amp; Annual Technical Fests</p>
           </div>
         </div>
 
@@ -262,16 +277,11 @@ export default function HeroCinematicHero() {
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[var(--void)] via-[var(--void)]/40 to-transparent" />
           <div className="absolute bottom-0 inset-x-0 p-6 md:p-8 flex flex-col xl:flex-row items-start xl:items-end justify-between gap-6 z-10">
-            <div className="grid grid-cols-2 gap-6 w-full xl:max-w-4xl">
-              <div className="flex flex-col items-center justify-center text-center p-5 rounded-xl bg-black/65 backdrop-blur-md border border-white/15 hover:border-[var(--accent)]/50 transition-all duration-300 shadow-xl group/card">
-                <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-[var(--accent)] font-bold mb-1.5">ANNUAL FESTS</span>
-                <h3 className="text-2xl md:text-3xl font-black uppercase text-white font-display tracking-tight group-hover/card:text-[var(--accent)] transition-colors">ANKURA • ADROIT</h3>
-                <p className="text-xs font-mono text-white/70 mt-2">Annual Flagship Fests</p>
-              </div>
-              <div className="flex flex-col items-center justify-center text-center p-5 rounded-xl bg-black/65 backdrop-blur-md border border-white/15 hover:border-[var(--accent)]/50 transition-all duration-300 shadow-xl group/card">
-                <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-[var(--accent)] font-bold mb-1.5">FLAGSHIP EVENT</span>
-                <h3 className="text-2xl md:text-3xl font-black uppercase text-white font-display tracking-tight group-hover/card:text-[var(--accent)] transition-colors">ELECTRONIKA • IPL</h3>
-                <p className="text-xs font-mono text-white/70 mt-2">IEEE Programming League</p>
+            <div className="w-full xl:max-w-xl">
+              <div className="flex flex-col items-start text-left p-5 sm:p-6 rounded-xl bg-black/65 backdrop-blur-md border border-white/15 hover:border-[var(--accent)]/50 transition-all duration-300 shadow-xl group/card">
+                <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-[var(--accent)] font-bold mb-1.5">ANNUAL FLAGSHIPS</span>
+                <h3 className="text-2xl md:text-3xl font-black uppercase text-white font-display tracking-tight group-hover/card:text-[var(--accent)] transition-colors">ANKURA, ADROIT</h3>
+                <p className="text-xs font-mono text-white/70 mt-2">State-Level &amp; Annual Technical Fests • Engineering Symposia</p>
               </div>
             </div>
             <div className="flex items-center gap-3 flex-wrap shrink-0">

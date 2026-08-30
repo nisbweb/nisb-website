@@ -9,6 +9,8 @@ import LegacyScrollSection from '@/components/landing/LegacyScrollSection';
 
 // Dynamically import below-the-fold interactive components for code-splitting & performance
 const CinematicEventsSection = dynamic(() => import('@/components/landing/CinematicEventsSection'), { ssr: false });
+const SocietyFestsSection    = dynamic(() => import('@/components/landing/SocietyFestsSection'), { ssr: false });
+const AwardsSection          = dynamic(() => import('@/components/landing/AwardsSection'), { ssr: false });
 const ActivitiesBentoGrid   = dynamic(() => import('@/components/landing/ActivitiesBentoGrid'), { ssr: false });
 const PublicationsSection   = dynamic(() => import('@/components/landing/PublicationsSection'), { ssr: false });
 const BlogsAndPodcastSection = dynamic(() => import('@/components/landing/BlogsAndPodcastSection'), { ssr: false });
@@ -106,34 +108,40 @@ export default function HomePage() {
             {/* 3 ── Scroll-pinned word-reveal legacy story */}
             <LegacyScrollSection />
 
-            {/* 4 ── Horizontal scroll event showcase */}
+            {/* 4 ── Awards & Honours */}
+            <AwardsSection />
+
+            {/* 5 ── Live Google Sheets Events Feed */}
             <CinematicEventsSection />
+
+            {/* 6 ── Society Fests & Flagships */}
+            <SocietyFestsSection />
 
             {/* ── Astro-Bot Divider: Left to Right ── */}
             <RobotWalkingDivider direction="left-to-right" speed={1.05} />
 
-            {/* 5 ── All-round development bento grid */}
+            {/* 7 ── All-round development bento grid with expandable focus groups */}
             <ActivitiesBentoGrid />
 
-            {/* 6 ── Publications */}
+            {/* 8 ── Publications */}
             <PublicationsSection />
 
             {/* ── Astro-Bot Divider: Right to Left ── */}
             <RobotWalkingDivider direction="right-to-left" speed={0.95} />
 
-            {/* 7 ── NISB Blogs & Tech and Tales Podcast */}
+            {/* 9 ── NISB Blogs & Tech and Tales Podcast */}
             <BlogsAndPodcastSection />
 
-            {/* 8 ── Executive Committee / Team */}
+            {/* 10 ── Executive Committee / Team */}
             <TeamSection />
 
             {/* ── Astro-Bot Divider: Left to Right ── */}
             <RobotWalkingDivider direction="left-to-right" speed={1.1} />
 
-            {/* 9 ── IEEE Chapters / Societies */}
+            {/* 11 ── IEEE Chapters / Societies */}
             <ChaptersSection />
 
-            {/* 10 ── Footer */}
+            {/* 12 ── Footer */}
             <SiteFooter />
           </div>
         </div>

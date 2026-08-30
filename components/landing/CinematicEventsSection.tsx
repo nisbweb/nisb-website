@@ -265,12 +265,92 @@ export default function CinematicEventsSection() {
     fetchLiveSpreadsheet();
   }, []);
 
-  const categories = ['ALL', ...Array.from(new Set(events.map((e) => e.category)))
-    .filter(Boolean)
-    .filter((c) => c !== 'GRSS - WIE' && c !== 'GRSS-WIE' && !c.includes('GRSS - WIE'))];
+  const SOCIETY_CATEGORIES = ['ALL', 'NISB', 'CS', 'WIE', 'CASS', 'RAS', 'GRSS', 'CEDA', 'EDITORIAL'];
+  const SPECIAL_FILTERS = ['Collab Events', 'Industrial Visits', 'Social Initiatives', 'Weekly Meetups', 'Technical Talks'];
+
+  // Enhanced category matching supporting collab events (e.g. CS+CASS on both feeds) and thematic filters
+  const eventMatchesCategory = (evt: EventItem, cat: string): boolean => {
+    if (cat === 'ALL') return true;
+
+    const titleLower = (evt.title || '').toLowerCase();
+    const catUpper = (evt.category || '').toUpperCase();
+    const descLower = (evt.description || '').toLowerCase();
+
+    if (cat === 'Industrial Visits') {
+      return (
+        titleLower.includes('visit') ||
+        titleLower.includes('tour') ||
+        titleLower.includes('isro') ||
+        titleLower.includes('iisc') ||
+        titleLower.includes('nigst') ||
+        titleLower.includes('industry') ||
+        catUpper.includes('VISIT') ||
+        descLower.includes('industrial visit') ||
+        descLower.includes('technical tour')
+      );
+    }
+
+    if (cat === 'Social Initiatives') {
+      return (
+        titleLower.includes('social') ||
+        titleLower.includes('ashram') ||
+        titleLower.includes('divya deepa') ||
+        titleLower.includes('literacy') ||
+        titleLower.includes('outreach') ||
+        titleLower.includes('charity') ||
+        catUpper.includes('SOCIAL') ||
+        descLower.includes('social initiative')
+      );
+    }
+
+    if (cat === 'Weekly Meetups') {
+      return (
+        titleLower.includes('meetup') ||
+        titleLower.includes('weekly') ||
+        titleLower.includes('sync') ||
+        titleLower.includes('peer') ||
+        titleLower.includes('focus group') ||
+        titleLower.includes('sfg') ||
+        titleLower.includes('hfg') ||
+        descLower.includes('weekly meetup')
+      );
+    }
+
+    if (cat === 'Technical Talks') {
+      return (
+        titleLower.includes('talk') ||
+        titleLower.includes('webinar') ||
+        titleLower.includes('seminar') ||
+        titleLower.includes('lecture') ||
+        titleLower.includes('keynote') ||
+        titleLower.includes('bootcamp') ||
+        titleLower.includes('session') ||
+        descLower.includes('technical talk') ||
+        descLower.includes('expert lecture')
+      );
+    }
+
+    if (cat === 'Collab Events') {
+      return (
+        catUpper.includes('+') ||
+        catUpper.includes('&') ||
+        catUpper.includes('COLLAB') ||
+        titleLower.includes('jointly') ||
+        titleLower.includes('collab') ||
+        (catUpper.includes('CS') && catUpper.includes('CASS')) ||
+        (catUpper.includes('GRSS') && catUpper.includes('WIE'))
+      );
+    }
+
+    // Society matching with cross-collab detection (e.g. CS+CASS appears on CS, CASS, and Collab feeds)
+    if (catUpper === cat.toUpperCase()) return true;
+    if (catUpper.includes(cat.toUpperCase())) return true;
+
+    return false;
+  };
 
   const filteredEvents = events.filter((evt) => {
-    const matchesCat = activeCategory === 'ALL' || evt.category === activeCategory;
+    const matchesCat = eventMatchesCategory(evt, activeCategory);
     const matchesSearch = searchQuery === '' ||
       evt.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       evt.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -335,21 +415,38 @@ export default function CinematicEventsSection() {
                 : 'text-white/60 hover:text-white'
                 }`}
             >
-              Grid ({filteredEvents.length})
+              Grid
             </button>
           </div>
         </div>
 
         {/* Category Pills & Search Input */}
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
           <div className="flex items-center gap-2 flex-wrap">
-            {categories.map((cat) => (
+            {/* Society Badges */}
+            {SOCIETY_CATEGORIES.map((cat) => (
               <button
                 key={cat}
                 onClick={() => { setActiveCategory(cat); setCurrentIndex(0); }}
-                className={`px-4 py-1.5 rounded-full text-xs font-mono tracking-wider uppercase transition-all ${activeCategory === cat
+                className={`px-3.5 py-1.5 rounded-full text-xs font-mono tracking-wider uppercase transition-all ${activeCategory === cat
                   ? 'bg-[var(--accent)] text-[var(--void)] font-extrabold shadow-lg scale-105'
                   : 'bg-white/5 text-white/70 hover:bg-white/10 hover:text-white border border-white/10'
+                  }`}
+              >
+                {cat}
+              </button>
+            ))}
+
+            <span className="w-px h-5 bg-white/20 mx-1 hidden sm:inline-block" />
+
+            {/* Special Filters */}
+            {SPECIAL_FILTERS.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => { setActiveCategory(cat); setCurrentIndex(0); }}
+                className={`px-3.5 py-1.5 rounded-full text-xs font-mono tracking-wider uppercase transition-all ${activeCategory === cat
+                  ? 'bg-[var(--star-white)] text-[var(--void)] font-extrabold shadow-lg scale-105'
+                  : 'bg-white/[0.03] text-white/60 hover:bg-white/10 hover:text-white border border-dashed border-white/20'
                   }`}
               >
                 {cat}

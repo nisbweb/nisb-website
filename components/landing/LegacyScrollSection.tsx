@@ -134,9 +134,9 @@ export default function SolarLegacySection() {
             {[
               { label: 'Founded', val: '1999', sub: '25+ Years of Tradition' },
               { label: 'Recognition', val: 'R10', sub: 'Best Student Chapter' },
-              { label: 'Flagships', val: 'ADROIT • ANKURA', sub: '' },
-              { label: '2025 Honours', val: 'GRSS • CS', sub: 'Chapter Awards & Distinctions' },
-              { label: 'Legacy', val: '2018 • 2021 • 2023', sub: 'Outstanding Branch Recognitions' },
+              { label: 'Flagships', val: 'ADROIT, ANKURA', sub: '' },
+              { label: '2025 Honours', val: 'GRSS, CS', sub: 'Chapter Awards & Distinctions' },
+              { label: 'Legacy', val: '2018, 2021, 2023', sub: 'Outstanding Branch Recognitions' },
               { label: 'Impact', val: '70+', sub: 'Events Every Year' },
             ].map((stat, i) => (
               <motion.div
@@ -180,9 +180,9 @@ export default function SolarLegacySection() {
           <div className="relative aspect-[16/9] md:aspect-[21/9] min-h-[320px] w-full overflow-hidden flex items-center justify-center">
             {/* Background Cinematic Graphic / Video Poster */}
             <img
-              src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=2000&auto=format&fit=crop"
+              src="https://img.youtube.com/vi/2sM8orzFsZo/maxresdefault.jpg"
               alt="NISB 25 Years Legacy Film"
-              className="w-full h-full object-cover filter brightness-[0.45] contrast-125 group-hover:scale-105 transition-transform duration-1000"
+              className="w-full h-full object-cover filter brightness-[0.6] contrast-110 group-hover:scale-105 transition-transform duration-1000"
             />
 
             {/* Dark Vignette & Mesh Overlay */}
@@ -193,7 +193,7 @@ export default function SolarLegacySection() {
             <div className="absolute top-4 sm:top-6 left-4 sm:left-8 right-4 sm:right-8 flex items-center justify-between pointer-events-none z-10">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/15 text-[9px] sm:text-[10.5px] font-mono uppercase tracking-[0.25em] text-[var(--accent)] font-bold">
                 <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
-                <span>NISB CINEMATIC ARCHIVE • 1999 — 2026</span>
+                <span>NISB CINEMATIC ARCHIVE, 1999 — 2026</span>
               </div>
 
             </div>
