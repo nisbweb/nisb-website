@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useMediaQuery } from '@/hooks/useMediaQuery';
 
 const staggerContainer = {
   hidden: { opacity: 0 },
@@ -224,14 +225,16 @@ const ACTIVITIES: ActivityItem[] = [
 
 export default function ActivitiesBentoGrid() {
   const [selectedActivity, setSelectedActivity] = useState<ActivityItem | null>(null);
+  const isMobile = useMediaQuery('(max-width: 768px)');
 
   return (
     <motion.section
       id="activities"
       className="premium-section py-20 bg-[var(--void)] text-[var(--star-white)] relative overflow-hidden border-b border-[var(--border-main)]"
-      initial="hidden"
-      whileInView="show"
-      viewport={{ once: true, margin: '-80px' }}
+      initial={isMobile ? false : 'hidden'}
+      animate={isMobile ? 'show' : undefined}
+      whileInView={isMobile ? undefined : 'show'}
+      viewport={{ once: true, margin: '250px' }}
       variants={staggerContainer}
     >
       <div className="max-w-[88rem] mx-auto space-y-12 px-4 md:px-12">

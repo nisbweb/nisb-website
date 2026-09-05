@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { useMediaQuery } from '@/hooks/useMediaQuery';
 
 const staggerContainer = {
   hidden: { opacity: 0 },
@@ -36,13 +37,16 @@ const PUBLICATIONS = [
 ];
 
 export default function PublicationsSection() {
+  const isMobile = useMediaQuery('(max-width: 768px)');
+
   return (
     <motion.section
       id="publications"
       className="premium-section py-12 md:py-20"
-      initial="hidden"
-      whileInView="show"
-      viewport={{ once: true, margin: '-100px' }}
+      initial={isMobile ? false : 'hidden'}
+      animate={isMobile ? 'show' : undefined}
+      whileInView={isMobile ? undefined : 'show'}
+      viewport={{ once: true, margin: '250px' }}
       variants={staggerContainer}
     >
       <motion.p className="section-tag-center" variants={fadeUp}>Knowledge Archives</motion.p>

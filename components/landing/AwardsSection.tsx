@@ -294,6 +294,11 @@ export default function AwardsSection() {
     return diff;
   }, []);
 
+  const activeIdxRef = useRef(0);
+  const isLoopRunningRef = useRef(false);
+  const isInViewRef = useRef(true);
+  const animIdRef = useRef<number | null>(null);
+
   // Update card 3D transforms directly on DOM for 120fps smooth performance
   const renderCards = useCallback(() => {
     const total = totalCardsRef.current;
@@ -327,13 +332,15 @@ export default function AwardsSection() {
       const rotateY = -rel * 14; // Subtle 3D tilt facing center
       const scale = Math.max(0.72, 1 - absRel * 0.12);
       const opacity = Math.max(0, 1 - absRel * 0.36);
-      const blur = Math.max(0, (absRel - 0.6) * 4);
+      const blur = isMobile ? 0 : Math.max(0, (absRel - 0.6) * 4);
       const zIndex = Math.round((10 - Math.min(absRel, 10)) * 100);
 
       // Apply transform & styling
       card.style.transform = `translate3d(${x.toFixed(1)}px, 0px, ${z.toFixed(1)}px) rotateY(${rotateY.toFixed(1)}deg) scale(${scale.toFixed(3)})`;
       card.style.opacity = opacity.toFixed(2);
-      card.style.filter = blur > 0.5 ? `blur(${blur.toFixed(1)}px)` : 'none';
+      if (!isMobile) {
+        card.style.filter = blur > 0.5 ? `blur(${blur.toFixed(1)}px)` : 'none';
+      }
       card.style.zIndex = `${zIndex}`;
       card.style.visibility = opacity > 0.02 ? 'visible' : 'hidden';
 
@@ -344,19 +351,25 @@ export default function AwardsSection() {
       }
     });
 
-    if (newActiveIdx !== activeIndex) {
+    if (newActiveIdx !== activeIdxRef.current) {
+      activeIdxRef.current = newActiveIdx;
       setActiveIndex(newActiveIdx);
     }
-  }, [activeIndex]);
+  }, []);
 
-  // Main Animation / Friction Deceleration Loop
-  useEffect(() => {
-    let animId: number;
+  const startLoop = useCallback(() => {
+    if (isLoopRunningRef.current || !isInViewRef.current) return;
+    isLoopRunningRef.current = true;
 
     const tick = () => {
+      if (!isInViewRef.current) {
+        isLoopRunningRef.current = false;
+        return;
+      }
+
       // Apply momentum friction when user releases drag
       if (!isDraggingRef.current) {
-        if (Math.abs(velocityRef.current) > 0.001) {
+        if (Math.abs(velocityRef.current) > 0.0005) {
           targetOffsetRef.current += velocityRef.current;
           velocityRef.current *= 0.90; // smooth friction
         } else {
@@ -372,12 +385,50 @@ export default function AwardsSection() {
       currentOffsetRef.current += diff * 0.14;
 
       renderCards();
-      animId = requestAnimationFrame(tick);
+
+      // If animation has settled and user is not dragging, stop the RAF loop!
+      const isSettled =
+        !isDraggingRef.current &&
+        Math.abs(velocityRef.current) < 0.0005 &&
+        Math.abs(diff) < 0.001;
+
+      if (!isSettled) {
+        animIdRef.current = requestAnimationFrame(tick);
+      } else {
+        isLoopRunningRef.current = false;
+      }
     };
 
-    animId = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(animId);
+    animIdRef.current = requestAnimationFrame(tick);
   }, [renderCards]);
+
+  // Main Animation / Friction Deceleration Loop with Idle & Viewport detection
+  useEffect(() => {
+    renderCards();
+    startLoop();
+
+    const el = containerRef.current;
+    if (!el || typeof IntersectionObserver === 'undefined') return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isInViewRef.current = entry.isIntersecting;
+        if (entry.isIntersecting) {
+          startLoop();
+        } else if (animIdRef.current) {
+          cancelAnimationFrame(animIdRef.current);
+          isLoopRunningRef.current = false;
+        }
+      },
+      { rootMargin: '200px' }
+    );
+
+    observer.observe(el);
+    return () => {
+      observer.disconnect();
+      if (animIdRef.current) cancelAnimationFrame(animIdRef.current);
+    };
+  }, [renderCards, startLoop]);
 
   // Navigate to specific card index smoothly
   const navigateToIndex = useCallback((index: number) => {
@@ -386,7 +437,8 @@ export default function AwardsSection() {
     const diff = getShortestDiff(index, targetOffsetRef.current, total);
     targetOffsetRef.current += diff;
     velocityRef.current = 0;
-  }, [getShortestDiff]);
+    startLoop();
+  }, [getShortestDiff, startLoop]);
 
   // Pointer / Drag Event Handlers
   const handlePointerDown = (e: React.PointerEvent) => {
@@ -398,6 +450,7 @@ export default function AwardsSection() {
     try {
       (e.currentTarget as HTMLElement).setPointerCapture?.(e.pointerId);
     } catch { }
+    startLoop();
   };
 
   const handlePointerMove = (e: React.PointerEvent) => {
@@ -416,6 +469,7 @@ export default function AwardsSection() {
 
     lastXRef.current = e.clientX;
     lastTimeRef.current = now;
+    startLoop();
   };
 
   const handlePointerUp = (e: React.PointerEvent) => {
@@ -429,6 +483,7 @@ export default function AwardsSection() {
     if (Math.abs(velocityRef.current) < 0.05) {
       targetOffsetRef.current = Math.round(targetOffsetRef.current);
     }
+    startLoop();
   };
 
   // Wheel interaction: gentle horizontal scroll with trackpad/mouse
@@ -436,6 +491,7 @@ export default function AwardsSection() {
     if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
       e.preventDefault();
       targetOffsetRef.current += e.deltaX * 0.0025;
+      startLoop();
     }
   };
 

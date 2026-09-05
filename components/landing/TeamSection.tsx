@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useMediaQuery } from '@/hooks/useMediaQuery';
 
 interface TeamMember {
   name: string;
@@ -183,17 +184,26 @@ const TEAM_MEMBERS: TeamMember[] = [
   },
 ];
 
-function TeamGridCard({ member, isPriority = false }: { member: TeamMember; isPriority?: boolean }) {
+function TeamGridCard({
+  member,
+  isPriority = false,
+  isMobile = false,
+}: {
+  member: TeamMember;
+  isPriority?: boolean;
+  isMobile?: boolean;
+}) {
   const [imgSrc, setImgSrc] = useState(member.img);
   const [isLoaded, setIsLoaded] = useState(false);
 
   return (
     <motion.div
-      layout
-      initial={{ opacity: 0, y: 24, scale: 0.96 }}
-      whileInView={{ opacity: 1, y: 0, scale: 1 }}
-      viewport={{ once: true, margin: '-40px' }}
-      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+      layout={!isMobile}
+      initial={isMobile ? false : { opacity: 0, y: 24, scale: 0.96 }}
+      whileInView={isMobile ? undefined : { opacity: 1, y: 0, scale: 1 }}
+      animate={isMobile ? { opacity: 1, y: 0, scale: 1 } : undefined}
+      viewport={{ once: true, margin: '300px' }}
+      transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
       className="group relative rounded-[38px] border-[2.5px] border-white/15 hover:border-[var(--accent)] bg-gradient-to-b from-[#101726] to-[#070b14] p-2.5 transition-all duration-500 shadow-2xl hover:shadow-[0_20px_50px_rgba(0,0,0,0.85),0_0_30px_var(--accent-glow)] hover:-translate-y-1.5 will-change-transform"
     >
       {/* Specular Edge Glow on Hover */}
@@ -242,6 +252,8 @@ function TeamGridCard({ member, isPriority = false }: { member: TeamMember; isPr
 }
 
 export default function TeamSection() {
+  const isMobile = useMediaQuery('(max-width: 768px)');
+
   return (
     <section
       id="team"
@@ -269,6 +281,7 @@ export default function TeamSection() {
                 key={member.name}
                 member={member}
                 isPriority={idx < 8}
+                isMobile={isMobile}
               />
             ))}
           </AnimatePresence>

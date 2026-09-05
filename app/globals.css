@@ -1313,4 +1313,30 @@ body {
   .hero-actions-center {
     flex-direction: column;
   }
+
+  /* ─── INSTANT MOBILE RENDERING OVERRIDES ─── */
+  /* 1. Completely remove intro overlay blocking on mobile */
+  .intro-overlay-container {
+    display: none !important;
+  }
+
+  /* 2. Make landing page instantly visible on first paint */
+  .landing-wrapper {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transition: none !important;
+  }
+
+  /* 3. Instant Navbar visibility */
+  #main-navbar {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+    transition: none !important;
+  }
+
+  /* 4. Instant hero section rendering */
+  .hero-section {
+    opacity: 1 !important;
+  }
 }
+

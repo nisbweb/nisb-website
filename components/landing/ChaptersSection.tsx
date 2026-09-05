@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { useMediaQuery } from '@/hooks/useMediaQuery';
 
 const staggerContainer = {
   hidden: { opacity: 0 },
@@ -57,13 +58,16 @@ const CHAPTERS = [
 ];
 
 export default function ChaptersSection() {
+  const isMobile = useMediaQuery('(max-width: 768px)');
+
   return (
     <motion.section
       id="chapters"
       className="premium-section py-14 md:py-24"
-      initial="hidden"
-      whileInView="show"
-      viewport={{ once: true, margin: '-80px' }}
+      initial={isMobile ? false : 'hidden'}
+      animate={isMobile ? 'show' : undefined}
+      whileInView={isMobile ? undefined : 'show'}
+      viewport={{ once: true, margin: '250px' }}
       variants={staggerContainer}
     >
       {/* ── RESPONSIVE SECTION HEADER ── */}

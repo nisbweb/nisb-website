@@ -7,22 +7,25 @@ import { useMediaQuery } from '@/hooks/useMediaQuery';
 /* ─── The Solar Obsidian Background ─── */
 function SolarBackground() {
   return (
-    <div className="fixed inset-0 -z-10 bg-[#020202] overflow-hidden">
-      {/* Harsh, focused spotlight */}
+    <div className="fixed inset-0 -z-10 bg-[#020202] overflow-hidden pointer-events-none">
+      {/* Mobile-light static gradient */}
+      <div className="md:hidden absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(56,189,248,0.06),transparent_60%)]" />
+
+      {/* Desktop Harsh, focused spotlight */}
       <motion.div
         animate={{
           x: [0, 50, 0],
           y: [0, 30, 0],
         }}
         transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-        className="absolute top-[-20%] right-[-10%] w-[70vw] h-[70vw] rounded-full bg-[var(--accent)]/[0.04] blur-[150px]"
+        className="hidden md:block absolute top-[-20%] right-[-10%] w-[70vw] h-[70vw] rounded-full bg-[var(--accent)]/[0.04] blur-[150px]"
       />
 
       {/* Bottom organic shape */}
-      <div className="absolute -bottom-[10%] -left-[10%] w-[50vw] h-[50vw] rounded-full bg-[#ffffff]/[0.02] blur-[120px]" />
+      <div className="hidden md:block absolute -bottom-[10%] -left-[10%] w-[50vw] h-[50vw] rounded-full bg-[#ffffff]/[0.02] blur-[120px]" />
 
-      {/* Heavy Film Grain for that 'Printed' look */}
-      <div className="absolute inset-0 opacity-[0.08] pointer-events-none mix-blend-overlay bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
+      {/* Film Grain (desktop only to prevent mobile compositor blend thrashing) */}
+      <div className="hidden md:block absolute inset-0 opacity-[0.08] pointer-events-none mix-blend-overlay bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
     </div>
   );
 }
@@ -130,38 +133,7 @@ export default function SolarLegacySection() {
           </div>
 
           {/* Right Side: Brutalist Stats */}
-          <div className="lg:col-span-4 flex flex-col justify-start gap-4 lg:border-l border-white/10 lg:pl-10">
-            {[
-              { label: 'Founded', val: '1999', sub: '25+ Years of Tradition' },
-              { label: 'Recognition', val: 'R10', sub: 'Best Student Chapter' },
-              { label: 'Flagships', val: 'ADROIT, ANKURA', sub: '' },
-              { label: '2025 Honours', val: 'GRSS, CS', sub: 'Chapter Awards & Distinctions' },
-              { label: 'Legacy', val: '2018, 2021, 2023', sub: 'Outstanding Branch Recognitions' },
-              { label: 'Impact', val: '70+', sub: 'Events Every Year' },
-            ].map((stat, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.12 }}
-                className="group py-4 sm:py-5 border-b border-white/10 hover:border-[var(--accent)] transition-colors flex items-center justify-between"
-              >
-                <div>
-                  <p className="text-[10px] uppercase tracking-[0.35em] text-white/50 group-hover:text-[var(--accent)] font-mono font-bold">
-                    {stat.label}
-                  </p>
-                  <p className="text-3xl md:text-5xl font-black text-white leading-tight font-display mt-0.5">
-                    {stat.val}
-                  </p>
-                  <p className="text-[11px] font-mono text-[var(--text-muted)] mt-1">
-                    {stat.sub}
-                  </p>
-                </div>
 
-              </motion.div>
-            ))}
-          </div>
         </div>
 
         {/* ── PART 2: STUNNING 25-YEAR LEGACY FILM SHOWCASE CARD ── */}

@@ -44,8 +44,8 @@ export default function HeroCinematicHero() {
       ref={containerRef}
       id="hero"
       className="hero-section relative pt-20 pb-12 px-3 sm:px-4 md:px-8 lg:px-12 bg-[var(--void)] text-[var(--star-white)] overflow-hidden w-full"
-      initial="hidden"
-      animate={isReady ? 'show' : 'hidden'}
+      initial={isMobile ? false : 'hidden'}
+      animate={isReady || isMobile ? 'show' : 'hidden'}
       style={{ opacity: finalOpacity }}
     >
       {/* Ambient Tech Circuit Background Image */}
@@ -259,8 +259,8 @@ export default function HeroCinematicHero() {
             <div className="w-full xl:max-w-xl">
               <div className="flex flex-col items-start text-left p-5 sm:p-6 rounded-xl bg-black/65 backdrop-blur-md border border-white/15 hover:border-[var(--accent)]/50 transition-all duration-300 shadow-xl group/card">
                 <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-[var(--accent)] font-bold mb-1.5">ANNUAL FLAGSHIPS</span>
-                <h3 className="text-2xl md:text-3xl font-black uppercase text-white font-display tracking-tight group-hover/card:text-[var(--accent)] transition-colors">ANKURA, ADROIT</h3>
-                <p className="text-xs font-mono text-white/70 mt-2">State-Level &amp; Annual Technical Fests • Engineering Symposia</p>
+                <h3 className="text-2xl md:text-3xl font-black uppercase text-white font-display tracking-tight group-hover/card:text-[var(--accent)] transition-colors">ANKURA & ADROIT</h3>
+                <p className="text-xs font-mono text-white/70 mt-2"> Odd & Even Semester Technical Fests </p>
               </div>
             </div>
             <div className="flex items-center gap-3 flex-wrap shrink-0">

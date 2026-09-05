@@ -718,22 +718,28 @@ export default function RobotWalkingDivider({
     }
 
     function emitThrusterParticles(botX: number, botY: number, sc: number, dir: number) {
+      const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+      const spawnChance = isMobile ? 0.25 : 0.6;
+      const maxParticles = isMobile ? 20 : 60;
+
+      if (particles.length >= maxParticles) return;
+
       const legOffsets = [-26 * sc, 26 * sc];
       legOffsets.forEach((offsetX) => {
         const footX = botX + offsetX;
         const footY = botY + 110 * sc;
 
-        if (Math.random() < 0.6) {
+        if (Math.random() < spawnChance) {
           const spread = (Math.random() - 0.5) * 6;
           const pVx = -dir * (Math.random() * 2 + 1) + spread * 0.1;
           const pVy = Math.random() * 3 + 2;
           const size = Math.random() * 5 + 2.5;
           const color = Math.random() > 0.3 ? themeColors.glow : '#67e8f9';
-          particles.push(new Particle(footX + spread, footY, pVx, pVy, size, color, 20, 'fire'));
+          particles.push(new Particle(footX + spread, footY, pVx, pVy, size, color, isMobile ? 14 : 20, 'fire'));
         }
       });
 
-      if (Math.random() < 0.04) {
+      if (!isMobile && Math.random() < 0.04) {
         particles.push(new Particle(botX, height * 0.82, 0, 0, 6, 'rgba(6, 182, 212, 0.35)', 25, 'ring'));
       }
     }

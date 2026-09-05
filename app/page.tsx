@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import SmoothScroll from '@/components/landing/SmoothScroll';
 import Navbar from '@/components/landing/Navbar';
@@ -23,19 +23,7 @@ const RobotWalkingDivider = dynamic(() => import('@/components/landing/RobotWalk
 // Heavy / SSR-unsafe components loaded dynamically
 const IntroSequence = dynamic(() => import('@/components/intro/IntroSequence'), {
   ssr: false,
-  loading: () => (
-    <div
-      style={{
-        position: 'fixed', inset: 0,
-        background: '#000005',
-        display: 'flex', alignItems: 'center', justifyContent: 'center',
-        zIndex: 1000,
-      }}
-      aria-label="Loading intro sequence"
-    >
-      <div className="loading-ring" />
-    </div>
-  ),
+  loading: () => null,
 });
 
 const LandingCanvas = dynamic(() => import('@/components/landing/LandingCanvas'), { ssr: false });
@@ -45,6 +33,15 @@ export default function HomePage() {
   const [landingVisible, setLandingVisible] = useState(false);
   const overlayRef = useRef<HTMLDivElement>(null);
 
+  // On mobile screens, immediately reveal landing page at 0ms with zero wait
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.innerWidth < 768) {
+      setLandingVisible(true);
+      setIntroUnmounted(true);
+      window.dispatchEvent(new Event('nisb:landingReady'));
+    }
+  }, []);
+
   const handleIntroComplete = () => {
     // 1. Immediately cross-fade in the landing page
     setLandingVisible(true);
@@ -52,11 +49,12 @@ export default function HomePage() {
       window.dispatchEvent(new Event('nisb:landingReady'));
     }
 
-    // 2. Unmount the intro overlay ONLY after the smooth crossfade finishes (1200ms)
+    // 2. Unmount the intro overlay ONLY after the smooth crossfade finishes (800ms)
     setTimeout(() => {
       setIntroUnmounted(true);
-    }, 1200);
+    }, 800);
   };
+
 
   return (
     <SmoothScroll>
@@ -64,6 +62,7 @@ export default function HomePage() {
         {/* ── Seamless Cross-fade Intro Sequence ── */}
         {!introUnmounted && (
           <div
+            className="intro-overlay-container"
             style={{
               position: 'fixed',
               inset: 0,

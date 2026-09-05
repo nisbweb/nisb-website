@@ -276,15 +276,13 @@ export default function SocietyFestsSection() {
         {/* Header */}
         <div className="flex flex-col md:flex-row items-start md:items-end justify-between gap-6 pb-6 border-b border-[var(--border-main)]">
           <div>
-            <span className="text-xs font-mono uppercase tracking-[0.4em] text-[var(--accent)] font-bold block mb-1">
-              SIGNATURE SYMPOSIA &amp; FESTS
-            </span>
+
             <h2 className="text-3xl sm:text-4xl md:text-6xl font-black uppercase font-display tracking-tight text-[var(--star-white)] leading-tight">
               SOCIETY <span className="text-[var(--accent)]">FLAGSHIPS</span>
             </h2>
           </div>
           <p className="text-xs font-mono text-[var(--text-muted)] max-w-sm">
-            Explore the signature annual technical fests, championships, and flagship symposiums hosted across NISB societies.
+            Explore the signature annual technical fests, championships, and flagship hosted across NISB societies.
           </p>
         </div>
 

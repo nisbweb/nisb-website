@@ -20,40 +20,61 @@ export default function IntroSequence({ onComplete }: IntroSequenceProps) {
     if (completedRef.current) return;
     completedRef.current = true;
     setIsExiting(true);
-    setTimeout(onComplete, 450);
+    setTimeout(onComplete, 250);
   }, [onComplete]);
 
   useEffect(() => {
+    // If on mobile, immediately complete so mobile users see the site with 0ms delay
+    if (typeof window !== 'undefined' && window.innerWidth < 768) {
+      if (!completedRef.current) {
+        completedRef.current = true;
+        onComplete();
+      }
+      return;
+    }
+
     // 1. Reveal card smoothly as letters crystallize
-    const t1 = setTimeout(() => setIsRevealed(true), 5400);
+    const t1 = setTimeout(() => setIsRevealed(true), 3600);
     // 2. Begin exit cross-fade
-    const t2 = setTimeout(() => setIsExiting(true), 8800);
+    const t2 = setTimeout(() => setIsExiting(true), 6000);
     // 3. Complete and hand over to landing page
     const t3 = setTimeout(() => {
       if (!completedRef.current) {
         completedRef.current = true;
         onComplete();
       }
-    }, 9800);
+    }, 6800);
 
     return () => {
       clearTimeout(t1);
       clearTimeout(t2);
       clearTimeout(t3);
     };
-  }, [onComplete]);
+  }, [onComplete, skip]);
 
   return (
     <motion.div
       initial={{ opacity: 1 }}
       animate={{ opacity: isExiting ? 0 : 1 }}
-      transition={{ duration: 0.95, ease: [0.22, 1, 0.36, 1] }}
-      className="fixed inset-0 z-[99999] flex flex-col justify-between items-center overflow-hidden select-none text-white font-sans"
+      transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+      onClick={skip}
+      className="fixed inset-0 z-[99999] flex flex-col justify-between items-center overflow-hidden select-none text-white font-sans cursor-pointer"
       style={{
         background: 'radial-gradient(120% 120% at 50% 30%, #081020 0%, #03060e 50%, #010206 100%)',
         backgroundColor: '#030712',
       }}
     >
+      {/* Tap / Click Anywhere or Skip Button */}
+      <button
+        onClick={(e) => {
+          e.stopPropagation();
+          skip();
+        }}
+        className="absolute top-5 right-5 z-[100] px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-xs font-mono font-bold uppercase tracking-wider text-white shadow-lg backdrop-blur-md transition-all active:scale-95 cursor-pointer"
+      >
+        Skip Intro ➔
+      </button>
+
       {/* ── PURE CSS MICRO-BRUSHED METALLIC & ENGRAVED STYLES ── */}
       <style jsx global>{`
         .bg-brushed-metal {
