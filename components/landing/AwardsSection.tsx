@@ -279,29 +279,19 @@ const CATEGORIES = [
 export default function AwardsSection() {
   const [activeTab, setActiveTab] = useState<'all' | 'global' | 'branch' | 'chapter' | 'individual'>('all');
   const [viewMode, setViewMode] = useState<'orbit' | 'grid'>('orbit');
-  const [isAutoSpinning, setIsAutoSpinning] = useState(true);
   const [activeIndex, setActiveIndex] = useState(0);
 
   const containerRef = useRef<HTMLDivElement>(null);
-  const stageRef = useRef<HTMLDivElement>(null);
   const cardNodesRef = useRef<(HTMLDivElement | null)[]>([]);
-  const mirrorNodesRef = useRef<(HTMLDivElement | null)[]>([]);
 
-  // 3D Physics State stored in refs for 120fps GPU execution
-  const currentAngleRef = useRef(0);
-  const targetAngleRef = useRef(0);
+  // Physics and continuous scroll offset state
+  const currentOffsetRef = useRef(0);
+  const targetOffsetRef = useRef(0);
   const velocityRef = useRef(0);
   const isDraggingRef = useRef(false);
   const startXRef = useRef(0);
   const lastXRef = useRef(0);
   const lastTimeRef = useRef(0);
-  const cylinderRadiusRef = useRef(1050);
-  const isAutoSpinningRef = useRef(true);
-  const activeIndexRef = useRef(0);
-  const tiltXRef = useRef(0);
-  const tiltYRef = useRef(0);
-  const targetTiltXRef = useRef(0);
-  const targetTiltYRef = useRef(0);
 
   const filteredAwards = useMemo(() => {
     if (activeTab === 'all') return AWARDS;
@@ -309,207 +299,141 @@ export default function AwardsSection() {
   }, [activeTab]);
 
   const totalCards = filteredAwards.length;
-  const angleStep = 360 / Math.max(1, totalCards);
-
-  // Sync auto-spin state ref
-  useEffect(() => {
-    isAutoSpinningRef.current = isAutoSpinning;
-  }, [isAutoSpinning]);
-
   const totalCardsRef = useRef(totalCards);
   useEffect(() => {
     totalCardsRef.current = totalCards;
   }, [totalCards]);
 
-  // Responsive Cylinder Radius: Wide and spacious so cards have generous 100px+ gaps
-  useEffect(() => {
-    const updateRadius = () => {
-      if (typeof window === 'undefined') return;
-      const w = window.innerWidth;
-      const n = totalCardsRef.current;
-      if (w < 640) {
-        cylinderRadiusRef.current = Math.max(500, n * 28);
-      } else if (w < 1024) {
-        cylinderRadiusRef.current = Math.max(760, n * 42);
-      } else {
-        cylinderRadiusRef.current = Math.max(1050, n * 56);
-      }
-    };
-    updateRadius();
-    window.addEventListener('resize', updateRadius);
-    return () => window.removeEventListener('resize', updateRadius);
+  // Helper: Shortest modular distance in circular array
+  const getShortestDiff = useCallback((target: number, current: number, total: number) => {
+    if (total <= 0) return 0;
+    let diff = (target - current) % total;
+    if (diff > total / 2) diff -= total;
+    if (diff < -total / 2) diff += total;
+    return diff;
   }, []);
 
-  // Helper: Normalize Angle to [-180, 180]
-  const normalizeAngle = useCallback((angle: number) => {
-    let a = angle % 360;
-    if (a > 180) a -= 360;
-    if (a < -180) a += 360;
-    return a;
-  }, []);
+  // Update card 3D transforms directly on DOM for 120fps smooth performance
+  const renderCards = useCallback(() => {
+    const total = totalCardsRef.current;
+    if (total === 0) return;
 
-  // Render 3D Cylindrical Ring Transforms on DOM elements with smooth depth fade
-  const render3DCards = useCallback(() => {
-    const radius = cylinderRadiusRef.current;
-    const currentAngle = currentAngleRef.current;
+    const offset = currentOffsetRef.current;
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+    const cardSpacing = isMobile ? 260 : 340;
+
     let closestDist = Infinity;
-    let newActiveIndex = 0;
+    let newActiveIdx = 0;
 
     cardNodesRef.current.forEach((card, i) => {
-      if (!card) return;
+      if (!card || i >= total) return;
 
-      const baseAngle = i * angleStep;
-      const cardAngle = baseAngle + currentAngle;
-      const normAngle = normalizeAngle(cardAngle);
-      const absAngle = Math.abs(normAngle);
+      // Calculate relative circular distance to current offset
+      let rel = (i - offset) % total;
+      if (rel > total / 2) rel -= total;
+      if (rel < -total / 2) rel += total;
 
-      if (absAngle < closestDist) {
-        closestDist = absAngle;
-        newActiveIndex = i;
+      const absRel = Math.abs(rel);
+      if (absRel < closestDist) {
+        closestDist = absRel;
+        newActiveIdx = i;
       }
 
-      // 3D Cylinder trigonometry
-      const rad = (cardAngle * Math.PI) / 180;
-      const x = Math.sin(rad) * radius;
-      const z = Math.cos(rad) * radius;
+      // Parabolic 3D curve positioning
+      const x = rel * cardSpacing;
+      // Cards curve gently backward as they move away from center
+      const z = -Math.min(absRel * 130, 600);
+      const rotateY = -rel * 14; // Subtle 3D tilt facing center
+      const scale = Math.max(0.72, 1 - absRel * 0.12);
+      const opacity = Math.max(0, 1 - absRel * 0.36);
+      const blur = Math.max(0, (absRel - 0.6) * 4);
+      const zIndex = Math.round((10 - Math.min(absRel, 10)) * 100);
 
-      // Depth calculations: only front-facing arc is visible with clarity; back half fades out seamlessly
-      const normalizedDepth = (z + radius) / (radius * 2); // 0 (far back) to 1 (near front)
-      const scale = 0.76 + normalizedDepth * 0.28;
-
-      // Smooth front-arc visibility curve: cards in back fade to 0 opacity
-      const opacity = normalizedDepth > 0.42 ? Math.pow((normalizedDepth - 0.42) / 0.58, 1.4) : 0;
-      const blur = Math.max(0, (1 - normalizedDepth) * 5.0);
-      const zIndex = Math.round(normalizedDepth * 1000);
-
-      // Apply 3D transform to main card
-      card.style.transform = `translate3d(${x.toFixed(2)}px, 0px, ${z.toFixed(2)}px) rotateY(${cardAngle.toFixed(2)}deg) scale(${scale.toFixed(3)})`;
+      // Apply transform & styling
+      card.style.transform = `translate3d(${x.toFixed(1)}px, 0px, ${z.toFixed(1)}px) rotateY(${rotateY.toFixed(1)}deg) scale(${scale.toFixed(3)})`;
       card.style.opacity = opacity.toFixed(2);
-      card.style.filter = `blur(${blur.toFixed(1)}px)`;
+      card.style.filter = blur > 0.5 ? `blur(${blur.toFixed(1)}px)` : 'none';
       card.style.zIndex = `${zIndex}`;
       card.style.visibility = opacity > 0.02 ? 'visible' : 'hidden';
 
-      // Mirror reflection ground projection
-      const mirror = mirrorNodesRef.current[i];
-      if (mirror) {
-        mirror.style.transform = `translate3d(${x.toFixed(2)}px, 0px, ${z.toFixed(2)}px) rotateY(${cardAngle.toFixed(2)}deg) scale(${scale.toFixed(3)})`;
-        mirror.style.opacity = (opacity * 0.18).toFixed(2);
-        mirror.style.visibility = opacity > 0.02 ? 'visible' : 'hidden';
-      }
-
-      // Center card spotlight glow class
-      if (absAngle < 16) {
-        card.classList.add('active-center-card');
+      if (absRel < 0.45) {
+        card.classList.add('active-card-center');
       } else {
-        card.classList.remove('active-center-card');
+        card.classList.remove('active-card-center');
       }
     });
 
-    if (newActiveIndex !== activeIndexRef.current) {
-      activeIndexRef.current = newActiveIndex;
-      setActiveIndex(newActiveIndex);
+    if (newActiveIdx !== activeIndex) {
+      setActiveIndex(newActiveIdx);
     }
-  }, [angleStep, normalizeAngle]);
+  }, [activeIndex]);
 
-  // Main 3D Animation & Physics Loop (Runs smoothly on GPU)
+  // Main Animation / Friction Deceleration Loop
   useEffect(() => {
     if (viewMode !== 'orbit' || totalCards === 0) return;
 
     let animId: number;
 
-    const animateLoop = () => {
-      // 1. Auto-Orbit Drift
-      if (isAutoSpinningRef.current && !isDraggingRef.current) {
-        targetAngleRef.current -= 0.11;
+    const tick = () => {
+      // Apply momentum friction when user releases drag
+      if (!isDraggingRef.current) {
+        if (Math.abs(velocityRef.current) > 0.001) {
+          targetOffsetRef.current += velocityRef.current;
+          velocityRef.current *= 0.90; // smooth friction
+        } else {
+          // Snap strictly to nearest integer card when velocity subsides
+          const currentTgt = targetOffsetRef.current;
+          const nearest = Math.round(currentTgt);
+          targetOffsetRef.current += (nearest - currentTgt) * 0.12;
+        }
       }
 
-      // 2. Inertia Friction Deceleration
-      if (!isDraggingRef.current && Math.abs(velocityRef.current) > 0.001) {
-        targetAngleRef.current += velocityRef.current * 3.2;
-        velocityRef.current *= 0.92;
-      }
+      // Smooth lerp of current offset towards target offset
+      const diff = targetOffsetRef.current - currentOffsetRef.current;
+      currentOffsetRef.current += diff * 0.14;
 
-      // 3. Smooth Lerp to Target Angle
-      currentAngleRef.current += (targetAngleRef.current - currentAngleRef.current) * 0.085;
-
-      // 4. Parallax Stage Tilt Lerp
-      tiltXRef.current += (targetTiltXRef.current - tiltXRef.current) * 0.06;
-      tiltYRef.current += (targetTiltYRef.current - tiltYRef.current) * 0.06;
-
-      if (stageRef.current) {
-        stageRef.current.style.transform = `translate(-50%, -50%) rotateX(${tiltXRef.current.toFixed(2)}deg) rotateY(${tiltYRef.current.toFixed(2)}deg)`;
-      }
-
-      // 5. Render All 3D Cards
-      render3DCards();
-
-      animId = requestAnimationFrame(animateLoop);
+      renderCards();
+      animId = requestAnimationFrame(tick);
     };
 
-    animId = requestAnimationFrame(animateLoop);
+    animId = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(animId);
-  }, [viewMode, totalCards, render3DCards]);
+  }, [viewMode, totalCards, renderCards]);
 
-  // Rotate to exact index with shortest angular path
-  const rotateToIndex = useCallback(
-    (targetIndex: number) => {
-      setIsAutoSpinning(false);
-      isAutoSpinningRef.current = false;
+  // Navigate to specific card index smoothly
+  const navigateToIndex = useCallback((index: number) => {
+    const total = totalCardsRef.current;
+    if (total === 0) return;
+    const diff = getShortestDiff(index, targetOffsetRef.current, total);
+    targetOffsetRef.current += diff;
+    velocityRef.current = 0;
+  }, [getShortestDiff]);
 
-      const currentNorm = normalizeAngle(targetAngleRef.current);
-      let diff = -targetIndex * angleStep - currentNorm;
-
-      if (diff > 180) diff -= 360;
-      if (diff < -180) diff += 360;
-
-      targetAngleRef.current += diff;
-    },
-    [angleStep, normalizeAngle]
-  );
-
-  // Snap gently to nearest slot
-  const snapToNearest = useCallback(() => {
-    const currentNorm = normalizeAngle(targetAngleRef.current);
-    const nearestIndex = Math.round(-currentNorm / angleStep);
-    const snapTarget = -nearestIndex * angleStep;
-
-    let diff = snapTarget - currentNorm;
-    if (diff > 180) diff -= 360;
-    if (diff < -180) diff += 360;
-
-    targetAngleRef.current += diff;
-  }, [angleStep, normalizeAngle]);
-
-  // Pointer & Drag Handlers
+  // Pointer / Drag Event Handlers
   const handlePointerDown = (e: React.PointerEvent) => {
     isDraggingRef.current = true;
     startXRef.current = e.clientX;
-    lastXRef.current = startXRef.current;
+    lastXRef.current = e.clientX;
     lastTimeRef.current = performance.now();
     velocityRef.current = 0;
-    setIsAutoSpinning(false);
-    isAutoSpinningRef.current = false;
-    (e.target as HTMLElement).setPointerCapture?.(e.pointerId);
+    try {
+      (e.currentTarget as HTMLElement).setPointerCapture?.(e.pointerId);
+    } catch {}
   };
 
   const handlePointerMove = (e: React.PointerEvent) => {
-    // Parallax Stage Tilt
-    if (typeof window !== 'undefined') {
-      const normX = (e.clientX / window.innerWidth - 0.5) * 2;
-      const normY = (e.clientY / window.innerHeight - 0.5) * 2;
-      targetTiltXRef.current = -normY * 8;
-      targetTiltYRef.current = normX * 12;
-    }
-
     if (!isDraggingRef.current) return;
-
     const now = performance.now();
     const deltaX = e.clientX - lastXRef.current;
     const deltaTime = Math.max(now - lastTimeRef.current, 1);
 
-    const sens = typeof window !== 'undefined' && window.innerWidth < 768 ? 0.3 : 0.18;
-    targetAngleRef.current += deltaX * sens;
-    velocityRef.current = (deltaX / deltaTime) * 1.5;
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+    const cardSpacing = isMobile ? 260 : 340;
+    const offsetDelta = -deltaX / cardSpacing;
+
+    targetOffsetRef.current += offsetDelta;
+    currentOffsetRef.current += offsetDelta;
+    velocityRef.current = (offsetDelta / deltaTime) * 16; // velocity momentum
 
     lastXRef.current = e.clientX;
     lastTimeRef.current = now;
@@ -519,44 +443,29 @@ export default function AwardsSection() {
     if (!isDraggingRef.current) return;
     isDraggingRef.current = false;
     try {
-      (e.target as HTMLElement).releasePointerCapture?.(e.pointerId);
+      (e.currentTarget as HTMLElement).releasePointerCapture?.(e.pointerId);
     } catch {}
 
-    if (Math.abs(velocityRef.current) < 0.25) {
-      snapToNearest();
+    // If drag was very small, snap directly to nearest card
+    if (Math.abs(velocityRef.current) < 0.05) {
+      targetOffsetRef.current = Math.round(targetOffsetRef.current);
     }
   };
 
-  // Wheel interaction
+  // Wheel interaction: gentle horizontal scroll with trackpad/mouse
   const handleWheel = (e: React.WheelEvent) => {
-    setIsAutoSpinning(false);
-    isAutoSpinningRef.current = false;
-    const delta = Math.sign(e.deltaY) * -1;
-    targetAngleRef.current += delta * 12;
-    velocityRef.current = delta * 0.35;
+    if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
+      e.preventDefault();
+      targetOffsetRef.current += e.deltaX * 0.0025;
+    }
   };
 
   const handleCategoryChange = (val: any) => {
     setActiveTab(val);
-    currentAngleRef.current = 0;
-    targetAngleRef.current = 0;
+    currentOffsetRef.current = 0;
+    targetOffsetRef.current = 0;
     velocityRef.current = 0;
-    activeIndexRef.current = 0;
     setActiveIndex(0);
-
-    if (typeof window !== 'undefined') {
-      const w = window.innerWidth;
-      const filtered = val === 'all' ? AWARDS : AWARDS.filter((a) => a.type === val);
-      const n = filtered.length;
-      totalCardsRef.current = n;
-      if (w < 640) {
-        cylinderRadiusRef.current = Math.max(500, n * 28);
-      } else if (w < 1024) {
-        cylinderRadiusRef.current = Math.max(760, n * 42);
-      } else {
-        cylinderRadiusRef.current = Math.max(1050, n * 56);
-      }
-    }
   };
 
   return (
@@ -564,107 +473,71 @@ export default function AwardsSection() {
       id="awards"
       className="premium-section py-20 bg-[var(--void)] text-[var(--star-white)] relative overflow-hidden border-b border-[var(--border-main)] select-none"
     >
-      {/* ── CSS STYLES FOR TRUE 3D CYLINDER STAGE (SEAMLESS FULL BLEED & SPACIOUS ORBIT) ── */}
+      {/* ── 3D VIEWPORT & CARD STYLING ── */}
       <style jsx global>{`
-        .aether-viewport {
-          perspective: 1400px;
-          perspective-origin: 50% 48%;
+        .awards-3d-stage {
+          perspective: 1200px;
+          perspective-origin: 50% 50%;
           transform-style: preserve-3d;
-          mask-image: linear-gradient(to right, transparent 0%, black 14%, black 86%, transparent 100%);
-          -webkit-mask-image: linear-gradient(to right, transparent 0%, black 14%, black 86%, transparent 100%);
+          mask-image: linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%);
+          -webkit-mask-image: linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%);
         }
-        .aether-stage {
-          transform-style: preserve-3d;
-          will-change: transform;
+        .awards-card-wrapper {
           position: absolute;
-          top: 50%;
+          width: 320px;
+          height: 420px;
           left: 50%;
-          transform: translate(-50%, -50%);
-        }
-        .aether-ring {
+          top: 50%;
+          margin-left: -160px;
+          margin-top: -210px;
           transform-style: preserve-3d;
-          position: relative;
-          width: 0;
-          height: 0;
-        }
-        .aether-card {
-          position: absolute;
-          width: 220px;
-          height: 310px;
-          left: -110px;
-          top: -155px;
-          transform-style: preserve-3d;
-          will-change: transform, filter, opacity;
+          will-change: transform, opacity, filter;
           cursor: grab;
+          -webkit-font-smoothing: antialiased;
         }
         @media (max-width: 768px) {
-          .aether-card {
-            width: 190px;
-            height: 275px;
-            left: -95px;
-            top: -137.5px;
+          .awards-card-wrapper {
+            width: 260px;
+            height: 360px;
+            margin-left: -130px;
+            margin-top: -180px;
           }
         }
-        .aether-card:active {
+        .awards-card-wrapper:active {
           cursor: grabbing;
         }
-        .aether-card-inner {
+        .awards-card-body {
           width: 100%;
           height: 100%;
-          border-radius: 20px;
-          background: linear-gradient(165deg, rgba(255, 255, 255, 0.08) 0%, rgba(10, 14, 26, 0.94) 100%);
+          border-radius: 24px;
+          background: linear-gradient(165deg, rgba(255, 255, 255, 0.07) 0%, rgba(10, 14, 26, 0.92) 100%);
           border: 1px solid rgba(255, 255, 255, 0.12);
-          backdrop-filter: blur(24px);
-          -webkit-backdrop-filter: blur(24px);
-          box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.8), inset 0 1px 1px 0 rgba(255, 255, 255, 0.18);
+          backdrop-filter: blur(20px);
+          -webkit-backdrop-filter: blur(20px);
+          box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.8), inset 0 1px 1px 0 rgba(255, 255, 255, 0.15);
           overflow: hidden;
           position: relative;
-          transition: border-color 0.4s ease, box-shadow 0.4s ease;
+          transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.3s ease;
         }
-        .aether-card.active-center-card .aether-card-inner {
-          border-color: rgba(255, 255, 255, 0.45);
-          box-shadow: 0 0 50px -10px var(--accent-glow, rgba(6, 182, 212, 0.45)), 0 25px 50px -12px rgba(0, 0, 0, 0.95), inset 0 0 25px rgba(255, 255, 255, 0.08);
+        .awards-card-wrapper.active-card-center .awards-card-body {
+          border-color: rgba(6, 182, 212, 0.55);
+          box-shadow: 0 0 50px -10px rgba(6, 182, 212, 0.35), 0 30px 60px -15px rgba(0, 0, 0, 0.95), inset 0 0 20px rgba(255, 255, 255, 0.06);
         }
-        .aether-holo-sheen {
+        .awards-card-wrapper:hover .awards-card-body {
+          border-color: rgba(255, 255, 255, 0.35);
+        }
+        .awards-holo-sheen {
           position: absolute;
           inset: 0;
-          background: linear-gradient(115deg, transparent 20%, rgba(255, 255, 255, 0.12) 45%, rgba(255, 255, 255, 0.25) 50%, transparent 55%);
+          background: linear-gradient(115deg, transparent 25%, rgba(255, 255, 255, 0.08) 48%, rgba(255, 255, 255, 0.18) 50%, transparent 55%);
           pointer-events: none;
-          opacity: 0.35;
-          mix-blend-mode: overlay;
-        }
-        .aether-card:hover .aether-holo-sheen {
-          opacity: 0.85;
-        }
-        .aether-floor-grid {
-          position: absolute;
-          top: 60%;
-          left: 50%;
-          transform: translate(-50%, 0) rotateX(90deg);
-          width: 2200px;
-          height: 2200px;
-          background: radial-gradient(circle at center, rgba(255, 255, 255, 0.035) 0%, rgba(5, 5, 8, 0.95) 70%, var(--void) 100%);
-          pointer-events: none;
-          mask-image: radial-gradient(circle at center, black 25%, transparent 75%);
-          -webkit-mask-image: radial-gradient(circle at center, black 25%, transparent 75%);
-        }
-        .aether-mirror-stage {
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%) scaleY(-1) translateY(-40px);
-          transform-style: preserve-3d;
-          opacity: 0.18;
-          filter: blur(4px);
-          pointer-events: none;
-          mask-image: linear-gradient(to bottom, black 0%, transparent 65%);
-          -webkit-mask-image: linear-gradient(to bottom, black 0%, transparent 65%);
+          opacity: 0.5;
         }
       `}</style>
 
-      {/* Ambient Sci-Fi Glows integrated into Landing Page Void */}
-      <div className="absolute top-1/3 -right-40 w-[600px] h-[600px] bg-[var(--accent)]/10 rounded-full blur-[160px] pointer-events-none" />
-      <div className="absolute bottom-1/3 -left-40 w-[600px] h-[600px] bg-amber-500/8 rounded-full blur-[160px] pointer-events-none" />
+      {/* Ambient background glows */}
+      <div className="absolute top-1/4 right-0 w-[500px] h-[500px] bg-[var(--accent)]/8 rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute bottom-1/4 left-0 w-[500px] h-[500px] bg-amber-500/6 rounded-full blur-[140px] pointer-events-none" />
 
       <div className="max-w-[92rem] mx-auto space-y-8 px-4 md:px-10 relative z-10">
         {/* ── HEADER & CONTROLS ── */}
@@ -681,7 +554,7 @@ export default function AwardsSection() {
             </h2>
           </div>
 
-          {/* Mode Switcher: 3D Orbit vs Full Grid */}
+          {/* Mode Switcher: 3D Slider vs Full Grid */}
           <div className="flex items-center gap-3 flex-wrap">
             <div className="flex rounded-full bg-white/5 border border-white/10 p-1">
               <button
@@ -693,11 +566,9 @@ export default function AwardsSection() {
                 }`}
               >
                 <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                  <circle cx="12" cy="12" r="9" strokeDasharray="4 2" />
-                  <circle cx="12" cy="12" r="3" fill="currentColor" />
-                  <path d="M12 3v3m0 12v3M3 12h3m12 0h3" />
+                  <path d="M4 12h16M14 6l6 6-6 6" />
                 </svg>
-                <span>3D Orbit Showcase</span>
+                <span>3D Slider</span>
               </button>
               <button
                 onClick={() => setViewMode('grid')}
@@ -719,7 +590,7 @@ export default function AwardsSection() {
           </div>
         </div>
 
-        {/* ── CATEGORY PILLS & FLOATING NAV CONTROLS ── */}
+        {/* ── CATEGORY FILTER BUTTONS & DRAG NAVIGATION ── */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
             {CATEGORIES.map((cat) => (
@@ -737,31 +608,22 @@ export default function AwardsSection() {
             ))}
           </div>
 
-          {/* Clean Floating 3D Navigation Controls (No bounded box) */}
+          {/* Navigation Controls */}
           {viewMode === 'orbit' && (
             <div className="flex items-center gap-2 shrink-0">
+              <span className="text-[11px] font-mono text-white/40 hidden sm:inline-block pr-1">
+                DRAG TO SLIDE ⇄
+              </span>
               <button
-                onClick={() => setIsAutoSpinning(!isAutoSpinning)}
-                className={`px-3 py-1.5 rounded-full border text-[11px] font-mono font-bold transition-all flex items-center gap-1.5 ${
-                  isAutoSpinning
-                    ? 'border-emerald-500/40 text-emerald-400 bg-emerald-500/10 shadow-[0_0_12px_rgba(16,185,129,0.2)]'
-                    : 'border-white/20 text-white/70 bg-white/5'
-                }`}
-              >
-                <span className={`w-2 h-2 rounded-full ${isAutoSpinning ? 'bg-emerald-400 animate-pulse' : 'bg-white/40'}`} />
-                <span>{isAutoSpinning ? 'ORBITING' : 'PAUSED'}</span>
-              </button>
-
-              <button
-                onClick={() => rotateToIndex((activeIndex - 1 + totalCards) % totalCards)}
-                className="w-8 h-8 rounded-full bg-white/5 hover:bg-white/15 border border-white/10 text-white flex items-center justify-center transition-transform active:scale-90"
+                onClick={() => navigateToIndex((activeIndex - 1 + totalCards) % totalCards)}
+                className="w-9 h-9 rounded-full bg-white/5 hover:bg-white/15 border border-white/10 text-white flex items-center justify-center transition-transform active:scale-90"
                 aria-label="Previous Award"
               >
                 ❮
               </button>
               <button
-                onClick={() => rotateToIndex((activeIndex + 1) % totalCards)}
-                className="w-8 h-8 rounded-full bg-white/5 hover:bg-white/15 border border-white/10 text-white flex items-center justify-center transition-transform active:scale-90"
+                onClick={() => navigateToIndex((activeIndex + 1) % totalCards)}
+                className="w-9 h-9 rounded-full bg-white/5 hover:bg-white/15 border border-white/10 text-white flex items-center justify-center transition-transform active:scale-90"
                 aria-label="Next Award"
               >
                 ❯
@@ -771,11 +633,11 @@ export default function AwardsSection() {
         </div>
 
         {/* ═════════════════════════════════════════════════════════════ */}
-        {/* ── MODE 1: UNBOUNDED SEAMLESS 3D CYLINDRICAL ORBIT STAGE ── */}
+        {/* ── MODE 1: SMOOTH DRAG-ONLY 3D SLIDER SHOWCASE ── */}
         {/* ═════════════════════════════════════════════════════════════ */}
         {viewMode === 'orbit' && (
-          <div className="relative w-full py-4 overflow-hidden">
-            {/* 3D Viewport & Stage (No restrictive box border, seamless fade into page void) */}
+          <div className="relative w-full py-4">
+            {/* Viewport for 3D Carousel (Drag from left to right to slide) */}
             <div
               ref={containerRef}
               onPointerDown={handlePointerDown}
@@ -783,102 +645,70 @@ export default function AwardsSection() {
               onPointerUp={handlePointerUp}
               onPointerCancel={handlePointerUp}
               onWheel={handleWheel}
-              className="aether-viewport relative w-full h-[400px] sm:h-[440px] md:h-[480px] flex items-center justify-center overflow-hidden touch-pan-y"
+              className="awards-3d-stage relative w-full h-[470px] sm:h-[510px] md:h-[550px] flex items-center justify-center overflow-hidden touch-pan-y"
             >
-              {/* 3D Floor Reflection Grid */}
-              <div className="aether-floor-grid" />
+              {filteredAwards.map((award, i) => (
+                <div
+                  key={award.id}
+                  ref={(el) => {
+                    cardNodesRef.current[i] = el;
+                  }}
+                  onClick={() => navigateToIndex(i)}
+                  className="awards-card-wrapper"
+                >
+                  <div className="awards-card-body flex flex-col justify-between p-6 sm:p-7">
+                    <div className="awards-holo-sheen" />
 
-              {/* Primary 3D Stage */}
-              <div ref={stageRef} className="aether-stage">
-                {/* Main 3D Cylinder Ring */}
-                <div className="aether-ring">
-                  {filteredAwards.map((award, i) => (
-                    <div
-                      key={award.id}
-                      ref={(el) => {
-                        cardNodesRef.current[i] = el;
-                      }}
-                      onClick={() => rotateToIndex(i)}
-                      className="aether-card"
-                    >
-                      {/* ONLY CLEAN CARD CONTENT - NO EXTRA BUTTONS */}
-                      <div className="aether-card-inner flex flex-col justify-between p-4 sm:p-5">
-                        {/* Holographic Sheen Line */}
-                        <div className="aether-holo-sheen" />
-
-                        {/* Top Header: Year & Category Badge */}
-                        <div className="flex items-center justify-between z-10">
-                          <span className="px-2.5 py-0.5 rounded-full bg-white/10 text-[9px] sm:text-[10px] font-mono font-black tracking-wider text-[var(--accent)] uppercase border border-white/10">
-                            {award.year}
-                          </span>
-                          <span className="text-[8px] sm:text-[8.5px] font-mono tracking-widest text-white/70 uppercase font-bold px-2 py-0.5 rounded bg-white/5 border border-white/10">
-                            {award.category.split(' ')[0]}
-                          </span>
-                        </div>
-
-                        {/* Middle: SPECIAL IEEE IMPERIAL LAUREL CREST EMBLEM & Typography */}
-                        <div className="my-auto space-y-2 z-10">
-                          {/* Special Imperial Laurel Wreath & Crest Emblem */}
-                          <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-amber-500/25 via-[var(--accent)]/20 to-yellow-300/20 border border-amber-400/40 text-amber-300 flex items-center justify-center shadow-md">
-                            <svg className="w-4.5 h-4.5 drop-shadow-[0_0_8px_rgba(245,158,11,0.5)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                              {/* Left Laurel Branch */}
-                              <path d="M7 19c-2-1.5-3-4-3-7 0-4 2-7 4-8" />
-                              <path d="M5 8c1 .5 2 1.5 2 3" />
-                              <path d="M4 13c1 .5 2 1.5 2 3" />
-                              {/* Right Laurel Branch */}
-                              <path d="M17 19c2-1.5 3-4 3-7 0-4-2-7-4-8" />
-                              <path d="M19 8c-1 .5-2 1.5-2 3" />
-                              <path d="M20 13c-1 .5-2 1.5-2 3" />
-                              {/* Central Diamond Starburst Medal */}
-                              <polygon points="12 4 14.5 9 20 9.5 16 13.5 17.5 19 12 16 6.5 19 8 13.5 4 9.5 9.5 9" fill="currentColor" stroke="none" opacity="0.85" />
-                              <circle cx="12" cy="12" r="1.8" fill="#ffffff" />
-                            </svg>
-                          </div>
-
-                          <div>
-                            <h3 className="text-sm sm:text-base font-black uppercase font-display tracking-tight text-white leading-tight line-clamp-2">
-                              {award.title}
-                            </h3>
-                            <p className="text-[10px] font-mono text-[var(--accent)] font-semibold mt-0.5 truncate">
-                              {award.issuer}
-                            </p>
-                          </div>
-
-                          <p className="text-[10.5px] sm:text-[11px] font-sans text-white/75 leading-relaxed line-clamp-3">
-                            {award.description}
-                          </p>
-                        </div>
-
-                        {/* Bottom Telemetry Footer */}
-                        <div className="pt-2 border-t border-white/10 flex items-center justify-between text-[8.5px] sm:text-[9px] font-mono text-white/50 z-10">
-                          <span className="text-[var(--accent)] font-bold">◆ IEEE HONOUR</span>
-                          <span>NISB</span>
-                        </div>
-                      </div>
+                    {/* Card Top: Year & Category */}
+                    <div className="flex items-center justify-between z-10">
+                      <span className="px-3 py-1 rounded-full bg-white/10 text-xs font-mono font-black tracking-wider text-[var(--accent)] uppercase border border-white/10">
+                        {award.year}
+                      </span>
+                      <span className="text-[10px] font-mono tracking-widest text-white/70 uppercase font-bold px-2.5 py-0.5 rounded-md bg-white/5 border border-white/10">
+                        {award.category.split(' ')[0]}
+                      </span>
                     </div>
-                  ))}
-                </div>
 
-                {/* Mirror Ring for specular floor reflection */}
-                <div className="aether-mirror-stage">
-                  {filteredAwards.map((award, i) => (
-                    <div
-                      key={`mirror-${award.id}`}
-                      ref={(el) => {
-                        mirrorNodesRef.current[i] = el;
-                      }}
-                      className="aether-card pointer-events-none"
-                    >
-                      <div className="aether-card-inner flex flex-col justify-between p-4">
-                        <div className="flex items-center justify-between">
-                          <span className="text-[9px] font-mono font-bold text-white">{award.year}</span>
-                        </div>
-                        <h4 className="text-xs font-bold uppercase font-display text-white truncate">{award.title}</h4>
+                    {/* Card Middle: Imperial Laurel Crest & Typography */}
+                    <div className="my-auto space-y-3 z-10">
+                      {/* Imperial Laurel Wreath & Starburst Crest Medal */}
+                      <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-amber-500/25 via-[var(--accent)]/20 to-yellow-300/20 border border-amber-400/40 text-amber-300 flex items-center justify-center shadow-md">
+                        <svg className="w-6 h-6 drop-shadow-[0_0_8px_rgba(245,158,11,0.5)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                          {/* Laurel Wreath */}
+                          <path d="M7 19c-2-1.5-3-4-3-7 0-4 2-7 4-8" />
+                          <path d="M5 8c1 .5 2 1.5 2 3" />
+                          <path d="M4 13c1 .5 2 1.5 2 3" />
+                          <path d="M17 19c2-1.5 3-4 3-7 0-4-2-7-4-8" />
+                          <path d="M19 8c-1 .5-2 1.5-2 3" />
+                          <path d="M20 13c-1 .5-2 1.5-2 3" />
+                          {/* Central Starburst Medal */}
+                          <polygon points="12 4 14.5 9 20 9.5 16 13.5 17.5 19 12 16 6.5 19 8 13.5 4 9.5 9.5 9" fill="currentColor" stroke="none" opacity="0.9" />
+                          <circle cx="12" cy="12" r="1.8" fill="#ffffff" />
+                        </svg>
                       </div>
+
+                      <div>
+                        <h3 className="text-lg sm:text-xl font-black uppercase font-display tracking-tight text-white leading-tight line-clamp-2">
+                          {award.title}
+                        </h3>
+                        <p className="text-xs font-mono text-[var(--accent)] font-semibold mt-1 truncate">
+                          {award.issuer}
+                        </p>
+                      </div>
+
+                      <p className="text-xs sm:text-sm font-sans text-white/80 leading-relaxed line-clamp-3">
+                        {award.description}
+                      </p>
                     </div>
-                  ))}
+
+                    {/* Card Bottom: IEEE Distinction Badge */}
+                    <div className="pt-3 border-t border-white/10 flex items-center justify-between text-[10px] font-mono text-white/50 z-10">
+                      <span className="text-[var(--accent)] font-bold">◆ IEEE HONOUR</span>
+                      <span>NISB</span>
+                    </div>
+                  </div>
                 </div>
-              </div>
+              ))}
             </div>
 
             {/* Bottom Slider Nav Indicators */}
@@ -886,7 +716,7 @@ export default function AwardsSection() {
               {filteredAwards.map((_, idx) => (
                 <button
                   key={idx}
-                  onClick={() => rotateToIndex(idx)}
+                  onClick={() => navigateToIndex(idx)}
                   className={`h-1.5 rounded-full transition-all duration-300 ${
                     activeIndex === idx
                       ? 'w-7 bg-[var(--accent)] shadow-[0_0_10px_var(--accent)]'
@@ -984,3 +814,4 @@ export default function AwardsSection() {
     </section>
   );
 }
+
