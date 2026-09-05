@@ -164,19 +164,6 @@ export default function SolarLegacySection() {
             <div className="absolute inset-0 bg-gradient-to-t from-[#030712] via-[#030712]/40 to-transparent" />
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_20%,rgba(0,0,0,0.75)_100%)]" />
 
-            {/* Top Telemetry Overlay */}
-            <div className="absolute top-4 sm:top-6 left-4 sm:left-8 right-4 sm:right-8 flex items-center justify-between pointer-events-none z-10">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/15 text-[9px] sm:text-[10.5px] font-mono uppercase tracking-[0.25em] text-[var(--accent)] font-bold">
-                <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
-                <span>NISB CINEMATIC ARCHIVE, 1999 — 2026</span>
-              </div>
-              <div className="hidden sm:inline-flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-white/50">
-                <span>DOCUMENTARY FILM</span>
-                <span className="text-[var(--accent)]">•</span>
-                <span>4K RESOLUTION</span>
-              </div>
-            </div>
-
             {/* Center Luminous Play Button */}
             <a
               href={legacyVideoUrl}

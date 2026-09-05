@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
 
@@ -195,6 +195,13 @@ function TeamGridCard({
 }) {
   const [imgSrc, setImgSrc] = useState(member.img);
   const [isLoaded, setIsLoaded] = useState(false);
+  const imgRef = useRef<HTMLImageElement>(null);
+
+  useEffect(() => {
+    if (imgRef.current && imgRef.current.complete) {
+      setIsLoaded(true);
+    }
+  }, [imgSrc]);
 
   return (
     <motion.div
@@ -217,6 +224,7 @@ function TeamGridCard({
         )}
 
         <img
+          ref={imgRef}
           src={imgSrc}
           alt={member.name}
           width={600}
@@ -227,11 +235,11 @@ function TeamGridCard({
           fetchPriority={isPriority ? 'high' : 'auto'}
           onLoad={() => setIsLoaded(true)}
           onError={() => {
-            if (imgSrc !== member.fallback) setImgSrc(member.fallback);
+            if (imgSrc !== member.fallback) {
+              setImgSrc(member.fallback);
+            }
           }}
-          className={`w-full h-full object-cover object-top transition-all duration-500 ease-out group-hover:scale-106 pointer-events-none ${
-            isLoaded ? 'opacity-100' : 'opacity-0'
-          }`}
+          className="w-full h-full object-cover object-top transition-transform duration-500 ease-out group-hover:scale-106 pointer-events-none"
         />
 
         {/* Gradient Scrim Overlay */}
