@@ -116,12 +116,17 @@ export default function RobotWalkingDivider({
 
     // Load NISB Logo for the Robot's chest
     const logoImg = new Image();
-    logoImg.src = '/icon.png';
+    logoImg.src = '/assets/nisb-chest-logo.png';
     let logoLoaded = false;
     logoImg.onload = () => {
       logoLoaded = true;
     };
-    if (logoImg.complete) {
+    logoImg.onerror = () => {
+      if (logoImg.src !== '/icon.png') {
+        logoImg.src = '/icon.png';
+      }
+    };
+    if (logoImg.complete && logoImg.naturalWidth > 0) {
       logoLoaded = true;
     }
 
@@ -452,13 +457,13 @@ export default function RobotWalkingDivider({
       ctx!.fill();
       ctx!.stroke();
 
-      // ── NISB LOGO ON ROBOT CHEST ──
+      // ── NISB LOGO ON ROBOT CHEST (from app/icon.png) ──
       const badgeCenterX = 0;
-      const badgeCenterY = 4;
-      const badgeRadius = 14;
+      const badgeCenterY = 5;
+      const badgeRadius = 16.5;
 
       // Outer Chrome Rim / Badge Frame
-      ctx!.fillStyle = '#0f172a';
+      ctx!.fillStyle = '#0a0f1d';
       ctx!.beginPath();
       ctx!.arc(badgeCenterX, badgeCenterY, badgeRadius + 2.5, 0, Math.PI * 2);
       ctx!.fill();
@@ -467,10 +472,10 @@ export default function RobotWalkingDivider({
       // Glowing Theme Ambient Halo behind Logo
       ctx!.save();
       ctx!.shadowColor = cyanColor;
-      ctx!.shadowBlur = 10;
+      ctx!.shadowBlur = 12;
       ctx!.fillStyle = cyanColor;
       ctx!.beginPath();
-      ctx!.arc(badgeCenterX, badgeCenterY, badgeRadius + 0.5, 0, Math.PI * 2);
+      ctx!.arc(badgeCenterX, badgeCenterY, badgeRadius + 0.8, 0, Math.PI * 2);
       ctx!.fill();
       ctx!.restore();
 
@@ -483,11 +488,13 @@ export default function RobotWalkingDivider({
       // Render NISB Logo Image clipped to circular medallion
       if (logoLoaded && logoImg.width > 0) {
         ctx!.save();
+        ctx!.imageSmoothingEnabled = true;
+        ctx!.imageSmoothingQuality = 'high';
         ctx!.beginPath();
-        ctx!.arc(badgeCenterX, badgeCenterY, badgeRadius - 1.5, 0, Math.PI * 2);
+        ctx!.arc(badgeCenterX, badgeCenterY, badgeRadius - 1.2, 0, Math.PI * 2);
         ctx!.clip();
 
-        const imgSize = (badgeRadius - 1.5) * 2;
+        const imgSize = (badgeRadius - 1.2) * 2;
         ctx!.drawImage(
           logoImg,
           badgeCenterX - imgSize / 2,
@@ -499,7 +506,7 @@ export default function RobotWalkingDivider({
       } else {
         // Fallback: NISB Text / Power Core
         ctx!.fillStyle = '#0284c7';
-        ctx!.font = '900 8px monospace';
+        ctx!.font = '900 8.5px monospace';
         ctx!.textAlign = 'center';
         ctx!.textBaseline = 'middle';
         ctx!.fillText('NISB', badgeCenterX, badgeCenterY);
@@ -508,7 +515,7 @@ export default function RobotWalkingDivider({
       // Glass specular reflection sheen over the chest logo
       ctx!.fillStyle = 'rgba(255, 255, 255, 0.45)';
       ctx!.beginPath();
-      ctx!.arc(badgeCenterX - 4, badgeCenterY - 4, 4, 0, Math.PI * 2);
+      ctx!.arc(badgeCenterX - 5, badgeCenterY - 5, 4.5, 0, Math.PI * 2);
       ctx!.fill();
 
       ctx!.restore();
