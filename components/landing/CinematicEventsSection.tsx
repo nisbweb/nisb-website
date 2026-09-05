@@ -265,8 +265,8 @@ export default function CinematicEventsSection() {
     fetchLiveSpreadsheet();
   }, []);
 
-  const SOCIETY_CATEGORIES = ['ALL', 'NISB', 'CS', 'WIE', 'CASS', 'RAS', 'GRSS', 'CEDA', 'EDITORIAL'];
-  const SPECIAL_FILTERS = ['Collab Events', 'Industrial Visits', 'Social Initiatives', 'Weekly Meetups', 'Technical Talks'];
+  const SOCIETY_CATEGORIES = ['ALL', 'NISB', 'CS', 'WIE', 'CASS', 'RAS', 'GRSS'];
+  const SPECIAL_FILTERS = ['Industrial Visits', 'Technical Talks'];
 
   // Enhanced category matching supporting collab events (e.g. CS+CASS on both feeds) and thematic filters
   const eventMatchesCategory = (evt: EventItem, cat: string): boolean => {

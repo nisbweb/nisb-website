@@ -24,147 +24,233 @@ const SOCIETY_FESTS: SocietyFest[] = [
   {
     code: 'NISB',
     society: 'NIE IEEE Student Branch',
-    badge: 'STUDENT BRANCH FLAGSHIPS',
+    badge: 'STUDENT BRANCH FLAGSHIP FESTS',
     accent: '#38bdf8',
     festName: 'ANKURA & ADROIT',
-    festTagline: 'State-Level Techno-Cultural Fest & National Technical Symposium',
+    festTagline: 'Flagship Fests of NISB',
     description:
-      'The crown jewels of NISB. Ankura brings hundreds of students across Karnataka for vibrant technical innovation and cultural expression, while Adroit stands as our flagship national technical symposium featuring high-stakes competitive hackathons, paper presentations, and robotics tracks.',
+      'The flagship celebrations of NISB. Ankura and Adroit bring together students through technical learning, competitions, innovation, and a shared enthusiasm for technology. They represent the branch’s spirit of curiosity, collaboration, and building experiences beyond the classroom.',
     flagships: [
-      { name: 'ANKURA', type: 'Annual Flagship Fest', desc: 'Premier state-level techno-cultural extravaganza with 20+ diverse technical and creative events.' },
-      { name: 'ADROIT', type: 'National Tech Symposium', desc: 'Flagship symposium featuring algorithmic challenges, robotics combat, and research presentations.' },
-      { name: 'IPL (IEEE Programming League)', type: 'Competitive Coding', desc: 'High-intensity multi-round coding league bringing top student developers together.' },
+      {
+        name: 'ANKURA',
+        type: 'Odd Semester Flagship Fest',
+        desc: 'One of NISB’s signature fests, bringing together students through a blend of technical and engaging activities!',
+      },
+      {
+        name: 'ADROIT',
+        type: 'Even Semester Flagship Fest',
+        desc: 'One of NISB’s signature fests, creating a platform for students to explore technology, compete, learn, and connect!',
+      },
     ],
     stats: [
-      { label: 'Participants', val: '2,500+' },
-      { label: 'Colleges', val: '40+' },
-      { label: 'Prize Pool', val: '₹1.5L+' },
+      { label: 'Legacy', val: '25+ Years' },
+      { label: 'Signature Fests', val: '2' },
+      { label: 'Student Community', val: 'NISB' },
     ],
     bgGradient: 'from-sky-500/10 via-sky-500/5 to-transparent',
   },
+
+
   {
     code: 'CS',
     society: 'Computer Society',
     badge: 'COMPUTER SOCIETY',
     accent: '#06b6d4',
-    festName: 'TURING CUP & CODEWARS',
-    festTagline: 'Algorithmic Mastery, Open-Source & AI Bootcamps',
+    festName: 'RUBIX',
+    festTagline: 'Code. Compete. Create.',
     description:
-      'IEEE CS NISB drives software innovation with competitive programming leagues, production-grade MLOps bootcamps, and hackathons pushing the frontiers of artificial intelligence, cloud architectures, and web technologies.',
+      'The Computer Society brings together students passionate about computing through hands-on workshops, weekly meetups, hackathons, coding competitions, technical talks, and project-driven learning. Its flagship fest, Rubix, brings that energy together in one place.',
     flagships: [
-      { name: 'Turing Cup', type: 'Championship', desc: 'Annual algorithmic programming championship testing data structures, dynamic programming, and logic.' },
-      { name: 'MLOps & AI Sprint', type: 'Hands-on Bootcamp', desc: 'Deep learning pipeline workshop from model training to production cloud deployments.' },
-      { name: 'Code Wars', type: 'Speed Hackathon', desc: 'Time-pressured competitive problem-solving sprint testing full-stack agility.' },
+      {
+        name: 'RUBIX',
+        type: 'Flagship Tech Fest',
+        desc: 'CS’s flagship event spanning multiple days of workshops, talks, hackathons, and technical activities.',
+      },
+      {
+        name: 'CODEGEEKS',
+        type: 'Coding Competition',
+        desc: 'A coding competition designed to challenge programmers through problem-solving and competitive programming.',
+      },
+      {
+        name: 'CODELABS',
+        type: 'Workshop Series',
+        desc: 'A dedicated workshop series exploring core technologies through focused sessions including C++, Python, and Java!',
+      },
+      {
+        name: 'WEEKLY MEETUPS',
+        type: 'Peer Learning',
+        desc: 'Regular technical meetups where members strengthen their knowledge around focused topics and learn together!',
+      },
     ],
     stats: [
-      { label: 'Developers', val: '800+' },
-      { label: 'Repositories', val: '120+' },
-      { label: 'Workshops', val: '15+' },
+      { label: 'Events', val: '80+' },
+      { label: 'Workshops', val: '17' },
+      { label: 'Weekly Meetups', val: '15' },
     ],
     bgGradient: 'from-cyan-500/10 via-cyan-500/5 to-transparent',
   },
+
+
   {
     code: 'CASS',
     society: 'Circuits & Systems Society',
     badge: 'CIRCUITS & SYSTEMS',
     accent: '#f59e0b',
-    festName: 'ELECTRONIKA',
-    festTagline: 'Hardware Design, Analog Synthesis & Embedded Systems',
+    festName: 'ILLUME',
+    festTagline: 'Where Circuits Meet Creativity!',
     description:
-      'CASS NISB champions analog and digital hardware design. Electronika stands as our premier electronics symposium where students design custom PCBs, optimize logic circuits, and build real-time microcontroller prototypes.',
+      'CASS is where curiosity meets core electronics. Through workshops, technical events, and industry-oriented initiatives, the society gives students opportunities to explore circuits and systems beyond the textbook. Its flagship event, Illume, brings that spirit to life.',
     flagships: [
-      { name: 'Electronika', type: 'Annual Hardware Fest', desc: 'Hardware design championship featuring schematic capture, debugging, and live breadboard prototyping.' },
-      { name: 'PCB Design Bootcamp', type: 'Fabrication Track', desc: 'Hands-on training in KiCAD, high-speed routing, and multi-layer board fabrication.' },
-      { name: 'Embedded Circuit Hunt', type: 'Diagnostic Challenge', desc: 'Fast-paced circuit debugging and oscilloscope fault detection competition.' },
+      {
+        name: 'ILLUME',
+        type: 'Flagship Electronics Fest',
+        desc: 'CASS’s flagship event featuring workshops, competitions, and hands-on exploration of circuits and electronics.',
+      },
+      {
+        name: 'I2I',
+        type: 'Industry Interaction Forum',
+        desc: 'A CASS initiative connecting students with industry experts through discussions around RTL design, Design Verification, DFT, STA, and analog design.',
+      },
+      {
+        name: 'ELECTRONICS ESSENTIALS',
+        type: 'Hands-on Workshop',
+        desc: 'A practical electronics workshop covering analog and digital concepts, from resistor colour codes to building logic gates using universal gates.',
+      },
     ],
     stats: [
-      { label: 'Circuits Built', val: '350+' },
-      { label: 'Hardware Labs', val: '10+' },
-      { label: 'Components', val: '5,000+' },
+      { label: 'CASS Events', val: '8' },
+      { label: 'CASS Legacy', val: '5 Years' },
+      { label: 'Funded Collaborations', val: '2' },
     ],
     bgGradient: 'from-amber-500/10 via-amber-500/5 to-transparent',
   },
+
+
   {
     code: 'RAS',
     society: 'Robotics & Automation Society',
     badge: 'ROBOTICS & AUTOMATION',
     accent: '#10b981',
-    festName: 'ROBOLYMPICS',
-    festTagline: 'Autonomous Navigation, Drone Racing & Combat Robotics',
+    festName: 'ROSPHERE',
+    festTagline: 'Robotics, Automation & Innovation in Motion',
     description:
-      'IEEE RAS NISB brings engineering to life with autonomous ground vehicles, computer vision-guided drones, robotic manipulators, and intense combat arenas.',
+      'RAS brings robotics and automation to life through learning, experimentation, and hands-on experiences. From exploring robotics to building confidence through technical activities, the society gives students a space to turn curiosity about machines into practical knowledge.',
     flagships: [
-      { name: 'Robolympics', type: 'Robotics Arena', desc: 'Flagship arena with autonomous line-followers, maze navigators, and battle bot showdowns.' },
-      { name: 'Autonomous Rover Hack', type: 'SLAM & ROS2', desc: 'Building ROS-powered rovers with LiDAR mapping and real-time obstacle avoidance.' },
-      { name: 'Drone Aerial Challenge', type: 'Flight Dynamics', desc: 'Quadcopter flight controllers, PID tuning, and aerial photography competition.' },
+      {
+        name: 'ROSPHERE',
+        type: 'Robotics Event',
+        desc: 'A multi-day RAS event designed to enhance students’ knowledge of robotics.',
+      },
+      {
+        name: 'RAS TECHNICAL ACTIVITIES',
+        type: 'Hands-on Learning',
+        desc: 'Activities and learning experiences that encourage students to explore robotics, automation, and emerging technologies.',
+      },
+      {
+        name: 'RAS INDUSTRIAL EXPOSURE',
+        type: 'Technical Exposure',
+        desc: 'Opportunities for students to connect classroom concepts with real-world engineering and technology.',
+      },
     ],
     stats: [
-      { label: 'Bots Deployed', val: '150+' },
-      { label: 'Sensors Used', val: '800+' },
-      { label: 'Arena Battles', val: '60+' },
+      { label: 'Event Duration', val: '4 Days' },
+      { label: 'Focus', val: 'Robotics' },
+      { label: 'Chapter Support', val: 'RAS Bangalore' },
     ],
     bgGradient: 'from-emerald-500/10 via-emerald-500/5 to-transparent',
   },
+
+
   {
     code: 'WIE',
     society: 'Women in Engineering',
     badge: 'WOMEN IN ENGINEERING',
     accent: '#ec4899',
-    festName: 'CASCADE SPRINT',
-    festTagline: 'Empowering Women Technologists, Leadership & Innovation',
+    festName: 'INSPIRO',
+    festTagline: 'Inspiring Ideas. Empowering Futures.',
     description:
-      'WIE NISB fosters diversity and technical leadership through fast-paced ideathons, UI/UX sprints, social community literacy drives, and women-in-tech leadership symposiums.',
+      'WIE creates a space where technology, leadership, creativity, and representation come together. Through technical sessions, non-technical initiatives, humanitarian projects, and outreach, WIE encourages students to explore STEM while creating meaningful impact beyond campus.',
     flagships: [
-      { name: 'Cascade Sprint', type: 'Innovation Hackathon', desc: 'High-energy coding and problem-solving sprint tailored for aspiring women engineers.' },
-      { name: 'Tech & Leadership Conclave', type: 'Keynote Panel', desc: 'Distinguished panel of women leaders in engineering and academic research.' },
-      { name: 'Rural Digital Outreach', type: 'Social Drive', desc: 'Annual technology literacy camps at Divya Deepa and local underserved communities.' },
+      {
+        name: 'INSPIRO',
+        type: 'Annual Flagship Fest',
+        desc: 'WIE’s annual fest bringing together technical, non-technical, and inspiring initiatives under one platform.',
+      },
+      {
+        name: 'VIGYAAN',
+        type: 'Rural Outreach STEM Initiative',
+        desc: 'An outreach initiative engaging students from rural areas with STEM, encouraging curiosity and helping them explore possibilities in science and technology.',
+      },
     ],
     stats: [
-      { label: 'Women Led', val: '100%' },
-      { label: 'Scholars', val: '450+' },
-      { label: 'Outreach Camps', val: '12+' },
+      { label: 'Core Focus', val: 'STEM' },
+      { label: 'Outreach', val: 'Vigyaan' },
+      { label: 'Flagship Fest', val: 'Inspiro' },
     ],
     bgGradient: 'from-pink-500/10 via-pink-500/5 to-transparent',
   },
+
+
   {
     code: 'GRSS',
     society: 'Geoscience & Remote Sensing Society',
     badge: 'GEOSCIENCE & REMOTE SENSING',
     accent: '#a855f7',
-    festName: 'GEOSIGHT',
-    festTagline: 'Satellite Earth Observation, GIS & Planetary Analytics',
+    festName: 'GRSS',
+    festTagline: 'Exploring Earth From Above',
     description:
-      'GRSS NISB explores satellite data analytics, drone photogrammetry, synthetic aperture radar (SAR), and climate modeling in collaboration with national research bodies.',
+      'GRSS opens the door to Earth observation, remote sensing, spatial technologies, and the many ways technology helps us understand our planet. Through technical sessions, industry exposure, and research-oriented activities, students get to look at engineering from a wider perspective.',
     flagships: [
-      { name: 'GeoSight', type: 'Geospatial Symposium', desc: 'Satellite imagery analysis, GIS terrain classification, and remote sensing datathons.' },
-      { name: 'ISRO Technical Tour', type: 'Industrial Visit', desc: 'Exclusive access and technical walkthrough of satellite tracking and telemetry facilities.' },
-      { name: 'SAR & Climate Modeling', type: 'Research Workshop', desc: 'Hands-on analysis of multi-spectral satellite datasets for environmental tracking.' },
+      {
+        name: 'THE GRSS WINDOW',
+        type: 'Technical Session',
+        desc: 'An introductory session exploring GRSS, remote sensing, Earth observation, natural disaster mitigation, sensors, and data processing techniques.',
+      },
+      {
+        name: 'GRSS INDUSTRIAL VISITS',
+        type: 'Industrial Exposure',
+        desc: 'Technical visits giving students closer exposure to real-world applications of geoscience, remote sensing, and spatial technologies.',
+      },
+      {
+        name: 'SPACE APPLICATIONS VISIT',
+        type: 'Technical Visit',
+        desc: 'A visit to IIIT Hyderabad that provided students an opportunity to enhance their knowledge in space applications.',
+      },
     ],
     stats: [
-      { label: 'Datasets Analyzed', val: '50GB+' },
-      { label: 'Satellite Passes', val: '200+' },
-      { label: 'Award Honours', val: '2025 Top' },
+      { label: 'GRSS Members', val: '93+' },
+      { label: 'Previous Members', val: '40' },
+      { label: 'Chapter Awards', val: '2' },
     ],
     bgGradient: 'from-purple-500/10 via-purple-500/5 to-transparent',
   },
+
+
   {
     code: 'CEDA',
     society: 'Council on Electronic Design Automation',
     badge: 'ELECTRONIC DESIGN AUTOMATION',
     accent: '#3b82f6',
-    festName: 'CHIPDESIGN SUMMIT',
-    festTagline: 'Semiconductor Architecture, EDA & VLSI Synthesis',
+    festName: 'CEDA',
+    festTagline: 'A New Chapter in Design Automation',
     description:
-      'CEDA NISB focuses on the heart of semiconductor design: HDL synthesis, logic verification, physical place-and-route, and microarchitecture exploration.',
+      'CEDA is the newest addition to the NISB community. Introduced as a newly formed council, it adds a fresh layer of structure and support to the branch’s growing technical ecosystem and ongoing initiatives.',
     flagships: [
-      { name: 'ChipDesign Summit', type: 'VLSI Symposium', desc: 'Comprehensive symposium on modern EDA workflows, Verilog HDL, and ASIC design flows.' },
-      { name: 'RTL to GDSII Workshop', type: 'Silicon Pipeline', desc: 'Open-source silicon flow walkthrough from behavioral code to layout mask files.' },
-      { name: 'Logic Synthesis Sprint', type: 'HDL Challenge', desc: 'Optimizing circuit area, power, and timing in FPGA implementations.' },
+      {
+        name: 'CEDA',
+        type: 'Newly Formed Council',
+        desc: 'NISB’s newly formed Council on Electronic Design Automation, adding a new dimension to the branch’s technical community.',
+      },
+      {
+        name: 'EMERGING INITIATIVES',
+        type: 'Technical Community',
+        desc: 'A growing space for students interested in electronic design automation and related areas to explore and build together.',
+      },
     ],
     stats: [
-      { label: 'RTL Cores', val: '40+' },
-      { label: 'FPGA Deploys', val: '100+' },
-      { label: 'Toolchains', val: '8+' },
+      { label: 'Status', val: 'New Council' },
+      { label: 'Community', val: 'NISB' },
+      { label: 'Focus', val: 'EDA' },
     ],
     bgGradient: 'from-blue-500/10 via-blue-500/5 to-transparent',
   },
@@ -208,11 +294,10 @@ export default function SocietyFestsSection() {
             <button
               key={soc.code}
               onClick={() => setActiveCode(soc.code)}
-              className={`px-4 py-2 rounded-full text-xs font-mono font-bold tracking-wider uppercase transition-all duration-300 ${
-                activeCode === soc.code
-                  ? 'bg-[var(--star-white)] text-[var(--void)] shadow-[0_0_20px_rgba(255,255,255,0.3)] scale-105'
-                  : 'bg-white/5 text-white/70 hover:bg-white/10 hover:text-white border border-white/10'
-              }`}
+              className={`px-4 py-2 rounded-full text-xs font-mono font-bold tracking-wider uppercase transition-all duration-300 ${activeCode === soc.code
+                ? 'bg-[var(--star-white)] text-[var(--void)] shadow-[0_0_20px_rgba(255,255,255,0.3)] scale-105'
+                : 'bg-white/5 text-white/70 hover:bg-white/10 hover:text-white border border-white/10'
+                }`}
             >
               {soc.code} • {soc.festName.split('&')[0].trim()}
             </button>
@@ -289,8 +374,7 @@ export default function SocietyFestsSection() {
                   </div>
 
                   <div className="pt-2 border-t border-white/5 flex items-center justify-between text-[10px] font-mono text-[var(--accent)] font-bold">
-                    <span>Explore Track</span>
-                    <span className="group-hover:translate-x-1 transition-transform">➔</span>
+
                   </div>
                 </div>
               ))}

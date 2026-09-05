@@ -18,168 +18,168 @@ const TEAM_MEMBERS: TeamMember[] = [
     role: 'Chairperson',
     category: 'core',
     society: 'Executive Board',
-    img: '/assets/team/SagarSingh.jpg?v=3',
-    fallback: 'https://raw.githubusercontent.com/nisbweb/nisbweb.github.io/master/assets/cores25-26/SagarSingh.jpg',
+    img: '/assets/team/SagarSingh.webp',
+    fallback: '/assets/team/SagarSingh.jpg',
   },
   {
     name: 'Abhay Hegde',
     role: 'Vice Chairperson & Secretary of Marketing and Publicity',
     category: 'core',
     society: 'Executive Board',
-    img: '/assets/team/Abhay.jpg?v=3',
-    fallback: 'https://raw.githubusercontent.com/nisbweb/nisbweb.github.io/master/assets/cores25-26/Abhay.jpg',
+    img: '/assets/team/Abhay.webp',
+    fallback: '/assets/team/Abhay.jpg',
   },
   {
     name: 'Yogesh S',
     role: 'Treasurer',
     category: 'core',
     society: 'Executive Board',
-    img: '/assets/team/Yogesh.jpg?v=3',
-    fallback: 'https://raw.githubusercontent.com/nisbweb/nisbweb.github.io/master/assets/cores25-26/Yogesh.jpg',
+    img: '/assets/team/Yogesh.webp',
+    fallback: '/assets/team/Yogesh.jpg',
   },
   {
     name: 'Sakleshwar Hubli',
     role: 'Secretary of Internal Affairs',
     category: 'core',
     society: 'Executive Board',
-    img: '/assets/team/Saklesh.jpg?v=3',
-    fallback: 'https://raw.githubusercontent.com/nisbweb/nisbweb.github.io/master/assets/cores25-26/Saklesh.jpg',
+    img: '/assets/team/Saklesh.webp',
+    fallback: '/assets/team/Saklesh.jpg',
   },
   {
     name: 'K Anantha Krishna Rao',
     role: 'Secretary of Events',
     category: 'core',
     society: 'Event Operations',
-    img: '/assets/team/Anantha.jpg?v=3',
-    fallback: 'https://raw.githubusercontent.com/nisbweb/nisbweb.github.io/master/assets/cores25-26/Anantha.jpg',
+    img: '/assets/team/Anantha.webp',
+    fallback: '/assets/team/Anantha.jpg',
   },
   {
     name: 'Shreya P V',
     role: 'Secretary of Events',
     category: 'core',
     society: 'Event Operations',
-    img: '/assets/team/ShreyaPV.jpg?v=3',
-    fallback: 'https://raw.githubusercontent.com/nisbweb/nisbweb.github.io/master/assets/cores25-26/Shreya%20P%20V.jpg',
+    img: '/assets/team/ShreyaPV.webp',
+    fallback: '/assets/team/ShreyaPV.jpg',
   },
   {
     name: 'Aadya Sharma',
     role: 'Secretary of Marketing and Publicity',
     category: 'core',
     society: 'Member Public Relations',
-    img: '/assets/team/Aadya.jpg?v=3',
-    fallback: 'https://raw.githubusercontent.com/nisbweb/nisbweb.github.io/master/assets/cores25-26/Aadya.jpeg',
+    img: '/assets/team/Aadya.webp',
+    fallback: '/assets/team/Aadya.jpg',
   },
   {
     name: 'Sagar N Mutalik',
     role: 'Secretary of membership development & SAC Coordinator',
     category: 'core',
     society: 'Member Development & SAC',
-    img: '/assets/team/SagarNM.jpg?v=3',
-    fallback: 'https://raw.githubusercontent.com/nisbweb/nisbweb.github.io/master/assets/cores25-26/SagarNM.jpg',
+    img: '/assets/team/SagarNM.webp',
+    fallback: '/assets/team/SagarNM.jpg',
   },
   {
     name: 'Pranav A Korlahalli',
     role: 'Technology Coordinator',
     category: 'tech',
     society: 'Tech Team',
-    img: '/assets/team/Pranav.jpg?v=3',
-    fallback: 'https://raw.githubusercontent.com/nisbweb/nisbweb.github.io/master/assets/cores25-26/Pranav.jpg',
+    img: '/assets/team/Pranav.webp',
+    fallback: '/assets/team/Pranav.jpg',
   },
   {
     name: 'Aashish Vatwani',
     role: 'Technology Coordinator',
     category: 'tech',
     society: 'Tech Team',
-    img: '/assets/team/Aashish.jpg?v=3',
-    fallback: 'https://raw.githubusercontent.com/nisbweb/nisbweb.github.io/master/assets/cores25-26/Aashish.jpg',
+    img: '/assets/team/Aashish.webp',
+    fallback: '/assets/team/Aashish.jpg',
   },
   {
     name: 'Rahul K',
     role: 'Editor-in-Chief',
     category: 'core',
     society: 'Editorial & Publications',
-    img: '/assets/team/Rahul.jpg?v=3',
-    fallback: 'https://raw.githubusercontent.com/nisbweb/nisbweb.github.io/master/assets/cores25-26/Rahul.jpeg',
+    img: '/assets/team/Rahul.webp',
+    fallback: '/assets/team/Rahul.jpg',
   },
   {
     name: 'Shresth S Juptimath',
     role: 'Sponsorship Coordinator',
     category: 'core',
     society: 'Corporate Outreach',
-    img: '/assets/team/Shresht.jpg?v=3',
-    fallback: 'https://raw.githubusercontent.com/nisbweb/nisbweb.github.io/master/assets/cores25-26/Shresht.JPG',
+    img: '/assets/team/Shresht.webp',
+    fallback: '/assets/team/Shresht.jpg',
   },
   {
     name: 'Priyanka Pramod Daivagna',
     role: 'CS Chairperson',
     category: 'chapter',
     society: 'Computer Society',
-    img: '/assets/team/Priyanka.jpg?v=3',
-    fallback: 'https://raw.githubusercontent.com/nisbweb/nisbweb.github.io/master/assets/cores25-26/Priyanka.jpeg',
+    img: '/assets/team/Priyanka.webp',
+    fallback: '/assets/team/Priyanka.jpg',
   },
   {
     name: 'Prerika P',
     role: 'CS Secretary',
     category: 'chapter',
     society: 'Computer Society',
-    img: '/assets/team/PrerikaP.jpg?v=3',
-    fallback: 'https://raw.githubusercontent.com/nisbweb/nisbweb.github.io/master/assets/cores25-26/PrerikaP.jpeg',
+    img: '/assets/team/PrerikaP.webp',
+    fallback: '/assets/team/PrerikaP.jpg',
   },
   {
     name: 'Nikitha H S',
     role: 'CASS & RAS Chairperson',
     category: 'chapter',
     society: 'CASS & RAS Societies',
-    img: '/assets/team/Nikitha.jpg?v=3',
-    fallback: 'https://raw.githubusercontent.com/nisbweb/nisbweb.github.io/master/assets/cores25-26/Nikitha.jpeg',
+    img: '/assets/team/Nikitha.webp',
+    fallback: '/assets/team/Nikitha.jpg',
   },
   {
     name: 'Suma Acharya',
     role: 'CASS Secretary',
     category: 'chapter',
     society: 'Circuits & Systems Society',
-    img: '/assets/team/Suma.jpg?v=3',
-    fallback: 'https://raw.githubusercontent.com/nisbweb/nisbweb.github.io/master/assets/cores25-26/Suma.jpg',
+    img: '/assets/team/Suma.webp',
+    fallback: '/assets/team/Suma.jpg',
   },
   {
     name: 'Sanjana S Shetty',
     role: 'WIE Chairperson',
     category: 'chapter',
     society: 'Women in Engineering',
-    img: '/assets/team/SanjanaS.jpg?v=3',
-    fallback: 'https://raw.githubusercontent.com/nisbweb/nisbweb.github.io/master/assets/cores25-26/SanjanaS.jpg',
+    img: '/assets/team/SanjanaS.webp',
+    fallback: '/assets/team/SanjanaS.jpg',
   },
   {
     name: 'Panchami Urs S',
     role: 'WIE Secretary',
     category: 'chapter',
     society: 'Women in Engineering',
-    img: '/assets/team/Panchami.jpg?v=3',
-    fallback: 'https://raw.githubusercontent.com/nisbweb/nisbweb.github.io/master/assets/cores25-26/Panchami.jpg',
+    img: '/assets/team/Panchami.webp',
+    fallback: '/assets/team/Panchami.jpg',
   },
   {
     name: 'Rachit Kulkarni',
     role: 'RAS Secretary',
     category: 'chapter',
     society: 'Robotics & Automation Society',
-    img: '/assets/team/Rachit.jpg?v=3',
-    fallback: 'https://raw.githubusercontent.com/nisbweb/nisbweb.github.io/master/assets/cores25-26/Rachit.jpeg',
+    img: '/assets/team/Rachit.webp',
+    fallback: '/assets/team/Rachit.jpg',
   },
   {
     name: 'Mohammed Mansooruddin',
     role: 'GRSS Chairperson',
     category: 'chapter',
     society: 'Geoscience & Remote Sensing',
-    img: '/assets/team/Mansoor.jpg?v=3',
-    fallback: 'https://raw.githubusercontent.com/nisbweb/nisbweb.github.io/master/assets/cores25-26/Mansoor.jpg',
+    img: '/assets/team/Mansoor.webp',
+    fallback: '/assets/team/Mansoor.jpg',
   },
   {
     name: 'Amol S',
     role: 'GRSS Secretary',
     category: 'chapter',
     society: 'Geoscience & Remote Sensing',
-    img: '/assets/team/Amol.jpg?v=3',
-    fallback: 'https://raw.githubusercontent.com/nisbweb/nisbweb.github.io/master/assets/cores25-26/Amol.jpg',
+    img: '/assets/team/Amol.webp',
+    fallback: '/assets/team/Amol.jpg',
   },
 ];
 
@@ -209,14 +209,19 @@ function TeamGridCard({ member, isPriority = false }: { member: TeamMember; isPr
         <img
           src={imgSrc}
           alt={member.name}
+          width={600}
+          height={750}
           loading={isPriority ? 'eager' : 'lazy'}
           decoding="async"
+          // @ts-ignore
+          fetchPriority={isPriority ? 'high' : 'auto'}
           onLoad={() => setIsLoaded(true)}
           onError={() => {
             if (imgSrc !== member.fallback) setImgSrc(member.fallback);
           }}
-          className={`w-full h-full object-cover object-top transition-all duration-700 ease-out group-hover:scale-106 pointer-events-none ${isLoaded ? 'opacity-100' : 'opacity-0'
-            }`}
+          className={`w-full h-full object-cover object-top transition-all duration-500 ease-out group-hover:scale-106 pointer-events-none ${
+            isLoaded ? 'opacity-100' : 'opacity-0'
+          }`}
         />
 
         {/* Gradient Scrim Overlay */}
@@ -248,16 +253,12 @@ export default function TeamSection() {
       <div className="max-w-[88rem] mx-auto relative z-10">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16 space-y-4">
-
-
           <h2 className="text-3xl sm:text-5xl md:text-6xl font-black uppercase font-display tracking-tight text-[var(--star-white)] leading-tight">
             CORE TEAM <br className="hidden sm:inline" />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-sky-200 to-[var(--accent)] drop-shadow-[0_0_25px_var(--accent-glow)]">
               2025–26
             </span>
           </h2>
-
-
         </div>
 
         {/* ── All 21 Team Members in Clean, High-Speed Responsive Grid ── */}

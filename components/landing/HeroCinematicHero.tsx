@@ -149,9 +149,7 @@ export default function HeroCinematicHero() {
               <span className="text-xs font-mono uppercase tracking-widest text-[var(--text-muted)] font-bold">
                 NISB CHAPTERS, COUNCILS AND AFFINITY GROUP
               </span>
-              <span className="px-2.5 py-0.5 rounded-full bg-[var(--accent)]/20 border border-[var(--accent)]/40 text-xs font-mono text-[var(--accent)] font-bold">
-                (06 CHAPTERS)
-              </span>
+
             </div>
 
             {/* Circular Orbit Ring Layout */}

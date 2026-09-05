@@ -397,7 +397,7 @@ export default function AwardsSection() {
     velocityRef.current = 0;
     try {
       (e.currentTarget as HTMLElement).setPointerCapture?.(e.pointerId);
-    } catch {}
+    } catch { }
   };
 
   const handlePointerMove = (e: React.PointerEvent) => {
@@ -423,7 +423,7 @@ export default function AwardsSection() {
     isDraggingRef.current = false;
     try {
       (e.currentTarget as HTMLElement).releasePointerCapture?.(e.pointerId);
-    } catch {}
+    } catch { }
 
     // If drag was very small, snap directly to nearest card
     if (Math.abs(velocityRef.current) < 0.05) {
@@ -515,10 +515,7 @@ export default function AwardsSection() {
         <div className="flex flex-col md:flex-row items-start md:items-end justify-between gap-6 pb-6 border-b border-[var(--border-main)]">
           <div>
             <div className="flex items-center gap-2 mb-2">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[var(--accent)]/10 border border-[var(--accent)]/30 text-[10px] font-mono font-bold tracking-widest text-[var(--accent)] uppercase">
-                <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)] animate-pulse" />
-                IEEE DISTINCTIONS &amp; RECOGNITIONS
-              </span>
+
             </div>
             <h2 className="text-3xl sm:text-4xl md:text-6xl font-black uppercase font-display tracking-tight text-[var(--star-white)] leading-tight">
               AWARDS &amp; <span className="text-[var(--accent)]">ACHIEVEMENTS</span>
@@ -631,11 +628,10 @@ export default function AwardsSection() {
               <button
                 key={idx}
                 onClick={() => navigateToIndex(idx)}
-                className={`h-1.5 rounded-full transition-all duration-300 ${
-                  activeIndex === idx
-                    ? 'w-7 bg-[var(--accent)] shadow-[0_0_10px_var(--accent)]'
-                    : 'w-1.5 bg-white/20 hover:bg-white/40'
-                }`}
+                className={`h-1.5 rounded-full transition-all duration-300 ${activeIndex === idx
+                  ? 'w-7 bg-[var(--accent)] shadow-[0_0_10px_var(--accent)]'
+                  : 'w-1.5 bg-white/20 hover:bg-white/40'
+                  }`}
                 aria-label={`Go to slide ${idx + 1}`}
               />
             ))}
@@ -667,7 +663,7 @@ export default function AwardsSection() {
                 key={idx}
                 className="text-xs font-mono font-bold tracking-widest text-white/60 uppercase hover:text-[var(--accent)] transition-colors"
               >
-                {text}
+
               </span>
             ))}
           </div>
