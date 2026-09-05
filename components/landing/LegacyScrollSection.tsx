@@ -39,7 +39,7 @@ function Word({ word, i, total, progress, isMobile }: { word: string; i: number;
   return (
     <motion.span
       style={{ opacity: isMobile ? 1 : opacity, y: isMobile ? 0 : y }}
-      className="text-2xl md:text-4xl lg:text-5xl font-bold text-white tracking-tight leading-snug"
+      className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white tracking-tight leading-tight"
     >
       {word}
     </motion.span>
@@ -75,81 +75,84 @@ export default function SolarLegacySection() {
     <section
       ref={containerRef}
       id="legacy"
-      className="relative bg-[var(--void)] text-[var(--star-white)] py-20 md:py-32 px-4 sm:px-6 md:px-16 border-b border-[var(--border-main)] selection:bg-[var(--accent)] selection:text-black"
+      className="relative bg-[var(--void)] text-[var(--star-white)] py-16 sm:py-24 md:py-32 px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 border-b border-[var(--border-main)] selection:bg-[var(--accent)] selection:text-black w-full overflow-hidden"
     >
       <SolarBackground />
 
       {/* Top Solar Progress Line */}
-      <div className="w-full h-[2px] bg-white/10 mb-12">
+      <div className="w-full h-[2px] bg-white/10 mb-12 sm:mb-16">
         <motion.div
           className="h-full bg-[var(--accent)] shadow-[0_0_20px_var(--accent)]"
           style={{ scaleX: smoothProgress, transformOrigin: 'left' }}
         />
       </div>
 
-      <div className="w-full max-w-[88rem] mx-auto space-y-16 sm:space-y-24">
-        {/* ── PART 1: EDITORIAL WRITEUP & STATS ── */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 sm:gap-12 items-start">
-          {/* Left Side: Editorial Heading & Large Word Text */}
-          <div className="lg:col-span-8 space-y-8">
-            <div>
-              <span className="inline-block px-3.5 py-1 mb-4 border border-[var(--accent)] text-[var(--accent)] text-xs font-bold uppercase tracking-[0.35em] rounded-full bg-[var(--accent)]/10">
-                Region 10 Excellence
+      <div className="w-full space-y-16 sm:space-y-24">
+        {/* ── PART 1: EDITORIAL WRITEUP SPREAD FULL WIDTH ── */}
+        <div className="w-full space-y-8 sm:space-y-12">
+          {/* Header & Badges */}
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-white/10 pb-8">
+            <div className="space-y-3">
+              <span className="inline-flex items-center gap-2 px-4 py-1.5 border border-[var(--accent)] text-[var(--accent)] text-xs font-mono font-bold uppercase tracking-[0.35em] rounded-full bg-[var(--accent)]/10 shadow-[0_0_15px_var(--accent-glow)]">
+                <span className="w-2 h-2 rounded-full bg-[var(--accent)] animate-pulse" />
+                <span>Region 10 Excellence • 25 Years</span>
               </span>
 
-              <h2 className="text-4xl xs:text-5xl md:text-7xl lg:text-8xl font-black text-white leading-[0.92] sm:leading-[0.88] tracking-[-0.05em] uppercase font-display">
+              <h2 className="text-4xl xs:text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-black text-white leading-[0.92] sm:leading-[0.88] tracking-[-0.05em] uppercase font-display">
                 The <span className="text-transparent stroke-white" style={{ WebkitTextStroke: '2px white' }}>Unmatched</span> <br />
-                <span className="text-[var(--accent)]">Legacy</span>
+                <span className="text-[var(--accent)] drop-shadow-[0_0_35px_var(--accent-glow)]">Legacy</span>
               </h2>
             </div>
 
-            <div className="space-y-6 pt-2">
-              <div className="flex flex-wrap gap-x-3 gap-y-2 md:gap-x-4 md:gap-y-3">
-                {paragraph1.map((word, i) => (
-                  <Word
-                    key={`p1-${i}`}
-                    word={word}
-                    i={i}
-                    total={totalWords}
-                    progress={smoothProgress}
-                    isMobile={isMobile}
-                  />
-                ))}
-              </div>
-
-              <div className="flex flex-wrap gap-x-3 gap-y-2 md:gap-x-4 md:gap-y-3">
-                {paragraph2.map((word, i) => (
-                  <Word
-                    key={`p2-${i}`}
-                    word={word}
-                    i={paragraph1.length + i}
-                    total={totalWords}
-                    progress={smoothProgress}
-                    isMobile={isMobile}
-                  />
-                ))}
-              </div>
-            </div>
+            <p className="text-xs sm:text-sm md:text-base font-mono text-white/60 max-w-lg uppercase tracking-wider leading-relaxed">
+              Preserving engineering heritage while advancing breakthrough research and technical leadership since 1999.
+            </p>
           </div>
 
-          {/* Right Side: Brutalist Stats */}
+          {/* Full Screen Word Reveal Paragraphs */}
+          <div className="w-full space-y-8 sm:space-y-12 pt-2">
+            <div className="flex flex-wrap gap-x-3 gap-y-2 sm:gap-x-4 sm:gap-y-3 md:gap-x-6 md:gap-y-4">
+              {paragraph1.map((word, i) => (
+                <Word
+                  key={`p1-${i}`}
+                  word={word}
+                  i={i}
+                  total={totalWords}
+                  progress={smoothProgress}
+                  isMobile={isMobile}
+                />
+              ))}
+            </div>
 
+            <div className="flex flex-wrap gap-x-3 gap-y-2 sm:gap-x-4 sm:gap-y-3 md:gap-x-6 md:gap-y-4">
+              {paragraph2.map((word, i) => (
+                <Word
+                  key={`p2-${i}`}
+                  word={word}
+                  i={paragraph1.length + i}
+                  total={totalWords}
+                  progress={smoothProgress}
+                  isMobile={isMobile}
+                />
+              ))}
+            </div>
+          </div>
         </div>
 
-        {/* ── PART 2: STUNNING 25-YEAR LEGACY FILM SHOWCASE CARD ── */}
+        {/* ── PART 2: STUNNING FULL-SCREEN PANORAMIC 25-YEAR FILM SHOWCASE ── */}
         <motion.div
           initial={{ opacity: 0, y: 35 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: '200px' }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="relative rounded-3xl overflow-hidden border border-[var(--border-main)] bg-[var(--card-bg)] shadow-[0_30px_70px_rgba(0,0,0,0.9),0_0_50px_var(--accent-glow)] group hover:border-[var(--accent)]/60 transition-all duration-700"
+          className="relative w-full rounded-2xl sm:rounded-3xl overflow-hidden border border-[var(--border-main)] bg-[var(--card-bg)] shadow-[0_30px_70px_rgba(0,0,0,0.9),0_0_50px_var(--accent-glow)] group hover:border-[var(--accent)]/60 transition-all duration-700"
         >
           {/* Ambient Lighting Orbs inside Card */}
-          <div className="absolute top-0 right-1/4 w-96 h-96 bg-[var(--accent)]/15 rounded-full blur-[100px] pointer-events-none" />
-          <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-blue-600/10 rounded-full blur-[100px] pointer-events-none" />
+          <div className="absolute top-0 right-1/4 w-[500px] h-[500px] bg-[var(--accent)]/15 rounded-full blur-[140px] pointer-events-none" />
+          <div className="absolute bottom-0 left-1/4 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[140px] pointer-events-none" />
 
-          {/* Cinematic Showcase Frame */}
-          <div className="relative aspect-[16/9] md:aspect-[21/9] min-h-[320px] w-full overflow-hidden flex items-center justify-center">
+          {/* Panoramic Film Frame */}
+          <div className="relative aspect-[16/9] md:aspect-[24/9] lg:aspect-[28/9] min-h-[340px] sm:min-h-[440px] w-full overflow-hidden flex items-center justify-center">
             {/* Background Cinematic Graphic / Video Poster */}
             <img
               src="https://img.youtube.com/vi/2sM8orzFsZo/maxresdefault.jpg"
@@ -157,29 +160,46 @@ export default function SolarLegacySection() {
               className="w-full h-full object-cover filter brightness-[0.6] contrast-110 group-hover:scale-105 transition-transform duration-1000"
             />
 
-            {/* Dark Vignette & Mesh Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-[#030712] via-[#030712]/50 to-transparent" />
-            <div className="absolute inset-0 bg-radial-gradient from-transparent via-black/40 to-black/80" />
+            {/* Dark Vignette & Gradient Overlays */}
+            <div className="absolute inset-0 bg-gradient-to-t from-[#030712] via-[#030712]/40 to-transparent" />
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_20%,rgba(0,0,0,0.75)_100%)]" />
 
             {/* Top Telemetry Overlay */}
             <div className="absolute top-4 sm:top-6 left-4 sm:left-8 right-4 sm:right-8 flex items-center justify-between pointer-events-none z-10">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/15 text-[9px] sm:text-[10.5px] font-mono uppercase tracking-[0.25em] text-[var(--accent)] font-bold">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/15 text-[9px] sm:text-[10.5px] font-mono uppercase tracking-[0.25em] text-[var(--accent)] font-bold">
                 <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
                 <span>NISB CINEMATIC ARCHIVE, 1999 — 2026</span>
               </div>
-
+              <div className="hidden sm:inline-flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-white/50">
+                <span>DOCUMENTARY FILM</span>
+                <span className="text-[var(--accent)]">•</span>
+                <span>4K RESOLUTION</span>
+              </div>
             </div>
 
-            {/* Center Luminous Play Button Linking to Google Drive Video */}
-
+            {/* Center Luminous Play Button */}
+            <a
+              href={legacyVideoUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="absolute z-20 group/play flex flex-col items-center justify-center gap-3 transition-transform duration-300 hover:scale-110 active:scale-95"
+              aria-label="Play NISB 25-Year Legacy Film on YouTube"
+            >
+              <div className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-full bg-black/60 backdrop-blur-xl border-2 border-[var(--accent)] flex items-center justify-center shadow-[0_0_40px_var(--accent-glow)] group-hover/play:shadow-[0_0_60px_var(--accent)] group-hover/play:border-white transition-all">
+                <div className="w-0 h-0 border-y-[12px] sm:border-y-[15px] border-y-transparent border-l-[20px] sm:border-l-[26px] border-l-white ml-1.5 transition-colors group-hover/play:border-l-[var(--accent)]" />
+              </div>
+              <span className="text-[10px] sm:text-xs font-mono font-bold uppercase tracking-[0.25em] text-white/80 group-hover/play:text-white transition-colors bg-black/50 px-3 py-1 rounded-full backdrop-blur-sm border border-white/10">
+                PLAY FILM ↗
+              </span>
+            </a>
 
             {/* Bottom Info Banner */}
             <div className="absolute bottom-4 sm:bottom-6 left-4 sm:left-8 right-4 sm:right-8 flex flex-col sm:flex-row sm:items-end justify-between gap-4 z-10">
-              <div className="max-w-xl">
-                <h3 className="text-xl sm:text-2xl md:text-3xl font-black uppercase tracking-tight text-white font-display">
+              <div className="max-w-2xl">
+                <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-black uppercase tracking-tight text-white font-display">
                   Watch The 25-Year <span className="text-[var(--accent)]">Legacy Story</span>
                 </h3>
-                <p className="text-xs sm:text-sm font-sans text-white/70 mt-1 leading-relaxed line-clamp-2 sm:line-clamp-none">
+                <p className="text-xs sm:text-sm font-sans text-white/70 mt-1.5 leading-relaxed line-clamp-2 sm:line-clamp-none max-w-xl">
                   Experience the founding memories, historic flagships, alumni achievements, and the visionary community that forged NIE IEEE Student Branch.
                 </p>
               </div>
@@ -190,7 +210,7 @@ export default function SolarLegacySection() {
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-[var(--star-white)] hover:bg-[var(--accent)] text-[var(--void)] hover:text-black text-xs font-mono font-extrabold uppercase tracking-wider transition-all duration-300 shadow-xl hover:scale-105 active:scale-95 shrink-0"
               >
-                <span>Open in Youtube</span>
+                <span>Open in YouTube</span>
                 <span>↗</span>
               </a>
             </div>
