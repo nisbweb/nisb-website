@@ -219,7 +219,7 @@ export default function HeroCinematicHero() {
         {/* -- BOTTOM SHOWCASE HERO CARD -- */}
 
         {/* MOBILE ONLY: visible image banner */}
-        <div className="md:hidden relative h-[160px] sm:h-[180px] overflow-hidden rounded-xl">
+        <div className="md:hidden relative h-[170px] sm:h-[200px] overflow-hidden rounded-xl mx-2 my-2 border border-white/10">
           <img
             src="/fonts/image.png"
             alt="NISB Engineering Showcase"
@@ -227,36 +227,17 @@ export default function HeroCinematicHero() {
             decoding="async"
             className="w-full h-full object-cover object-center grayscale-[15%] opacity-95"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[var(--void)]/80 via-transparent to-transparent" />
-          <div className="absolute bottom-3 inset-x-3 flex items-center gap-1.5 flex-wrap justify-center">
-            <div className="px-2.5 py-1 rounded-full bg-black/70 backdrop-blur-md border border-white/20 text-[9px] font-mono text-white">R10 Best Student Chapter</div>
-            <div className="px-2.5 py-1 rounded-full bg-black/70 backdrop-blur-md border border-white/20 text-[9px] font-mono text-white">25+ Years Legacy</div>
-            <div className="px-2.5 py-1 rounded-full bg-black/70 backdrop-blur-md border border-white/20 text-[9px] font-mono text-white">70+ Annual Events</div>
-          </div>
-        </div>
-
-        {/* -- BOTTOM SHOWCASE HERO CARD -- */}
-
-        {/* MOBILE ONLY: visible image banner */}
-        <div className="md:hidden relative h-[160px] sm:h-[180px] overflow-hidden rounded-xl">
-          <img
-            src="/fonts/image.png"
-            alt="NISB Engineering Showcase"
-            loading="lazy"
-            decoding="async"
-            className="w-full h-full object-cover object-center grayscale-[15%] opacity-95"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-[var(--void)]/80 via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[var(--void)]/90 via-[var(--void)]/30 to-transparent" />
           {/* Stats pills over image */}
-          <div className="absolute bottom-3 inset-x-3 flex items-center gap-1.5 flex-wrap justify-center">
-            <div className="px-2.5 py-1 rounded-full bg-black/70 backdrop-blur-md border border-white/20 text-[9px] font-mono text-white">R10 Best Student Chapter</div>
-            <div className="px-2.5 py-1 rounded-full bg-black/70 backdrop-blur-md border border-white/20 text-[9px] font-mono text-white">25+ Years Legacy</div>
-            <div className="px-2.5 py-1 rounded-full bg-black/70 backdrop-blur-md border border-white/20 text-[9px] font-mono text-white">70+ Annual Events</div>
+          <div className="absolute bottom-3 inset-x-2 flex items-center gap-1.5 flex-wrap justify-center">
+            <div className="px-2 py-0.5 rounded-full bg-black/80 backdrop-blur-md border border-white/20 text-[9px] font-mono text-white">R10 Best Student Chapter</div>
+            <div className="px-2 py-0.5 rounded-full bg-black/80 backdrop-blur-md border border-white/20 text-[9px] font-mono text-white">25+ Years Legacy</div>
+            <div className="px-2 py-0.5 rounded-full bg-black/80 backdrop-blur-md border border-white/20 text-[9px] font-mono text-white">70+ Annual Events</div>
           </div>
         </div>
 
         {/* MOBILE ONLY: single flagship card below image */}
-        <div className="md:hidden w-full mt-3">
+        <div className="md:hidden w-full px-2 mb-3">
           <div className="flex flex-col items-center justify-center text-center p-3.5 rounded-xl bg-white/5 border border-white/15 hover:border-[var(--accent)]/50 transition-all duration-300 group/card">
             <span className="text-[8px] font-mono uppercase tracking-[0.2em] text-[var(--accent)] font-bold mb-1">ANNUAL FLAGSHIPS</span>
             <h3 className="text-base font-black uppercase text-white font-display tracking-tight group-hover/card:text-[var(--accent)] transition-colors">ANKURA, ADROIT</h3>
