@@ -2,23 +2,23 @@
 
 import { useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
-import SmoothScroll        from '@/components/landing/SmoothScroll';
-import Navbar              from '@/components/landing/Navbar';
-import HeroCinematicHero   from '@/components/landing/HeroCinematicHero';
+import SmoothScroll from '@/components/landing/SmoothScroll';
+import Navbar from '@/components/landing/Navbar';
+import HeroCinematicHero from '@/components/landing/HeroCinematicHero';
 import LegacyScrollSection from '@/components/landing/LegacyScrollSection';
+import AwardsSection from '@/components/landing/AwardsSection';
+import CinematicEventsSection from '@/components/landing/CinematicEventsSection';
+import SocietyFestsSection from '@/components/landing/SocietyFestsSection';
+import ActivitiesBentoGrid from '@/components/landing/ActivitiesBentoGrid';
+import PublicationsSection from '@/components/landing/PublicationsSection';
+import BlogsAndPodcastSection from '@/components/landing/BlogsAndPodcastSection';
+import TeamSection from '@/components/landing/TeamSection';
+import ChaptersSection from '@/components/landing/ChaptersSection';
+import SiteFooter from '@/components/landing/SiteFooter';
 
-// Dynamically import below-the-fold interactive components for code-splitting & performance
-const CinematicEventsSection = dynamic(() => import('@/components/landing/CinematicEventsSection'), { ssr: false });
-const SocietyFestsSection    = dynamic(() => import('@/components/landing/SocietyFestsSection'), { ssr: false });
-const AwardsSection          = dynamic(() => import('@/components/landing/AwardsSection'), { ssr: false });
-const ActivitiesBentoGrid   = dynamic(() => import('@/components/landing/ActivitiesBentoGrid'), { ssr: false });
-const PublicationsSection   = dynamic(() => import('@/components/landing/PublicationsSection'), { ssr: false });
-const BlogsAndPodcastSection = dynamic(() => import('@/components/landing/BlogsAndPodcastSection'), { ssr: false });
-const TeamSection           = dynamic(() => import('@/components/landing/TeamSection'), { ssr: false });
-const ChaptersSection       = dynamic(() => import('@/components/landing/ChaptersSection'), { ssr: false });
-const SiteFooter            = dynamic(() => import('@/components/landing/SiteFooter'));
-const RadialThemeDial       = dynamic(() => import('@/components/landing/RadialThemeDial'), { ssr: false });
-const RobotWalkingDivider   = dynamic(() => import('@/components/landing/RobotWalkingDivider'), { ssr: false });
+// Client-only canvas & interactive widgets
+const RadialThemeDial = dynamic(() => import('@/components/landing/RadialThemeDial'), { ssr: false });
+const RobotWalkingDivider = dynamic(() => import('@/components/landing/RobotWalkingDivider'), { ssr: false });
 
 // Heavy / SSR-unsafe components loaded dynamically
 const IntroSequence = dynamic(() => import('@/components/intro/IntroSequence'), {

@@ -301,22 +301,23 @@ export default function ActivitiesBentoGrid() {
       <AnimatePresence>
         {selectedActivity && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 md:p-10">
-            {/* Backdrop */}
+            {/* High performance dark backdrop */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
               onClick={() => setSelectedActivity(null)}
-              className="absolute inset-0 bg-black/80 backdrop-blur-md"
+              className="absolute inset-0 bg-[#000005]/88"
             />
 
             {/* Modal Container */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              initial={{ opacity: 0, scale: 0.96, y: 15 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-              className="relative z-10 w-full max-w-4xl max-h-[85vh] overflow-y-auto rounded-3xl bg-[#090d16] border border-white/20 p-6 sm:p-8 md:p-10 shadow-[0_20px_60px_rgba(0,0,0,0.9)] space-y-6"
+              exit={{ opacity: 0, scale: 0.96, y: 15 }}
+              transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
+              className="relative z-10 w-full max-w-4xl max-h-[85vh] overflow-y-auto rounded-3xl bg-[#090d16] border border-white/20 p-6 sm:p-8 md:p-10 shadow-[0_20px_60px_rgba(0,0,0,0.9)] space-y-6 will-change-transform"
             >
               {/* Close Button */}
               <button

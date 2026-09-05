@@ -1,10 +1,20 @@
 'use client';
 
 import { Canvas } from '@react-three/fiber';
-import { Suspense } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import StarfieldBackground from './StarfieldBackground';
 
 export default function LandingCanvas() {
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.innerWidth >= 768) {
+      setIsDesktop(true);
+    }
+  }, []);
+
+  if (!isDesktop) return null;
+
   return (
     <Canvas
       gl={{
@@ -22,3 +32,4 @@ export default function LandingCanvas() {
     </Canvas>
   );
 }
+
