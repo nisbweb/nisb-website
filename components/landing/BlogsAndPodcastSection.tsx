@@ -276,20 +276,34 @@ export default function BlogsAndPodcastSection() {
             className="lg:col-span-7 rounded-2xl sm:rounded-3xl border border-[var(--border-main)] bg-[var(--card-bg)] p-5 sm:p-6 flex flex-col gap-5 shadow-2xl relative overflow-hidden"
           >
             {/* Header */}
-            <div className="space-y-3">
-              <div className="flex items-center justify-between flex-wrap gap-2">
+            <div className="space-y-4">
+              <div className="flex items-center justify-between flex-wrap gap-3 pb-2 border-b border-white/10">
+                <a
+                  href="https://nisb.substack.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 group/logo"
+                  title="Visit NISBlogs on Substack"
+                >
+                  <img
+                    src="/assets/nisblogs-logo-white.png"
+                    alt="NISBlogs"
+                    className="h-8 sm:h-9 w-auto object-contain filter drop-shadow-[0_0_12px_var(--accent-glow)] transition-transform duration-300 group-hover/logo:scale-105"
+                  />
+                </a>
 
                 <a
                   href="https://nisb.substack.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-[10px] font-mono text-[var(--text-muted)] hover:text-[var(--accent)] transition-colors font-bold"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 hover:border-[var(--accent)]/50 text-[10px] font-mono text-[var(--text-muted)] hover:text-white transition-all shadow-sm group/link"
                 >
-                  nisb.substack.com ↗
+                  <span>nisb.substack.com</span>
+                  <span className="text-[var(--accent)] group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform">↗</span>
                 </a>
               </div>
 
-              <h3 className="text-2xl sm:text-3xl font-black text-[var(--star-white)] tracking-tight uppercase leading-tight">
+              <h3 className="text-2xl sm:text-3xl font-black text-[var(--star-white)] tracking-tight uppercase leading-tight font-display">
                 READ <span className="text-[var(--accent)]">NISBlogs</span>
               </h3>
 

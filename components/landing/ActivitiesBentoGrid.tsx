@@ -104,42 +104,7 @@ const ACTIVITIES: ActivityItem[] = [
     },
   },
 
-  {
-    id: 'technical-workshops',
-    title: 'Workshops & Tech Talks',
-    image: '/image copy 3.png',
-    tag: 'TECHNICAL LEARNING',
-    destinations: 'Workshops • Tech Talks • Skill Building',
-    body: 'From Go and MATLAB to cryptography and cybersecurity, NISB creates spaces to pick up technologies, explore new ideas, and learn from people who know their stuff!',
-    details: {
-      heading: 'Workshops, Talks & Technical Sessions',
-      subheading: 'Learn Something New. Then Build With It.',
-      overview:
-        'NISB’s technical sessions cover a wide range of technologies and ideas, giving students opportunities to step outside their regular coursework and explore tools, concepts, and domains that spark their curiosity.',
-      highlights: [
-        {
-          title: 'Hands-on Technology Workshops',
-          desc: 'Workshops exploring Golang, MATLAB, MicroPython, Streamlit, cryptography, and other practical technologies give students an opportunity to learn by doing.',
-          tag: 'Golang • MATLAB • MicroPython • Streamlit',
-        },
-        {
-          title: 'Tech Talks',
-          desc: 'Expert-led and peer-driven sessions introduce students to evolving areas of technology, including blockchain and cybersecurity.',
-          tag: 'Blockchain • Cybersecurity • Emerging Tech',
-        },
-        {
-          title: 'Engineers COVID Paradigm',
-          desc: 'An online webinar that brought students together for conversations and learning during the changing landscape created by the COVID-19 pandemic.',
-          tag: 'Webinar • Engineering • Community',
-        },
-        {
-          title: 'Debate Competitions',
-          desc: 'Debate competitions conducted as part of Inspiro ’20 and Inspiro ’22 created a platform for students to think critically, articulate ideas, and engage with different perspectives.',
-          tag: 'Inspiro • Debate • Critical Thinking',
-        },
-      ],
-    },
-  },
+
 
   {
     id: 'weekly-meetups',
