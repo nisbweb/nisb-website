@@ -316,23 +316,29 @@ export default function AwardsSection() {
     isAutoSpinningRef.current = isAutoSpinning;
   }, [isAutoSpinning]);
 
+  const totalCardsRef = useRef(totalCards);
+  useEffect(() => {
+    totalCardsRef.current = totalCards;
+  }, [totalCards]);
+
   // Responsive Cylinder Radius: Wide and spacious so cards have generous 100px+ gaps
   useEffect(() => {
     const updateRadius = () => {
       if (typeof window === 'undefined') return;
       const w = window.innerWidth;
+      const n = totalCardsRef.current;
       if (w < 640) {
-        cylinderRadiusRef.current = Math.max(500, totalCards * 28);
+        cylinderRadiusRef.current = Math.max(500, n * 28);
       } else if (w < 1024) {
-        cylinderRadiusRef.current = Math.max(760, totalCards * 42);
+        cylinderRadiusRef.current = Math.max(760, n * 42);
       } else {
-        cylinderRadiusRef.current = Math.max(1050, totalCards * 56);
+        cylinderRadiusRef.current = Math.max(1050, n * 56);
       }
     };
     updateRadius();
     window.addEventListener('resize', updateRadius);
     return () => window.removeEventListener('resize', updateRadius);
-  }, [totalCards]);
+  }, []);
 
   // Helper: Normalize Angle to [-180, 180]
   const normalizeAngle = useCallback((angle: number) => {
@@ -537,6 +543,20 @@ export default function AwardsSection() {
     velocityRef.current = 0;
     activeIndexRef.current = 0;
     setActiveIndex(0);
+
+    if (typeof window !== 'undefined') {
+      const w = window.innerWidth;
+      const filtered = val === 'all' ? AWARDS : AWARDS.filter((a) => a.type === val);
+      const n = filtered.length;
+      totalCardsRef.current = n;
+      if (w < 640) {
+        cylinderRadiusRef.current = Math.max(500, n * 28);
+      } else if (w < 1024) {
+        cylinderRadiusRef.current = Math.max(760, n * 42);
+      } else {
+        cylinderRadiusRef.current = Math.max(1050, n * 56);
+      }
+    }
   };
 
   return (
