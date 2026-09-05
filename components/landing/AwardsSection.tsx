@@ -1,7 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 
 interface AwardItem {
   id: string;
@@ -268,17 +267,7 @@ const AWARDS: AwardItem[] = [
   },
 ];
 
-const CATEGORIES = [
-  { label: 'ALL HONOURS', value: 'all' },
-  { label: 'GLOBAL & MAJOR', value: 'global' },
-  { label: 'BRANCH EXCELLENCE', value: 'branch' },
-  { label: 'SOCIETY & CHAPTERS', value: 'chapter' },
-  { label: 'LEADERSHIP & VOLUNTEERS', value: 'individual' },
-];
-
 export default function AwardsSection() {
-  const [activeTab, setActiveTab] = useState<'all' | 'global' | 'branch' | 'chapter' | 'individual'>('all');
-  const [viewMode, setViewMode] = useState<'orbit' | 'grid'>('orbit');
   const [activeIndex, setActiveIndex] = useState(0);
 
   const containerRef = useRef<HTMLDivElement>(null);
@@ -293,16 +282,8 @@ export default function AwardsSection() {
   const lastXRef = useRef(0);
   const lastTimeRef = useRef(0);
 
-  const filteredAwards = useMemo(() => {
-    if (activeTab === 'all') return AWARDS;
-    return AWARDS.filter((a) => a.type === activeTab);
-  }, [activeTab]);
-
-  const totalCards = filteredAwards.length;
+  const totalCards = AWARDS.length;
   const totalCardsRef = useRef(totalCards);
-  useEffect(() => {
-    totalCardsRef.current = totalCards;
-  }, [totalCards]);
 
   // Helper: Shortest modular distance in circular array
   const getShortestDiff = useCallback((target: number, current: number, total: number) => {
@@ -370,8 +351,6 @@ export default function AwardsSection() {
 
   // Main Animation / Friction Deceleration Loop
   useEffect(() => {
-    if (viewMode !== 'orbit' || totalCards === 0) return;
-
     let animId: number;
 
     const tick = () => {
@@ -398,7 +377,7 @@ export default function AwardsSection() {
 
     animId = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(animId);
-  }, [viewMode, totalCards, renderCards]);
+  }, [renderCards]);
 
   // Navigate to specific card index smoothly
   const navigateToIndex = useCallback((index: number) => {
@@ -458,14 +437,6 @@ export default function AwardsSection() {
       e.preventDefault();
       targetOffsetRef.current += e.deltaX * 0.0025;
     }
-  };
-
-  const handleCategoryChange = (val: any) => {
-    setActiveTab(val);
-    currentOffsetRef.current = 0;
-    targetOffsetRef.current = 0;
-    velocityRef.current = 0;
-    setActiveIndex(0);
   };
 
   return (
@@ -540,7 +511,7 @@ export default function AwardsSection() {
       <div className="absolute bottom-1/4 left-0 w-[500px] h-[500px] bg-amber-500/6 rounded-full blur-[140px] pointer-events-none" />
 
       <div className="max-w-[92rem] mx-auto space-y-8 px-4 md:px-10 relative z-10">
-        {/* ── HEADER & CONTROLS ── */}
+        {/* ── STREAMLINED CLEAN HEADER ── */}
         <div className="flex flex-col md:flex-row items-start md:items-end justify-between gap-6 pb-6 border-b border-[var(--border-main)]">
           <div>
             <div className="flex items-center gap-2 mb-2">
@@ -554,231 +525,122 @@ export default function AwardsSection() {
             </h2>
           </div>
 
-          {/* Mode Switcher: 3D Slider vs Full Grid */}
-          <div className="flex items-center gap-3 flex-wrap">
-            <div className="flex rounded-full bg-white/5 border border-white/10 p-1">
-              <button
-                onClick={() => setViewMode('orbit')}
-                className={`px-4 py-1.5 rounded-full text-xs font-mono font-bold uppercase transition-all flex items-center gap-2 ${
-                  viewMode === 'orbit'
-                    ? 'bg-[var(--star-white)] text-[var(--void)] shadow-lg shadow-white/10'
-                    : 'text-white/60 hover:text-white'
-                }`}
-              >
-                <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                  <path d="M4 12h16M14 6l6 6-6 6" />
-                </svg>
-                <span>3D Slider</span>
-              </button>
-              <button
-                onClick={() => setViewMode('grid')}
-                className={`px-4 py-1.5 rounded-full text-xs font-mono font-bold uppercase transition-all flex items-center gap-2 ${
-                  viewMode === 'grid'
-                    ? 'bg-[var(--star-white)] text-[var(--void)] shadow-lg shadow-white/10'
-                    : 'text-white/60 hover:text-white'
-                }`}
-              >
-                <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                  <rect x="3" y="3" width="7" height="7" rx="1.5" />
-                  <rect x="14" y="3" width="7" height="7" rx="1.5" />
-                  <rect x="3" y="14" width="7" height="7" rx="1.5" />
-                  <rect x="14" y="14" width="7" height="7" rx="1.5" />
-                </svg>
-                <span>All Grid</span>
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* ── CATEGORY FILTER BUTTONS & DRAG NAVIGATION ── */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
-            {CATEGORIES.map((cat) => (
-              <button
-                key={cat.value}
-                onClick={() => handleCategoryChange(cat.value)}
-                className={`px-4 py-1.5 rounded-full text-xs font-mono font-bold tracking-wider uppercase whitespace-nowrap transition-all duration-300 ${
-                  activeTab === cat.value
-                    ? 'bg-[var(--accent)] text-[var(--void)] shadow-lg scale-105 font-extrabold'
-                    : 'bg-white/5 text-white/70 hover:bg-white/10 hover:text-white border border-white/10'
-                }`}
-              >
-                {cat.label}
-              </button>
-            ))}
-          </div>
-
-          {/* Navigation Controls */}
-          {viewMode === 'orbit' && (
-            <div className="flex items-center gap-2 shrink-0">
-              <span className="text-[11px] font-mono text-white/40 hidden sm:inline-block pr-1">
-                DRAG TO SLIDE ⇄
-              </span>
-              <button
-                onClick={() => navigateToIndex((activeIndex - 1 + totalCards) % totalCards)}
-                className="w-9 h-9 rounded-full bg-white/5 hover:bg-white/15 border border-white/10 text-white flex items-center justify-center transition-transform active:scale-90"
-                aria-label="Previous Award"
-              >
-                ❮
-              </button>
-              <button
-                onClick={() => navigateToIndex((activeIndex + 1) % totalCards)}
-                className="w-9 h-9 rounded-full bg-white/5 hover:bg-white/15 border border-white/10 text-white flex items-center justify-center transition-transform active:scale-90"
-                aria-label="Next Award"
-              >
-                ❯
-              </button>
-            </div>
-          )}
-        </div>
-
-        {/* ═════════════════════════════════════════════════════════════ */}
-        {/* ── MODE 1: SMOOTH DRAG-ONLY 3D SLIDER SHOWCASE ── */}
-        {/* ═════════════════════════════════════════════════════════════ */}
-        {viewMode === 'orbit' && (
-          <div className="relative w-full py-4">
-            {/* Viewport for 3D Carousel (Drag from left to right to slide) */}
-            <div
-              ref={containerRef}
-              onPointerDown={handlePointerDown}
-              onPointerMove={handlePointerMove}
-              onPointerUp={handlePointerUp}
-              onPointerCancel={handlePointerUp}
-              onWheel={handleWheel}
-              className="awards-3d-stage relative w-full h-[470px] sm:h-[510px] md:h-[550px] flex items-center justify-center overflow-hidden touch-pan-y"
+          {/* Clean Navigation Arrows & Drag Hint */}
+          <div className="flex items-center gap-2 shrink-0">
+            <span className="text-[11px] font-mono text-white/40 hidden sm:inline-block pr-1">
+              DRAG TO SLIDE ⇄
+            </span>
+            <button
+              onClick={() => navigateToIndex((activeIndex - 1 + totalCards) % totalCards)}
+              className="w-9 h-9 rounded-full bg-white/5 hover:bg-white/15 border border-white/10 text-white flex items-center justify-center transition-transform active:scale-90"
+              aria-label="Previous Award"
             >
-              {filteredAwards.map((award, i) => (
-                <div
-                  key={award.id}
-                  ref={(el) => {
-                    cardNodesRef.current[i] = el;
-                  }}
-                  onClick={() => navigateToIndex(i)}
-                  className="awards-card-wrapper"
-                >
-                  <div className="awards-card-body flex flex-col justify-between p-6 sm:p-7">
-                    <div className="awards-holo-sheen" />
+              ❮
+            </button>
+            <button
+              onClick={() => navigateToIndex((activeIndex + 1) % totalCards)}
+              className="w-9 h-9 rounded-full bg-white/5 hover:bg-white/15 border border-white/10 text-white flex items-center justify-center transition-transform active:scale-90"
+              aria-label="Next Award"
+            >
+              ❯
+            </button>
+          </div>
+        </div>
 
-                    {/* Card Top: Year & Category */}
-                    <div className="flex items-center justify-between z-10">
-                      <span className="px-3 py-1 rounded-full bg-white/10 text-xs font-mono font-black tracking-wider text-[var(--accent)] uppercase border border-white/10">
-                        {award.year}
-                      </span>
-                      <span className="text-[10px] font-mono tracking-widest text-white/70 uppercase font-bold px-2.5 py-0.5 rounded-md bg-white/5 border border-white/10">
-                        {award.category.split(' ')[0]}
-                      </span>
+        {/* ═════════════════════════════════════════════════════════════ */}
+        {/* ── SMOOTH DRAG-ONLY 3D SLIDER SHOWCASE ── */}
+        {/* ═════════════════════════════════════════════════════════════ */}
+        <div className="relative w-full py-4">
+          {/* Viewport for 3D Carousel (Drag from left to right to slide) */}
+          <div
+            ref={containerRef}
+            onPointerDown={handlePointerDown}
+            onPointerMove={handlePointerMove}
+            onPointerUp={handlePointerUp}
+            onPointerCancel={handlePointerUp}
+            onWheel={handleWheel}
+            className="awards-3d-stage relative w-full h-[470px] sm:h-[510px] md:h-[550px] flex items-center justify-center overflow-hidden touch-pan-y"
+          >
+            {AWARDS.map((award, i) => (
+              <div
+                key={award.id}
+                ref={(el) => {
+                  cardNodesRef.current[i] = el;
+                }}
+                onClick={() => navigateToIndex(i)}
+                className="awards-card-wrapper"
+              >
+                <div className="awards-card-body flex flex-col justify-between p-6 sm:p-7">
+                  <div className="awards-holo-sheen" />
+
+                  {/* Card Top: Year & Category */}
+                  <div className="flex items-center justify-between z-10">
+                    <span className="px-3 py-1 rounded-full bg-white/10 text-xs font-mono font-black tracking-wider text-[var(--accent)] uppercase border border-white/10">
+                      {award.year}
+                    </span>
+                    <span className="text-[10px] font-mono tracking-widest text-white/70 uppercase font-bold px-2.5 py-0.5 rounded-md bg-white/5 border border-white/10">
+                      {award.category.split(' ')[0]}
+                    </span>
+                  </div>
+
+                  {/* Card Middle: Imperial Laurel Crest & Typography */}
+                  <div className="my-auto space-y-3 z-10">
+                    {/* Imperial Laurel Wreath & Starburst Crest Medal */}
+                    <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-amber-500/25 via-[var(--accent)]/20 to-yellow-300/20 border border-amber-400/40 text-amber-300 flex items-center justify-center shadow-md">
+                      <svg className="w-6 h-6 drop-shadow-[0_0_8px_rgba(245,158,11,0.5)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                        {/* Laurel Wreath */}
+                        <path d="M7 19c-2-1.5-3-4-3-7 0-4 2-7 4-8" />
+                        <path d="M5 8c1 .5 2 1.5 2 3" />
+                        <path d="M4 13c1 .5 2 1.5 2 3" />
+                        <path d="M17 19c2-1.5 3-4 3-7 0-4-2-7-4-8" />
+                        <path d="M19 8c-1 .5-2 1.5-2 3" />
+                        <path d="M20 13c-1 .5-2 1.5-2 3" />
+                        {/* Central Starburst Medal */}
+                        <polygon points="12 4 14.5 9 20 9.5 16 13.5 17.5 19 12 16 6.5 19 8 13.5 4 9.5 9.5 9" fill="currentColor" stroke="none" opacity="0.9" />
+                        <circle cx="12" cy="12" r="1.8" fill="#ffffff" />
+                      </svg>
                     </div>
 
-                    {/* Card Middle: Imperial Laurel Crest & Typography */}
-                    <div className="my-auto space-y-3 z-10">
-                      {/* Imperial Laurel Wreath & Starburst Crest Medal */}
-                      <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-amber-500/25 via-[var(--accent)]/20 to-yellow-300/20 border border-amber-400/40 text-amber-300 flex items-center justify-center shadow-md">
-                        <svg className="w-6 h-6 drop-shadow-[0_0_8px_rgba(245,158,11,0.5)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                          {/* Laurel Wreath */}
-                          <path d="M7 19c-2-1.5-3-4-3-7 0-4 2-7 4-8" />
-                          <path d="M5 8c1 .5 2 1.5 2 3" />
-                          <path d="M4 13c1 .5 2 1.5 2 3" />
-                          <path d="M17 19c2-1.5 3-4 3-7 0-4-2-7-4-8" />
-                          <path d="M19 8c-1 .5-2 1.5-2 3" />
-                          <path d="M20 13c-1 .5-2 1.5-2 3" />
-                          {/* Central Starburst Medal */}
-                          <polygon points="12 4 14.5 9 20 9.5 16 13.5 17.5 19 12 16 6.5 19 8 13.5 4 9.5 9.5 9" fill="currentColor" stroke="none" opacity="0.9" />
-                          <circle cx="12" cy="12" r="1.8" fill="#ffffff" />
-                        </svg>
-                      </div>
-
-                      <div>
-                        <h3 className="text-lg sm:text-xl font-black uppercase font-display tracking-tight text-white leading-tight line-clamp-2">
-                          {award.title}
-                        </h3>
-                        <p className="text-xs font-mono text-[var(--accent)] font-semibold mt-1 truncate">
-                          {award.issuer}
-                        </p>
-                      </div>
-
-                      <p className="text-xs sm:text-sm font-sans text-white/80 leading-relaxed line-clamp-3">
-                        {award.description}
+                    <div>
+                      <h3 className="text-lg sm:text-xl font-black uppercase font-display tracking-tight text-white leading-tight line-clamp-2">
+                        {award.title}
+                      </h3>
+                      <p className="text-xs font-mono text-[var(--accent)] font-semibold mt-1 truncate">
+                        {award.issuer}
                       </p>
                     </div>
 
-                    {/* Card Bottom: IEEE Distinction Badge */}
-                    <div className="pt-3 border-t border-white/10 flex items-center justify-between text-[10px] font-mono text-white/50 z-10">
-                      <span className="text-[var(--accent)] font-bold">◆ IEEE HONOUR</span>
-                      <span>NISB</span>
-                    </div>
+                    <p className="text-xs sm:text-sm font-sans text-white/80 leading-relaxed line-clamp-3">
+                      {award.description}
+                    </p>
+                  </div>
+
+                  {/* Card Bottom: IEEE Distinction Badge */}
+                  <div className="pt-3 border-t border-white/10 flex items-center justify-between text-[10px] font-mono text-white/50 z-10">
+                    <span className="text-[var(--accent)] font-bold">◆ IEEE HONOUR</span>
+                    <span>NISB</span>
                   </div>
                 </div>
-              ))}
-            </div>
-
-            {/* Bottom Slider Nav Indicators */}
-            <div className="flex items-center justify-center gap-1.5 pt-3 flex-wrap max-w-xl mx-auto">
-              {filteredAwards.map((_, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => navigateToIndex(idx)}
-                  className={`h-1.5 rounded-full transition-all duration-300 ${
-                    activeIndex === idx
-                      ? 'w-7 bg-[var(--accent)] shadow-[0_0_10px_var(--accent)]'
-                      : 'w-1.5 bg-white/20 hover:bg-white/40'
-                  }`}
-                  aria-label={`Go to slide ${idx + 1}`}
-                />
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* ═════════════════════════════════════════════════════════════ */}
-        {/* ── MODE 2: COMPREHENSIVE ALL-AWARDS GRID VIEW ── */}
-        {/* ═════════════════════════════════════════════════════════════ */}
-        {viewMode === 'grid' && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredAwards.map((award, i) => (
-              <motion.div
-                key={award.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.05, duration: 0.4 }}
-                className={`p-6 rounded-3xl border transition-all duration-500 flex flex-col justify-between gap-5 group relative overflow-hidden ${
-                  award.highlight
-                    ? 'bg-gradient-to-br from-white/[0.08] via-white/[0.03] to-transparent border-[var(--accent)]/50 hover:border-[var(--accent)] shadow-[0_0_30px_rgba(0,0,0,0.6)]'
-                    : 'bg-white/[0.02] border-white/10 hover:border-white/25 hover:bg-white/[0.04]'
-                }`}
-              >
-                {/* Top Row: Year & Category Pill */}
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-mono font-black uppercase tracking-wider text-[var(--accent)]">
-                    {award.year}
-                  </span>
-                  <span className="text-[9px] font-mono font-bold tracking-[0.25em] uppercase text-white/60 px-2.5 py-1 rounded-full bg-white/5 border border-white/10">
-                    {award.category}
-                  </span>
-                </div>
-
-                {/* Middle: Title & Issuer */}
-                <div className="space-y-2">
-                  <h3 className="text-lg sm:text-xl font-black uppercase font-display tracking-tight text-white group-hover:text-[var(--accent)] transition-colors leading-tight">
-                    {award.title}
-                  </h3>
-                  <p className="text-xs font-mono text-white/50 uppercase tracking-wider">
-                    {award.issuer}
-                  </p>
-                  <p className="text-xs font-sans text-white/70 leading-relaxed pt-1">
-                    {award.description}
-                  </p>
-                </div>
-
-                {/* Bottom decorative bar */}
-                <div className="pt-3 border-t border-white/10 flex items-center justify-between text-[10px] font-mono text-white/40 group-hover:text-[var(--accent)] transition-colors">
-                  <span>◆ IEEE RECOGNIZED HONOUR</span>
-                  <span className="text-base group-hover:translate-x-1 transition-transform">★</span>
-                </div>
-              </motion.div>
+              </div>
             ))}
           </div>
-        )}
+
+          {/* Bottom Slider Nav Indicators */}
+          <div className="flex items-center justify-center gap-1.5 pt-3 flex-wrap max-w-xl mx-auto">
+            {AWARDS.map((_, idx) => (
+              <button
+                key={idx}
+                onClick={() => navigateToIndex(idx)}
+                className={`h-1.5 rounded-full transition-all duration-300 ${
+                  activeIndex === idx
+                    ? 'w-7 bg-[var(--accent)] shadow-[0_0_10px_var(--accent)]'
+                    : 'w-1.5 bg-white/20 hover:bg-white/40'
+                }`}
+                aria-label={`Go to slide ${idx + 1}`}
+              />
+            ))}
+          </div>
+        </div>
 
         {/* ── INFINITE MARQUEE STRIP AT THE BASE ── */}
         <div className="relative overflow-hidden py-4 border-y border-white/10 bg-white/[0.02] rounded-2xl">
