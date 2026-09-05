@@ -628,8 +628,23 @@ export default function AwardsSection() {
 
                   {/* Card Top: Year & Category */}
                   <div className="flex items-center justify-between z-10">
-                    <span className="px-3 py-1 rounded-full bg-white/10 text-xs font-mono font-black tracking-wider text-[var(--accent)] uppercase border border-white/10">
-                      {award.year}
+                    <span
+                      className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-mono font-black tracking-wider uppercase border shadow-lg backdrop-blur-md transition-all"
+                      style={{
+                        backgroundColor: award.accent ? `${award.accent}25` : 'rgba(56, 189, 248, 0.2)',
+                        borderColor: award.accent ? `${award.accent}70` : 'rgba(56, 189, 248, 0.6)',
+                        color: award.accent || 'var(--accent)',
+                        boxShadow: `0 0 16px -2px ${award.accent ? `${award.accent}60` : 'var(--accent-glow)'}`,
+                      }}
+                    >
+                      <span
+                        className="w-2 h-2 rounded-full animate-pulse shadow-sm shrink-0"
+                        style={{
+                          backgroundColor: award.accent || 'var(--accent)',
+                          boxShadow: `0 0 8px ${award.accent || 'var(--accent)'}`,
+                        }}
+                      />
+                      <span>{award.year}</span>
                     </span>
                     <span className="text-[10px] font-mono tracking-widest text-white/70 uppercase font-bold px-2.5 py-0.5 rounded-md bg-white/5 border border-white/10">
                       {award.category.split(' ')[0]}
