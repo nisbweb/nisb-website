@@ -242,10 +242,7 @@ export default function BlogsAndPodcastSection() {
               {/* Card content */}
               <div className="p-5 sm:p-6 space-y-3">
                 <div className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
-                  <span className="text-[10px] font-mono uppercase tracking-widest text-[var(--accent)] font-bold">
-                    NIE IEEE STUDENT BRANCH TALK SHOW
-                  </span>
+
                 </div>
                 <h3 className="text-2xl sm:text-3xl font-black text-[var(--star-white)] tracking-tight uppercase leading-tight font-display">
                   TECH N <span className="text-[var(--accent)]">TALES</span>
@@ -281,9 +278,7 @@ export default function BlogsAndPodcastSection() {
             {/* Header */}
             <div className="space-y-3">
               <div className="flex items-center justify-between flex-wrap gap-2">
-                <span className="px-3 py-1 rounded-full bg-[var(--accent)]/20 border border-[var(--accent)]/40 text-[var(--accent)] text-[9px] font-mono font-bold tracking-widest uppercase">
-                  NISBlogs • SUBSTACK
-                </span>
+
                 <a
                   href="https://nisb.substack.com"
                   target="_blank"
@@ -317,9 +312,7 @@ export default function BlogsAndPodcastSection() {
                   className="group cursor-pointer p-4 rounded-xl bg-white/[0.03] border border-[var(--border-main)] hover:border-[var(--accent)]/60 hover:bg-white/[0.06] transition-all"
                 >
                   <div className="flex items-start justify-between gap-2 mb-1.5">
-                    <span className="px-2 py-0.5 rounded-full bg-[var(--accent)]/15 border border-[var(--accent)]/25 text-[var(--accent)] text-[8px] font-mono font-bold uppercase tracking-wider shrink-0">
-                      {post.tag}
-                    </span>
+
                     <span className="text-[9px] font-mono text-[var(--text-muted)] shrink-0">{post.date}</span>
                   </div>
                   <h4 className="text-sm font-extrabold text-[var(--star-white)] group-hover:text-[var(--accent)] transition-colors leading-snug">

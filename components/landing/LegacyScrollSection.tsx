@@ -39,7 +39,7 @@ function Word({ word, i, total, progress, isMobile }: { word: string; i: number;
   return (
     <motion.span
       style={{ opacity: isMobile ? 1 : opacity, y: isMobile ? 0 : y }}
-      className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white tracking-tight leading-tight"
+      className="text-lg sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white tracking-tight leading-snug"
     >
       {word}
     </motion.span>
@@ -110,8 +110,8 @@ export default function SolarLegacySection() {
           </div>
 
           {/* Full Screen Word Reveal Paragraphs */}
-          <div className="w-full space-y-8 sm:space-y-12 pt-2">
-            <div className="flex flex-wrap gap-x-3 gap-y-2 sm:gap-x-4 sm:gap-y-3 md:gap-x-6 md:gap-y-4">
+          <div className="w-full space-y-6 sm:space-y-8 pt-2">
+            <div className="flex flex-wrap gap-x-2.5 gap-y-1.5 sm:gap-x-3.5 sm:gap-y-2 md:gap-x-4 md:gap-y-2.5">
               {paragraph1.map((word, i) => (
                 <Word
                   key={`p1-${i}`}
@@ -124,7 +124,7 @@ export default function SolarLegacySection() {
               ))}
             </div>
 
-            <div className="flex flex-wrap gap-x-3 gap-y-2 sm:gap-x-4 sm:gap-y-3 md:gap-x-6 md:gap-y-4">
+            <div className="flex flex-wrap gap-x-2.5 gap-y-1.5 sm:gap-x-3.5 sm:gap-y-2 md:gap-x-4 md:gap-y-2.5">
               {paragraph2.map((word, i) => (
                 <Word
                   key={`p2-${i}`}
