@@ -626,27 +626,35 @@ export default function AwardsSection() {
                 <div className="awards-card-body flex flex-col justify-between p-6 sm:p-7">
                   <div className="awards-holo-sheen" />
 
-                  {/* Card Top: Year & Category */}
+                  {/* Card Top: Highlighted Year & Category */}
                   <div className="flex items-center justify-between z-10">
                     <span
-                      className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-mono font-black tracking-wider uppercase border shadow-lg backdrop-blur-md transition-all"
+                      className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs sm:text-[13px] font-mono font-black tracking-widest uppercase border backdrop-blur-md transition-all duration-300 shadow-xl"
                       style={{
-                        backgroundColor: award.accent ? `${award.accent}25` : 'rgba(56, 189, 248, 0.2)',
-                        borderColor: award.accent ? `${award.accent}70` : 'rgba(56, 189, 248, 0.6)',
-                        color: award.accent || 'var(--accent)',
-                        boxShadow: `0 0 16px -2px ${award.accent ? `${award.accent}60` : 'var(--accent-glow)'}`,
+                        background: award.accent
+                          ? `linear-gradient(135deg, ${award.accent}40 0%, ${award.accent}18 100%)`
+                          : 'linear-gradient(135deg, rgba(56, 189, 248, 0.35) 0%, rgba(56, 189, 248, 0.15) 100%)',
+                        borderColor: award.accent ? `${award.accent}` : '#38bdf8',
+                        boxShadow: `0 0 20px -2px ${award.accent ? `${award.accent}80` : 'rgba(56, 189, 248, 0.7)'}, inset 0 0 14px ${award.accent ? `${award.accent}30` : 'rgba(56, 189, 248, 0.2)'}`,
                       }}
                     >
                       <span
-                        className="w-2 h-2 rounded-full animate-pulse shadow-sm shrink-0"
+                        className="w-2.5 h-2.5 rounded-full animate-pulse shadow-sm shrink-0"
                         style={{
-                          backgroundColor: award.accent || 'var(--accent)',
-                          boxShadow: `0 0 8px ${award.accent || 'var(--accent)'}`,
+                          backgroundColor: award.accent || '#38bdf8',
+                          boxShadow: `0 0 10px 2px ${award.accent || '#38bdf8'}`,
                         }}
                       />
-                      <span>{award.year}</span>
+                      <span
+                        className="text-white font-black"
+                        style={{
+                          textShadow: `0 0 10px ${award.accent ? `${award.accent}cc` : 'rgba(56, 189, 248, 0.8)'}`,
+                        }}
+                      >
+                        {award.year}
+                      </span>
                     </span>
-                    <span className="text-[10px] font-mono tracking-widest text-white/70 uppercase font-bold px-2.5 py-0.5 rounded-md bg-white/5 border border-white/10">
+                    <span className="text-[10px] font-mono tracking-widest text-white/80 uppercase font-bold px-2.5 py-1 rounded-md bg-white/10 border border-white/15 backdrop-blur-sm">
                       {award.category.split(' ')[0]}
                     </span>
                   </div>
