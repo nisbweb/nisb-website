@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 interface AwardItem {
   id: string;
@@ -268,17 +268,24 @@ const CATEGORIES = [
 export default function AwardsSection() {
   const [activeTab, setActiveTab] = useState<'all' | 'global' | 'branch' | 'chapter' | 'individual'>('all');
   const [viewMode, setViewMode] = useState<'orbit' | 'grid'>('orbit');
-  const [rotationAngle, setRotationAngle] = useState(0);
   const [isAutoSpinning, setIsAutoSpinning] = useState(true);
   const [activeIndex, setActiveIndex] = useState(0);
-  const [isDragging, setIsDragging] = useState(false);
   const [radius, setRadius] = useState(440);
 
   const containerRef = useRef<HTMLDivElement>(null);
+  const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
+  const rotationAngleRef = useRef(0);
+  const targetAngleRef = useRef(0);
+  const activeIndexRef = useRef(0);
+  const isAutoSpinningRef = useRef(true);
+  const isDraggingRef = useRef(false);
   const dragStartX = useRef(0);
   const dragStartAngle = useRef(0);
-  const animFrameId = useRef<number | null>(null);
-  const lastTimeRef = useRef<number>(0);
+
+  // Keep auto-spin ref in sync with state
+  useEffect(() => {
+    isAutoSpinningRef.current = isAutoSpinning;
+  }, [isAutoSpinning]);
 
   const filteredAwards = useMemo(() => {
     if (activeTab === 'all') return AWARDS;
@@ -305,61 +312,110 @@ export default function AwardsSection() {
     return () => window.removeEventListener('resize', updateRadius);
   }, []);
 
-  // Sync active index based on rotation
-  useEffect(() => {
-    if (count === 0) return;
-    const step = (2 * Math.PI) / count;
-    // Normalize angle to [0, 2*PI)
-    let norm = (-rotationAngle) % (2 * Math.PI);
+  // Update DOM cards transforms directly on GPU without React re-render thrashing
+  const updateCardPositions = useCallback(() => {
+    const angle = rotationAngleRef.current;
+    const n = filteredAwards.length;
+    if (n === 0) return;
+
+    const step = (2 * Math.PI) / n;
+
+    // Determine current active index
+    let norm = (-angle) % (2 * Math.PI);
     if (norm < 0) norm += 2 * Math.PI;
-    const closestIdx = Math.round(norm / step) % count;
-    setActiveIndex(closestIdx);
-  }, [rotationAngle, count]);
+    const closestIdx = Math.round(norm / step) % n;
 
-  // Smooth Infinite Auto-Spin Loop
+    if (closestIdx !== activeIndexRef.current) {
+      activeIndexRef.current = closestIdx;
+      setActiveIndex(closestIdx);
+    }
+
+    cardsRef.current.forEach((el, i) => {
+      if (!el) return;
+      const theta = angle + i * step;
+      const x = Math.sin(theta) * radius;
+      const z = Math.cos(theta) * radius - radius;
+
+      const depthProgress = (z + 2 * radius) / (2 * radius);
+      const scale = 0.58 + depthProgress * 0.44;
+      const opacity = Math.max(0.18, Math.pow(depthProgress, 1.8));
+      const isFront = depthProgress > 0.88;
+      const zIndex = Math.round(depthProgress * 100);
+
+      el.style.transform = `translate3d(${x.toFixed(1)}px, 0px, ${z.toFixed(1)}px) scale(${scale.toFixed(3)})`;
+      el.style.opacity = opacity.toFixed(3);
+      el.style.zIndex = `${zIndex}`;
+      el.style.filter = isFront ? 'none' : `blur(${Math.max(0, (1 - depthProgress) * 4).toFixed(1)}px)`;
+
+      if (isFront) {
+        el.classList.add('ring-1', 'ring-[var(--accent)]/50', 'border-[var(--accent)]');
+      } else {
+        el.classList.remove('ring-1', 'ring-[var(--accent)]/50', 'border-[var(--accent)]');
+      }
+    });
+  }, [filteredAwards.length, radius]);
+
+  // Main high-performance Animation Frame Loop
   useEffect(() => {
-    if (!isAutoSpinning || isDragging || count === 0) return;
+    if (viewMode !== 'orbit' || count === 0) return;
 
-    const spin = (time: number) => {
-      if (!lastTimeRef.current) lastTimeRef.current = time;
-      const dt = Math.min((time - lastTimeRef.current) / 1000, 0.1);
-      lastTimeRef.current = time;
+    let animId: number;
+    let lastTime = performance.now();
 
-      // Slow elegant 3D drift (one full rotation every ~28 seconds)
-      const speed = (2 * Math.PI) / 28;
-      setRotationAngle((prev) => prev - speed * dt);
+    const loop = (now: number) => {
+      const dt = Math.min((now - lastTime) / 1000, 0.1);
+      lastTime = now;
 
-      animFrameId.current = requestAnimationFrame(spin);
+      if (!isDraggingRef.current) {
+        if (isAutoSpinningRef.current) {
+          const speed = (2 * Math.PI) / 28;
+          rotationAngleRef.current -= speed * dt;
+          targetAngleRef.current = rotationAngleRef.current;
+        } else {
+          // Smoothly interpolate towards target angle
+          rotationAngleRef.current += (targetAngleRef.current - rotationAngleRef.current) * Math.min(1, dt * 7);
+        }
+      }
+
+      updateCardPositions();
+      animId = requestAnimationFrame(loop);
     };
 
-    lastTimeRef.current = performance.now();
-    animFrameId.current = requestAnimationFrame(spin);
+    animId = requestAnimationFrame(loop);
+    return () => cancelAnimationFrame(animId);
+  }, [viewMode, count, updateCardPositions]);
 
-    return () => {
-      if (animFrameId.current) cancelAnimationFrame(animFrameId.current);
-    };
-  }, [isAutoSpinning, isDragging, count]);
+  // Reset angle when changing category
+  const handleCategoryChange = (val: any) => {
+    setActiveTab(val);
+    rotationAngleRef.current = 0;
+    targetAngleRef.current = 0;
+    activeIndexRef.current = 0;
+    setActiveIndex(0);
+  };
 
   // Handle Drag / Scrub
   const handlePointerDown = (e: React.PointerEvent) => {
-    setIsDragging(true);
+    isDraggingRef.current = true;
     setIsAutoSpinning(false);
+    isAutoSpinningRef.current = false;
     dragStartX.current = e.clientX;
-    dragStartAngle.current = rotationAngle;
+    dragStartAngle.current = rotationAngleRef.current;
     (e.target as HTMLElement).setPointerCapture?.(e.pointerId);
   };
 
   const handlePointerMove = (e: React.PointerEvent) => {
-    if (!isDragging) return;
+    if (!isDraggingRef.current) return;
     const deltaX = e.clientX - dragStartX.current;
-    // Sensitivity factor
     const sensitivity = 0.0055;
-    setRotationAngle(dragStartAngle.current + deltaX * sensitivity);
+    rotationAngleRef.current = dragStartAngle.current + deltaX * sensitivity;
+    targetAngleRef.current = rotationAngleRef.current;
+    updateCardPositions();
   };
 
   const handlePointerUp = (e: React.PointerEvent) => {
-    if (!isDragging) return;
-    setIsDragging(false);
+    if (!isDraggingRef.current) return;
+    isDraggingRef.current = false;
     try {
       (e.target as HTMLElement).releasePointerCapture?.(e.pointerId);
     } catch { }
@@ -368,24 +424,25 @@ export default function AwardsSection() {
   // Rotate directly to a card
   const rotateToCard = useCallback(
     (index: number) => {
-      if (count === 0) return;
-      const step = (2 * Math.PI) / count;
-      const targetAngle = -index * step;
-      // Find shortest angular distance
-      const current = rotationAngle;
-      const diff = ((targetAngle - current + Math.PI) % (2 * Math.PI)) - Math.PI;
-      setRotationAngle(current + diff);
-      setActiveIndex(index);
+      const n = filteredAwards.length;
+      if (n === 0) return;
+      const step = (2 * Math.PI) / n;
+      const target = -index * step;
+      const current = rotationAngleRef.current;
+      const diff = ((target - current + Math.PI) % (2 * Math.PI)) - Math.PI;
+      targetAngleRef.current = current + diff;
+      setIsAutoSpinning(false);
+      isAutoSpinningRef.current = false;
     },
-    [count, rotationAngle]
+    [filteredAwards.length]
   );
 
   const nextCard = () => {
-    rotateToCard((activeIndex + 1) % count);
+    rotateToCard((activeIndexRef.current + 1) % count);
   };
 
   const prevCard = () => {
-    rotateToCard((activeIndex - 1 + count) % count);
+    rotateToCard((activeIndexRef.current - 1 + count) % count);
   };
 
   return (
@@ -454,11 +511,7 @@ export default function AwardsSection() {
           {CATEGORIES.map((cat) => (
             <button
               key={cat.value}
-              onClick={() => {
-                setActiveTab(cat.value as any);
-                setRotationAngle(0);
-                setActiveIndex(0);
-              }}
+              onClick={() => handleCategoryChange(cat.value)}
               className={`px-4 py-1.5 rounded-full text-xs font-mono font-bold tracking-wider uppercase whitespace-nowrap transition-all duration-300 ${activeTab === cat.value
                 ? 'bg-[var(--accent)] text-[var(--void)] shadow-lg scale-105'
                 : 'bg-white/5 text-white/70 hover:bg-white/10 hover:text-white border border-white/10'
@@ -540,41 +593,16 @@ export default function AwardsSection() {
 
               {/* 3D Circular Orbit Ring Cards */}
               {filteredAwards.map((award, i) => {
-                const step = (2 * Math.PI) / count;
-                const theta = rotationAngle + i * step;
-
-                // 3D Trigonometry on X-Z Plane
-                const x = Math.sin(theta) * radius;
-                const z = Math.cos(theta) * radius - radius; // z ranges from 0 (front) to -2*radius (back)
-
-                // Depth scaling and opacity
-                const depthProgress = (z + 2 * radius) / (2 * radius); // 0 (furthest back) to 1 (front center)
-                const scale = 0.58 + depthProgress * 0.44;
-                const opacity = Math.max(0.18, Math.pow(depthProgress, 1.8));
-                const isFront = depthProgress > 0.88;
-                const zIndex = Math.round(depthProgress * 100);
-
                 return (
                   <div
                     key={award.id}
+                    ref={(el) => { cardsRef.current[i] = el; }}
                     onClick={() => rotateToCard(i)}
-                    style={{
-                      transform: `translate3d(${x}px, 0, ${z}px) scale(${scale})`,
-                      opacity: opacity,
-                      zIndex: zIndex,
-                      filter: isFront ? 'none' : `blur(${Math.max(0, (1 - depthProgress) * 4)}px)`,
-                    }}
-                    className={`absolute w-[280px] sm:w-[320px] md:w-[360px] p-6 sm:p-7 rounded-3xl border transition-shadow duration-300 backdrop-blur-xl flex flex-col justify-between cursor-pointer ${isFront
-                      ? 'bg-gradient-to-br from-white/[0.14] via-[#0b1324]/95 to-[#050914] border-[var(--accent)] shadow-[0_20px_50px_rgba(0,0,0,0.9),0_0_40px_var(--accent-glow)] ring-1 ring-[var(--accent)]/50'
-                      : 'bg-[#0b1324]/80 border-white/10 hover:border-white/30'
-                      }`}
+                    className="absolute w-[280px] sm:w-[320px] md:w-[360px] p-6 sm:p-7 rounded-3xl border transition-shadow duration-300 backdrop-blur-xl flex flex-col justify-between cursor-pointer bg-gradient-to-br from-white/[0.14] via-[#0b1324]/95 to-[#050914] border-white/15 shadow-[0_20px_50px_rgba(0,0,0,0.9)] will-change-transform"
                   >
                     {/* Top Row: Year & Category Pill */}
                     <div className="flex items-center justify-between gap-2">
-                      <span
-                        className={`text-xs font-mono font-black uppercase tracking-wider ${isFront ? 'text-[var(--accent)]' : 'text-white/60'
-                          }`}
-                      >
+                      <span className="text-xs font-mono font-black uppercase tracking-wider text-[var(--accent)]">
                         {award.year}
                       </span>
                       <span className="text-[9px] font-mono font-bold tracking-[0.2em] uppercase text-white/70 px-2.5 py-1 rounded-full bg-white/5 border border-white/10">
@@ -585,21 +613,13 @@ export default function AwardsSection() {
                     {/* Middle: Trophy Medal Icon & Title */}
                     <div className="space-y-3 my-4">
                       <div className="flex items-center gap-3">
-                        <div
-                          className={`w-10 h-10 rounded-2xl flex items-center justify-center shrink-0 border ${isFront
-                            ? 'bg-gradient-to-tr from-[var(--accent)]/30 to-amber-400/20 border-[var(--accent)]/50 text-amber-300 shadow-md'
-                            : 'bg-white/5 border-white/10 text-white/40'
-                            }`}
-                        >
+                        <div className="w-10 h-10 rounded-2xl flex items-center justify-center shrink-0 border bg-gradient-to-tr from-[var(--accent)]/30 to-amber-400/20 border-[var(--accent)]/50 text-amber-300 shadow-md">
                           <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
                           </svg>
                         </div>
                         <div>
-                          <h3
-                            className={`text-lg sm:text-xl font-black uppercase font-display tracking-tight leading-tight line-clamp-2 ${isFront ? 'text-white' : 'text-white/80'
-                              }`}
-                          >
+                          <h3 className="text-lg sm:text-xl font-black uppercase font-display tracking-tight leading-tight line-clamp-2 text-white">
                             {award.title}
                           </h3>
                           <p className="text-[11px] font-mono text-[var(--accent)] font-semibold mt-0.5 line-clamp-1">
@@ -608,20 +628,17 @@ export default function AwardsSection() {
                         </div>
                       </div>
 
-                      <p
-                        className={`text-xs font-sans leading-relaxed line-clamp-3 ${isFront ? 'text-white/85' : 'text-white/50'
-                          }`}
-                      >
+                      <p className="text-xs font-sans leading-relaxed line-clamp-3 text-white/85">
                         {award.description}
                       </p>
                     </div>
 
                     {/* Bottom Telemetry Bar */}
                     <div className="pt-3 border-t border-white/10 flex items-center justify-between text-[10px] font-mono">
-                      <span className={isFront ? 'text-[var(--accent)] font-bold' : 'text-white/40'}>
-                        {isFront ? '★ ACTIVE SPOTLIGHT' : 'CLICK TO VIEW'}
+                      <span className="text-[var(--accent)] font-bold">
+                        ★ IEEE SPOTLIGHT
                       </span>
-                      <span className="text-white/40">IEEE NISB</span>
+                      <span className="text-white/40">NISB MYSURU</span>
                     </div>
                   </div>
                 );
