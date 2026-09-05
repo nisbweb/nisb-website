@@ -295,7 +295,7 @@ export default function AwardsSection() {
   const startXRef = useRef(0);
   const lastXRef = useRef(0);
   const lastTimeRef = useRef(0);
-  const cylinderRadiusRef = useRef(760);
+  const cylinderRadiusRef = useRef(1050);
   const isAutoSpinningRef = useRef(true);
   const activeIndexRef = useRef(0);
   const tiltXRef = useRef(0);
@@ -316,23 +316,23 @@ export default function AwardsSection() {
     isAutoSpinningRef.current = isAutoSpinning;
   }, [isAutoSpinning]);
 
-  // Responsive Cylinder Radius calculation with generous spacing between cards
+  // Responsive Cylinder Radius: Wide and spacious so cards have generous 100px+ gaps
   useEffect(() => {
     const updateRadius = () => {
       if (typeof window === 'undefined') return;
       const w = window.innerWidth;
       if (w < 640) {
-        cylinderRadiusRef.current = 440;
+        cylinderRadiusRef.current = Math.max(500, totalCards * 28);
       } else if (w < 1024) {
-        cylinderRadiusRef.current = 620;
+        cylinderRadiusRef.current = Math.max(760, totalCards * 42);
       } else {
-        cylinderRadiusRef.current = 780;
+        cylinderRadiusRef.current = Math.max(1050, totalCards * 56);
       }
     };
     updateRadius();
     window.addEventListener('resize', updateRadius);
     return () => window.removeEventListener('resize', updateRadius);
-  }, []);
+  }, [totalCards]);
 
   // Helper: Normalize Angle to [-180, 180]
   const normalizeAngle = useCallback((angle: number) => {
@@ -342,7 +342,7 @@ export default function AwardsSection() {
     return a;
   }, []);
 
-  // Render 3D Cylindrical Ring Transforms on DOM elements
+  // Render 3D Cylindrical Ring Transforms on DOM elements with smooth depth fade
   const render3DCards = useCallback(() => {
     const radius = cylinderRadiusRef.current;
     const currentAngle = currentAngleRef.current;
@@ -367,10 +367,12 @@ export default function AwardsSection() {
       const x = Math.sin(rad) * radius;
       const z = Math.cos(rad) * radius;
 
-      // Depth calculations
-      const normalizedDepth = (z + radius) / (radius * 2); // 0 (far) to 1 (near)
-      const scale = 0.74 + normalizedDepth * 0.28;
-      const opacity = Math.max(0.18, 0.2 + Math.pow(normalizedDepth, 1.8) * 0.8);
+      // Depth calculations: only front-facing arc is visible with clarity; back half fades out seamlessly
+      const normalizedDepth = (z + radius) / (radius * 2); // 0 (far back) to 1 (near front)
+      const scale = 0.76 + normalizedDepth * 0.28;
+
+      // Smooth front-arc visibility curve: cards in back fade to 0 opacity
+      const opacity = normalizedDepth > 0.42 ? Math.pow((normalizedDepth - 0.42) / 0.58, 1.4) : 0;
       const blur = Math.max(0, (1 - normalizedDepth) * 5.0);
       const zIndex = Math.round(normalizedDepth * 1000);
 
@@ -379,12 +381,14 @@ export default function AwardsSection() {
       card.style.opacity = opacity.toFixed(2);
       card.style.filter = `blur(${blur.toFixed(1)}px)`;
       card.style.zIndex = `${zIndex}`;
+      card.style.visibility = opacity > 0.02 ? 'visible' : 'hidden';
 
       // Mirror reflection ground projection
       const mirror = mirrorNodesRef.current[i];
       if (mirror) {
         mirror.style.transform = `translate3d(${x.toFixed(2)}px, 0px, ${z.toFixed(2)}px) rotateY(${cardAngle.toFixed(2)}deg) scale(${scale.toFixed(3)})`;
-        mirror.style.opacity = (opacity * 0.2).toFixed(2);
+        mirror.style.opacity = (opacity * 0.18).toFixed(2);
+        mirror.style.visibility = opacity > 0.02 ? 'visible' : 'hidden';
       }
 
       // Center card spotlight glow class
@@ -410,7 +414,7 @@ export default function AwardsSection() {
     const animateLoop = () => {
       // 1. Auto-Orbit Drift
       if (isAutoSpinningRef.current && !isDraggingRef.current) {
-        targetAngleRef.current -= 0.13;
+        targetAngleRef.current -= 0.11;
       }
 
       // 2. Inertia Friction Deceleration
@@ -487,8 +491,8 @@ export default function AwardsSection() {
     if (typeof window !== 'undefined') {
       const normX = (e.clientX / window.innerWidth - 0.5) * 2;
       const normY = (e.clientY / window.innerHeight - 0.5) * 2;
-      targetTiltXRef.current = -normY * 10;
-      targetTiltYRef.current = normX * 14;
+      targetTiltXRef.current = -normY * 8;
+      targetTiltYRef.current = normX * 12;
     }
 
     if (!isDraggingRef.current) return;
@@ -497,9 +501,9 @@ export default function AwardsSection() {
     const deltaX = e.clientX - lastXRef.current;
     const deltaTime = Math.max(now - lastTimeRef.current, 1);
 
-    const sens = typeof window !== 'undefined' && window.innerWidth < 768 ? 0.32 : 0.2;
+    const sens = typeof window !== 'undefined' && window.innerWidth < 768 ? 0.3 : 0.18;
     targetAngleRef.current += deltaX * sens;
-    velocityRef.current = (deltaX / deltaTime) * 1.6;
+    velocityRef.current = (deltaX / deltaTime) * 1.5;
 
     lastXRef.current = e.clientX;
     lastTimeRef.current = now;
@@ -538,14 +542,16 @@ export default function AwardsSection() {
   return (
     <section
       id="awards"
-      className="premium-section py-20 bg-[#050508] text-[var(--star-white)] relative overflow-hidden border-b border-[var(--border-main)] select-none"
+      className="premium-section py-20 bg-[var(--void)] text-[var(--star-white)] relative overflow-hidden border-b border-[var(--border-main)] select-none"
     >
-      {/* ── CSS STYLES FOR TRUE 3D CYLINDER STAGE (SLEEK COMPACT CARDS & SPACIOUS ORBIT) ── */}
+      {/* ── CSS STYLES FOR TRUE 3D CYLINDER STAGE (SEAMLESS FULL BLEED & SPACIOUS ORBIT) ── */}
       <style jsx global>{`
         .aether-viewport {
           perspective: 1400px;
           perspective-origin: 50% 48%;
           transform-style: preserve-3d;
+          mask-image: linear-gradient(to right, transparent 0%, black 14%, black 86%, transparent 100%);
+          -webkit-mask-image: linear-gradient(to right, transparent 0%, black 14%, black 86%, transparent 100%);
         }
         .aether-stage {
           transform-style: preserve-3d;
@@ -563,20 +569,20 @@ export default function AwardsSection() {
         }
         .aether-card {
           position: absolute;
-          width: 250px;
-          height: 340px;
-          left: -125px;
-          top: -170px;
+          width: 220px;
+          height: 310px;
+          left: -110px;
+          top: -155px;
           transform-style: preserve-3d;
           will-change: transform, filter, opacity;
           cursor: grab;
         }
         @media (max-width: 768px) {
           .aether-card {
-            width: 205px;
-            height: 290px;
-            left: -102.5px;
-            top: -145px;
+            width: 190px;
+            height: 275px;
+            left: -95px;
+            top: -137.5px;
           }
         }
         .aether-card:active {
@@ -586,7 +592,7 @@ export default function AwardsSection() {
           width: 100%;
           height: 100%;
           border-radius: 20px;
-          background: linear-gradient(165deg, rgba(255, 255, 255, 0.08) 0%, rgba(10, 14, 26, 0.92) 100%);
+          background: linear-gradient(165deg, rgba(255, 255, 255, 0.08) 0%, rgba(10, 14, 26, 0.94) 100%);
           border: 1px solid rgba(255, 255, 255, 0.12);
           backdrop-filter: blur(24px);
           -webkit-backdrop-filter: blur(24px);
@@ -612,12 +618,12 @@ export default function AwardsSection() {
         }
         .aether-floor-grid {
           position: absolute;
-          top: 62%;
+          top: 60%;
           left: 50%;
           transform: translate(-50%, 0) rotateX(90deg);
-          width: 2000px;
-          height: 2000px;
-          background: radial-gradient(circle at center, rgba(255, 255, 255, 0.04) 0%, rgba(5, 5, 8, 0.95) 70%, #050507 100%);
+          width: 2200px;
+          height: 2200px;
+          background: radial-gradient(circle at center, rgba(255, 255, 255, 0.035) 0%, rgba(5, 5, 8, 0.95) 70%, var(--void) 100%);
           pointer-events: none;
           mask-image: radial-gradient(circle at center, black 25%, transparent 75%);
           -webkit-mask-image: radial-gradient(circle at center, black 25%, transparent 75%);
@@ -628,7 +634,7 @@ export default function AwardsSection() {
           left: 50%;
           transform: translate(-50%, -50%) scaleY(-1) translateY(-40px);
           transform-style: preserve-3d;
-          opacity: 0.2;
+          opacity: 0.18;
           filter: blur(4px);
           pointer-events: none;
           mask-image: linear-gradient(to bottom, black 0%, transparent 65%);
@@ -636,9 +642,9 @@ export default function AwardsSection() {
         }
       `}</style>
 
-      {/* Ambient Sci-Fi Glows */}
-      <div className="absolute top-1/4 -right-40 w-[600px] h-[600px] bg-[var(--accent)]/12 rounded-full blur-[150px] pointer-events-none" />
-      <div className="absolute bottom-1/4 -left-40 w-[600px] h-[600px] bg-amber-500/10 rounded-full blur-[150px] pointer-events-none" />
+      {/* Ambient Sci-Fi Glows integrated into Landing Page Void */}
+      <div className="absolute top-1/3 -right-40 w-[600px] h-[600px] bg-[var(--accent)]/10 rounded-full blur-[160px] pointer-events-none" />
+      <div className="absolute bottom-1/3 -left-40 w-[600px] h-[600px] bg-amber-500/8 rounded-full blur-[160px] pointer-events-none" />
 
       <div className="max-w-[92rem] mx-auto space-y-8 px-4 md:px-10 relative z-10">
         {/* ── HEADER & CONTROLS ── */}
@@ -671,7 +677,7 @@ export default function AwardsSection() {
                   <circle cx="12" cy="12" r="3" fill="currentColor" />
                   <path d="M12 3v3m0 12v3M3 12h3m12 0h3" />
                 </svg>
-                <span>3D Orbit Slider</span>
+                <span>3D Orbit Showcase</span>
               </button>
               <button
                 onClick={() => setViewMode('grid')}
@@ -693,35 +699,32 @@ export default function AwardsSection() {
           </div>
         </div>
 
-        {/* ── CATEGORY PILLS ── */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
-          {CATEGORIES.map((cat) => (
-            <button
-              key={cat.value}
-              onClick={() => handleCategoryChange(cat.value)}
-              className={`px-4 py-1.5 rounded-full text-xs font-mono font-bold tracking-wider uppercase whitespace-nowrap transition-all duration-300 ${
-                activeTab === cat.value
-                  ? 'bg-[var(--accent)] text-[var(--void)] shadow-lg scale-105 font-extrabold'
-                  : 'bg-white/5 text-white/70 hover:bg-white/10 hover:text-white border border-white/10'
-              }`}
-            >
-              {cat.label}
-            </button>
-          ))}
-        </div>
+        {/* ── CATEGORY PILLS & FLOATING NAV CONTROLS ── */}
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
+            {CATEGORIES.map((cat) => (
+              <button
+                key={cat.value}
+                onClick={() => handleCategoryChange(cat.value)}
+                className={`px-4 py-1.5 rounded-full text-xs font-mono font-bold tracking-wider uppercase whitespace-nowrap transition-all duration-300 ${
+                  activeTab === cat.value
+                    ? 'bg-[var(--accent)] text-[var(--void)] shadow-lg scale-105 font-extrabold'
+                    : 'bg-white/5 text-white/70 hover:bg-white/10 hover:text-white border border-white/10'
+                }`}
+              >
+                {cat.label}
+              </button>
+            ))}
+          </div>
 
-        {/* ═════════════════════════════════════════════════════════════ */}
-        {/* ── MODE 1: 3D CYLINDRICAL ORBIT SHOWPIECE SLIDER ── */}
-        {/* ═════════════════════════════════════════════════════════════ */}
-        {viewMode === 'orbit' && (
-          <div className="relative w-full overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-b from-white/[0.03] via-black/80 to-[#05050a] p-3 sm:p-6 shadow-[0_25px_60px_rgba(0,0,0,0.9)]">
-            {/* Top Clean Controls (Orbit Header Text Removed) */}
-            <div className="flex items-center justify-end gap-2 pb-2">
+          {/* Clean Floating 3D Navigation Controls (No bounded box) */}
+          {viewMode === 'orbit' && (
+            <div className="flex items-center gap-2 shrink-0">
               <button
                 onClick={() => setIsAutoSpinning(!isAutoSpinning)}
-                className={`px-3 py-1 rounded-full border text-[11px] font-mono font-bold transition-colors flex items-center gap-1.5 ${
+                className={`px-3 py-1.5 rounded-full border text-[11px] font-mono font-bold transition-all flex items-center gap-1.5 ${
                   isAutoSpinning
-                    ? 'border-emerald-500/40 text-emerald-400 bg-emerald-500/10'
+                    ? 'border-emerald-500/40 text-emerald-400 bg-emerald-500/10 shadow-[0_0_12px_rgba(16,185,129,0.2)]'
                     : 'border-white/20 text-white/70 bg-white/5'
                 }`}
               >
@@ -731,21 +734,28 @@ export default function AwardsSection() {
 
               <button
                 onClick={() => rotateToIndex((activeIndex - 1 + totalCards) % totalCards)}
-                className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-transform active:scale-90"
+                className="w-8 h-8 rounded-full bg-white/5 hover:bg-white/15 border border-white/10 text-white flex items-center justify-center transition-transform active:scale-90"
                 aria-label="Previous Award"
               >
                 ❮
               </button>
               <button
                 onClick={() => rotateToIndex((activeIndex + 1) % totalCards)}
-                className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-transform active:scale-90"
+                className="w-8 h-8 rounded-full bg-white/5 hover:bg-white/15 border border-white/10 text-white flex items-center justify-center transition-transform active:scale-90"
                 aria-label="Next Award"
               >
                 ❯
               </button>
             </div>
+          )}
+        </div>
 
-            {/* 3D Viewport & Stage */}
+        {/* ═════════════════════════════════════════════════════════════ */}
+        {/* ── MODE 1: UNBOUNDED SEAMLESS 3D CYLINDRICAL ORBIT STAGE ── */}
+        {/* ═════════════════════════════════════════════════════════════ */}
+        {viewMode === 'orbit' && (
+          <div className="relative w-full py-4 overflow-hidden">
+            {/* 3D Viewport & Stage (No restrictive box border, seamless fade into page void) */}
             <div
               ref={containerRef}
               onPointerDown={handlePointerDown}
@@ -753,7 +763,7 @@ export default function AwardsSection() {
               onPointerUp={handlePointerUp}
               onPointerCancel={handlePointerUp}
               onWheel={handleWheel}
-              className="aether-viewport relative w-full h-[420px] sm:h-[460px] md:h-[500px] flex items-center justify-center overflow-hidden touch-pan-y"
+              className="aether-viewport relative w-full h-[400px] sm:h-[440px] md:h-[480px] flex items-center justify-center overflow-hidden touch-pan-y"
             >
               {/* 3D Floor Reflection Grid */}
               <div className="aether-floor-grid" />
@@ -781,16 +791,16 @@ export default function AwardsSection() {
                           <span className="px-2.5 py-0.5 rounded-full bg-white/10 text-[9px] sm:text-[10px] font-mono font-black tracking-wider text-[var(--accent)] uppercase border border-white/10">
                             {award.year}
                           </span>
-                          <span className="text-[8.5px] font-mono tracking-widest text-white/70 uppercase font-bold px-2 py-0.5 rounded bg-white/5 border border-white/10">
+                          <span className="text-[8px] sm:text-[8.5px] font-mono tracking-widest text-white/70 uppercase font-bold px-2 py-0.5 rounded bg-white/5 border border-white/10">
                             {award.category.split(' ')[0]}
                           </span>
                         </div>
 
                         {/* Middle: SPECIAL IEEE IMPERIAL LAUREL CREST EMBLEM & Typography */}
-                        <div className="my-auto space-y-2.5 z-10">
+                        <div className="my-auto space-y-2 z-10">
                           {/* Special Imperial Laurel Wreath & Crest Emblem */}
-                          <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-500/25 via-[var(--accent)]/20 to-yellow-300/20 border border-amber-400/40 text-amber-300 flex items-center justify-center shadow-md">
-                            <svg className="w-5 h-5 drop-shadow-[0_0_8px_rgba(245,158,11,0.5)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                          <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-amber-500/25 via-[var(--accent)]/20 to-yellow-300/20 border border-amber-400/40 text-amber-300 flex items-center justify-center shadow-md">
+                            <svg className="w-4.5 h-4.5 drop-shadow-[0_0_8px_rgba(245,158,11,0.5)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
                               {/* Left Laurel Branch */}
                               <path d="M7 19c-2-1.5-3-4-3-7 0-4 2-7 4-8" />
                               <path d="M5 8c1 .5 2 1.5 2 3" />
@@ -806,21 +816,21 @@ export default function AwardsSection() {
                           </div>
 
                           <div>
-                            <h3 className="text-base sm:text-lg font-black uppercase font-display tracking-tight text-white leading-tight line-clamp-2">
+                            <h3 className="text-sm sm:text-base font-black uppercase font-display tracking-tight text-white leading-tight line-clamp-2">
                               {award.title}
                             </h3>
-                            <p className="text-[10.5px] font-mono text-[var(--accent)] font-semibold mt-0.5 truncate">
+                            <p className="text-[10px] font-mono text-[var(--accent)] font-semibold mt-0.5 truncate">
                               {award.issuer}
                             </p>
                           </div>
 
-                          <p className="text-[11px] sm:text-xs font-sans text-white/75 leading-relaxed line-clamp-3">
+                          <p className="text-[10.5px] sm:text-[11px] font-sans text-white/75 leading-relaxed line-clamp-3">
                             {award.description}
                           </p>
                         </div>
 
                         {/* Bottom Telemetry Footer */}
-                        <div className="pt-2 border-t border-white/10 flex items-center justify-between text-[9px] font-mono text-white/50 z-10">
+                        <div className="pt-2 border-t border-white/10 flex items-center justify-between text-[8.5px] sm:text-[9px] font-mono text-white/50 z-10">
                           <span className="text-[var(--accent)] font-bold">◆ IEEE HONOUR</span>
                           <span>NISB</span>
                         </div>
@@ -843,7 +853,7 @@ export default function AwardsSection() {
                         <div className="flex items-center justify-between">
                           <span className="text-[9px] font-mono font-bold text-white">{award.year}</span>
                         </div>
-                        <h4 className="text-sm font-bold uppercase font-display text-white truncate">{award.title}</h4>
+                        <h4 className="text-xs font-bold uppercase font-display text-white truncate">{award.title}</h4>
                       </div>
                     </div>
                   ))}
