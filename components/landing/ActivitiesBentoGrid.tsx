@@ -224,8 +224,14 @@ export default function ActivitiesBentoGrid() {
             <motion.div
               key={a.id}
               onClick={() => setSelectedActivity(a)}
-              className="group relative rounded-3xl bg-[var(--card-bg)] border border-[var(--border-main)] hover:border-[var(--accent)] overflow-hidden transition-all duration-500 hover:shadow-2xl flex flex-col justify-between min-h-[380px] p-6 cursor-pointer"
+              whileHover={{
+                y: -10,
+                scale: 1.025,
+                transition: { type: 'spring', stiffness: 350, damping: 22 },
+              }}
+              className="group relative rounded-3xl bg-[var(--card-bg)] border border-[var(--border-main)] hover:border-[var(--accent)] overflow-hidden transition-all duration-500 hover:shadow-[0_20px_45px_-10px_var(--accent-glow)] flex flex-col justify-between min-h-[380px] p-6 cursor-pointer"
               variants={fadeUp}
+              style={{ transformStyle: 'preserve-3d' }}
             >
               {/* Background Image Container with Gradient Overlay */}
               <div className="absolute inset-0 z-0 overflow-hidden">
@@ -237,12 +243,17 @@ export default function ActivitiesBentoGrid() {
                   className="w-full h-full object-cover filter grayscale-[30%] group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700 opacity-40 group-hover:opacity-60"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[var(--card-bg)] via-[var(--card-bg)]/85 to-transparent" />
+                {/* Dynamic Holographic Sheen on hover */}
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 bg-gradient-to-tr from-transparent via-[var(--accent)]/15 to-transparent transition-opacity duration-500 pointer-events-none" />
               </div>
 
-              {/* Top Tag */}
-              <div className="relative z-10">
+              {/* Top Tag & Corner HUD Marker */}
+              <div className="relative z-10 flex items-center justify-between">
                 <span className="text-[9px] font-mono font-bold uppercase tracking-[0.25em] text-[var(--accent)] px-3 py-1 rounded-full bg-black/60 border border-white/10 backdrop-blur-md">
                   {a.tag}
+                </span>
+                <span className="text-[10px] font-mono text-[var(--accent)]/40 group-hover:text-[var(--accent)] transition-colors">
+                  [+]
                 </span>
               </div>
 
@@ -257,7 +268,7 @@ export default function ActivitiesBentoGrid() {
 
                 <div className="pt-3 border-t border-white/10 flex items-center justify-between text-[10px] font-mono text-[var(--accent)] font-bold">
                   <span>Click to Expand</span>
-                  <span className="text-base group-hover:translate-x-1 transition-transform">↗</span>
+                  <span className="text-base group-hover:translate-x-1.5 group-hover:-translate-y-0.5 transition-transform duration-300">↗</span>
                 </div>
               </div>
             </motion.div>

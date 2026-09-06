@@ -171,6 +171,8 @@ export default function RobotWalkingDivider({
       hasWaved: false,
       turnProgress: 0,
       expression: 'default' as 'default' | 'happy' | 'alert' | 'joy' | 'curious',
+      boostSpeed: 1,
+      boostTimer: 0,
     };
 
     function resize() {
@@ -764,7 +766,15 @@ export default function RobotWalkingDivider({
         }
       }
 
-      const moveSpeed = 110 * speed;
+      if (state.boostTimer > 0) {
+        state.boostTimer -= dt;
+        if (state.boostTimer <= 0) {
+          state.boostSpeed = 1;
+          state.expression = 'default';
+        }
+      }
+
+      const moveSpeed = 110 * speed * (state.boostSpeed || 1);
       const wrapPadding = 70;
       const centerX = width * 0.5;
 
@@ -817,7 +827,7 @@ export default function RobotWalkingDivider({
       state.hoverY = state.baseY + Math.sin(state.bobAngle) * 6;
 
       // Dynamic tilt based on movement
-      const desiredTilt = state.isWaving ? 0 : (isR2L ? -1 : 1) * 0.08;
+      const desiredTilt = state.isWaving ? 0 : (isR2L ? -1 : 1) * (state.boostTimer > 0 ? 0.16 : 0.08);
       state.tilt += (desiredTilt - state.tilt) * 0.1;
 
       // Clear Canvas
@@ -835,6 +845,26 @@ export default function RobotWalkingDivider({
       trackGrad.addColorStop(1, 'rgba(255,255,255,0)');
       ctx!.fillStyle = trackGrad;
       ctx!.fillRect(0, groundY + 1, width, 1);
+      ctx!.restore();
+
+      // Hyper-Drive Ionization Tail behind robot
+      const trailLength = Math.min(260, width * 0.32) * (state.boostTimer > 0 ? 1.8 : 1);
+      const tailX = isR2L ? state.robotX + trailLength : state.robotX - trailLength;
+      const beamGrad = ctx!.createLinearGradient(tailX, 0, state.robotX, 0);
+      beamGrad.addColorStop(0, 'rgba(0, 0, 0, 0)');
+      beamGrad.addColorStop(0.4, `${themeColors.glow}33`);
+      beamGrad.addColorStop(0.85, themeColors.glow);
+      beamGrad.addColorStop(1, '#ffffff');
+
+      ctx!.save();
+      ctx!.strokeStyle = beamGrad;
+      ctx!.lineWidth = state.boostTimer > 0 ? 3.5 : 2;
+      ctx!.shadowColor = themeColors.glow;
+      ctx!.shadowBlur = state.boostTimer > 0 ? 18 : 8;
+      ctx!.beginPath();
+      ctx!.moveTo(tailX, groundY + 1);
+      ctx!.lineTo(state.robotX, groundY + 1);
+      ctx!.stroke();
       ctx!.restore();
 
       // 1. Emit & Update Particles
@@ -900,11 +930,22 @@ export default function RobotWalkingDivider({
 
     animId = requestAnimationFrame(animate);
 
+    const handleBoost = () => {
+      state.boostSpeed = 2.4;
+      state.boostTimer = 1.5;
+      state.expression = 'joy';
+      const curGround = height * 0.84;
+      particles.push(new Particle(state.robotX, curGround, 0, 0, 16, themeColors.glow, 32, 'ring'));
+      particles.push(new Particle(state.robotX, curGround, 0, 0, 8, '#ffffff', 24, 'ring'));
+    };
+    canvas.addEventListener('click', handleBoost);
+
     return () => {
       cancelAnimationFrame(animId);
       if (resizeObserver) resizeObserver.disconnect();
       clearTimeout(timer1);
       clearTimeout(timer2);
+      canvas.removeEventListener('click', handleBoost);
       window.removeEventListener('resize', resize);
       window.removeEventListener('nisb:landingReady', resize);
       window.removeEventListener('nisb:themeChange', handleThemeChange);
@@ -914,14 +955,14 @@ export default function RobotWalkingDivider({
   return (
     <div
       ref={containerRef}
-      className={`relative w-full z-10 overflow-hidden select-none pointer-events-none h-[85px] sm:h-[105px] md:h-[120px] ${className}`}
-      aria-hidden="true"
+      className={`relative w-full z-10 overflow-hidden select-none cursor-pointer h-[85px] sm:h-[105px] md:h-[120px] group ${className}`}
+      title="Click Astro-Bot for Hyper-Drive Boost! ⚡"
     >
-      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full block" />
+      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full block pointer-events-auto" />
 
       {label && (
-        <div className="absolute top-2 left-6 z-10 opacity-30 text-[8px] font-mono tracking-widest uppercase text-white/50 pointer-events-none">
-          {label}
+        <div className="absolute top-2 left-6 z-10 opacity-30 group-hover:opacity-70 transition-opacity text-[8px] font-mono tracking-widest uppercase text-white/50 pointer-events-none">
+          {label} • [CLICK_FOR_BOOST]
         </div>
       )}
     </div>
