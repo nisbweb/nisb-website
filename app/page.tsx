@@ -15,7 +15,6 @@ import BlogsAndPodcastSection from '@/components/landing/BlogsAndPodcastSection'
 import TeamSection from '@/components/landing/TeamSection';
 import ChaptersSection from '@/components/landing/ChaptersSection';
 import SiteFooter from '@/components/landing/SiteFooter';
-import SectionTransition from '@/components/landing/SectionTransition';
 
 // Client-only canvas & interactive widgets
 const RadialThemeDial = dynamic(() => import('@/components/landing/RadialThemeDial'), { ssr: false });
@@ -109,53 +108,37 @@ export default function HomePage() {
             <LegacyScrollSection />
 
             {/* 4 ── Awards & Honours */}
-            <SectionTransition label="HONOURS & RECOGNITIONS" index={2}>
-              <AwardsSection />
-            </SectionTransition>
+            <AwardsSection />
 
             {/* 5 ── Live Google Sheets Events Feed */}
-            <SectionTransition label="LIVE DISPATCH // EVENTS FEED" index={3}>
-              <CinematicEventsSection />
-            </SectionTransition>
+            <CinematicEventsSection />
 
             {/* 6 ── Society Fests & Flagships */}
-            <SectionTransition label="SOCIETIES & FLAGSHIP FESTS" index={4}>
-              <SocietyFestsSection />
-            </SectionTransition>
+            <SocietyFestsSection />
 
             {/* ── Astro-Bot Divider: Left to Right ── */}
             <RobotWalkingDivider direction="left-to-right" speed={1.05} />
 
             {/* 7 ── All-round development bento grid with expandable focus groups */}
-            <SectionTransition label="CORE VERTICALS // BENTO" index={5}>
-              <ActivitiesBentoGrid />
-            </SectionTransition>
+            <ActivitiesBentoGrid />
 
             {/* 8 ── Publications */}
-            <SectionTransition label="RESEARCH & PUBLICATIONS" index={6}>
-              <PublicationsSection />
-            </SectionTransition>
+            <PublicationsSection />
 
             {/* ── Astro-Bot Divider: Right to Left ── */}
             <RobotWalkingDivider direction="right-to-left" speed={0.95} />
 
             {/* 9 ── NISB Blogs & Tech and Tales Podcast */}
-            <SectionTransition label="NISB EDITORIAL & BROADCAST" index={7}>
-              <BlogsAndPodcastSection />
-            </SectionTransition>
+            <BlogsAndPodcastSection />
 
             {/* 10 ── Executive Committee / Team */}
-            <SectionTransition label="EXECUTIVE LEADERSHIP" index={8}>
-              <TeamSection />
-            </SectionTransition>
+            <TeamSection />
 
             {/* ── Astro-Bot Divider: Left to Right ── */}
             <RobotWalkingDivider direction="left-to-right" speed={1.1} />
 
             {/* 11 ── IEEE Chapters / Societies */}
-            <SectionTransition label="IEEE CHAPTERS & SOCIETIES" index={9}>
-              <ChaptersSection />
-            </SectionTransition>
+            <ChaptersSection />
 
             {/* 12 ── Footer */}
             <SiteFooter />

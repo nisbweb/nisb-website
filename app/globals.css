@@ -1340,27 +1340,6 @@ body {
   }
 }
 
-/* ─── Quantum Laser Seam & Section Transition FX ─── */
-.quantum-laser-beam {
-  width: 35%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent 0%, var(--accent) 50%, #ffffff 85%, transparent 100%);
-  box-shadow: 0 0 16px 2px var(--accent-glow), 0 0 30px var(--accent);
-  animation: laserScan 6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-}
-
-@keyframes laserScan {
-  0% {
-    transform: translateX(-120%);
-  }
-  50% {
-    transform: translateX(320%);
-  }
-  100% {
-    transform: translateX(-120%);
-  }
-}
-
 /* 3D Tilt Card Container & Holographic Highlights */
 .interactive-3d-card {
   transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease, border-color 0.35s ease;
