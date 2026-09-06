@@ -2,166 +2,73 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import {
+  EventItem,
+  OFFICIAL_SPREADSHEET_ID,
+  LIVE_GVIZ_URL,
+  fetchLiveEvents,
+} from '@/lib/events-feed';
 
-// Google Spreadsheet Live Feed ID
-const OFFICIAL_SPREADSHEET_ID = '1wHYE0SCpAApAzRKL2BQmEXrTDtxSh6LQ9EPy_27GWlI';
-const LIVE_GVIZ_URL = `https://docs.google.com/spreadsheets/d/${OFFICIAL_SPREADSHEET_ID}/gviz/tq?tqx=out:json`;
-
-export interface EventItem {
-  id: string;
-  title: string;
-  category: string;
-  date: string;
-  image: string;
-  venue?: string;
-  description?: string;
-  regLink?: string;
-}
-
-// Convert Google Drive view links or raw Drive file IDs to direct high-speed image CDN URLs
-function sanitizeImageUrl(rawUrl: string): string {
-  if (!rawUrl || typeof rawUrl !== 'string') {
-    return 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2070&auto=format&fit=crop';
-  }
-
-  const str = rawUrl.trim();
-  if (!str) {
-    return 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2070&auto=format&fit=crop';
-  }
-
-  // If it's a full URL containing drive.google.com or googleusercontent.com
-  if (str.startsWith('http')) {
-    const driveIdMatch = str.match(/\/d\/([a-zA-Z0-9_-]+)/) || str.match(/id=([a-zA-Z0-9_-]+)/);
-    if (driveIdMatch && driveIdMatch[1]) {
-      return `https://lh3.googleusercontent.com/d/${driveIdMatch[1]}`;
-    }
-    return str;
-  }
-
-  // If it's a raw Google Drive File ID (e.g. 1Q7y--tV3KjjyTjsLaYK3kz_q03JmB_8b)
-  if (/^[a-zA-Z0-9_-]{20,}$/.test(str)) {
-    return `https://lh3.googleusercontent.com/d/${str}`;
-  }
-
-  return str;
-}
-
-function parseGVizResponse(text: string): EventItem[] {
-  const jsonStart = text.indexOf('{');
-  const jsonEnd = text.lastIndexOf('}');
-  if (jsonStart === -1 || jsonEnd === -1) return [];
-
-  const jsonString = text.substring(jsonStart, jsonEnd + 1);
-  const data = JSON.parse(jsonString);
-
-  const rows = data.table?.rows || [];
-  const eventsList: EventItem[] = [];
-
-  for (let i = 0; i < rows.length; i++) {
-    const c = rows[i]?.c;
-    if (!c) continue;
-
-    // Google Sheet schema: col 0 = Name, col 1 = Date, col 2 = Image ID, col 3 = Organiser/Category, col 4 = Venue
-    const eventName = c[0]?.v || '';
-    const rawDate = c[1]?.v || '';
-    const rawImage = c[2]?.v || c[4]?.v || c[5]?.v || '';
-    const organiser = c[3]?.v || 'NISB';
-    const venue = c[4]?.v || '';
-
-    // Ignore header row if present
-    if (String(eventName).toLowerCase().trim() === 'name') continue;
-
-    if (eventName && String(eventName).trim().length > 0) {
-      let formattedDate = String(rawDate);
-      if (rawDate && typeof rawDate === 'string' && rawDate.includes('Date(')) {
-        const dateParts = rawDate.match(/\d+/g);
-        if (dateParts && dateParts.length >= 3) {
-          const d = new Date(parseInt(dateParts[0]), parseInt(dateParts[1]), parseInt(dateParts[2]));
-          formattedDate = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-        }
-      }
-
-      let category = String(organiser).toUpperCase().trim() || 'NISB';
-      if (category.includes('GRSS') && category.includes('WIE')) {
-        category = 'GRSS';
-      }
-
-      eventsList.push({
-        id: `evt-${i}`,
-        title: String(eventName).trim(),
-        category: category,
-        date: formattedDate || '2025–2026',
-        image: sanitizeImageUrl(String(rawImage)),
-        venue: String(venue),
-        description: `Organized by ${organiser} ${venue ? 'at ' + venue : 'at NIE Mysuru'}. Join NISB for hands-on learning, engineering excellence, and networking.`,
-        regLink: 'https://social.nisb.in',
-      });
-    }
-  }
-
-  return eventsList;
-}
-
-// Top 6 Events pre-seeded for instant 0ms initial paint
+// Top 6 Events pre-seeded for instant 0ms initial paint (matching latest Google Sheet updates)
 export const INITIAL_TOP_EVENTS: EventItem[] = [
   {
     id: 'evt-top-0',
-    title: 'Automation in Healthcare',
+    title: 'Tech Jeopardy',
     category: 'NISB',
-    date: 'Sep 7, 2026',
-    image: 'https://lh3.googleusercontent.com/d/1wxukQjIkKL_kUp9s9hdvI0tu8Kqr8ZwV',
-    venue: 'NIE Mysuru',
-    description: 'Explore the revolution of healthcare through automated systems, AI diagnostics, and biomedical innovations.',
+    date: 'Aug 31, 2026',
+    image: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=2070&auto=format&fit=crop',
+    venue: 'NIE GJB',
+    description: 'Competitive technical showdown testing prowess across algorithmic logic, computer science, and engineering fundamentals.',
     regLink: 'https://social.nisb.in',
   },
   {
     id: 'evt-top-1',
-    title: "Vigyaan'26",
-    category: 'NISB',
-    date: 'Jul 6, 2026',
-    image: 'https://lh3.googleusercontent.com/d/1NlxToDj9jmvVTiB-UR0u5oaq3Z7ICnsq',
-    venue: 'NIE Mysuru',
-    description: 'The flagship annual technical extravaganza of NIE IEEE Student Branch bringing competitions and project exhibitions.',
+    title: 'National Space Day Celebration',
+    category: 'GRSS',
+    date: 'Aug 25, 2026',
+    image: 'https://lh3.googleusercontent.com/d/18prb5AkPHgvLC7-IeFcG3XICKbGcqi4i',
+    venue: 'NIE GJB',
+    description: 'Celebrating breakthroughs in satellite remote sensing, space exploration, and aerospace technology under IEEE GRSS.',
     regLink: 'https://social.nisb.in',
   },
   {
     id: 'evt-top-2',
-    title: 'Release of Manas 26 and Mosiac Chase',
-    category: 'EDITORIAL',
-    date: 'May 30, 2026',
-    image: 'https://lh3.googleusercontent.com/d/1qm0sJHLC6g2CRfXa9G8ZfTXdrWTmDbUZ',
-    venue: 'NIE Mysuru',
-    description: 'Annual magazine launch celebrating student literature, technical writing, and artistic brilliance.',
+    title: 'Project Ithaca',
+    category: 'NISB',
+    date: 'Aug 24, 2026',
+    image: 'https://lh3.googleusercontent.com/d/1Aha9is5AD_8qfmfSZTfIbUfALVY7gpDc',
+    venue: 'NIE GJB',
+    description: 'Pioneering technical odyssey empowering engineers to develop production-ready hardware and software prototypes.',
     regLink: 'https://social.nisb.in',
   },
   {
     id: 'evt-top-3',
-    title: 'THE HITCHHIKER’S GUIDE TO MLOps',
-    category: 'CS',
-    date: 'May 16, 2026',
-    image: 'https://lh3.googleusercontent.com/d/1NDwSbfg9h8u9X7EroiPtgqMyy4GNk0LW',
-    venue: 'NIE Mysuru',
-    description: 'Hands-on bootcamp on bridging Machine Learning model creation with continuous deployment pipelines.',
+    title: 'Resqbot',
+    category: 'CASS',
+    date: 'Aug 17, 2026',
+    image: 'https://lh3.googleusercontent.com/d/1U4uyD_kcqfPAeL_anGISPcQ1RRDCKBVd',
+    venue: 'NIE GJB',
+    description: 'Autonomous disaster-response robotics initiative built by IEEE Circuits and Systems Society.',
     regLink: 'https://social.nisb.in',
   },
   {
     id: 'evt-top-4',
-    title: 'CrossCurrent & Valedictory',
+    title: 'Building Agentic AI',
     category: 'NISB',
-    date: 'May 7, 2026',
-    image: 'https://lh3.googleusercontent.com/d/1BJS7osF8v9BPipdJTev3sh9EKYJC35Li',
-    venue: 'NIE Mysuru',
-    description: 'The grand farewell, award recognitions, and annual leadership handover ceremony of NISB.',
+    date: 'Jul 27, 2026',
+    image: 'https://lh3.googleusercontent.com/d/1KQWFV-erQrk-9P4AsS-zSA3FVS0BGWOz',
+    venue: 'Online',
+    description: 'Hands-on architectural masterclass on autonomous AI agents, tool invocation, and LLM reasoning workflows.',
     regLink: 'https://social.nisb.in',
   },
   {
     id: 'evt-top-5',
-    title: 'Cascade Sprint',
-    category: 'WIE',
-    date: 'May 6, 2026',
-    image: 'https://lh3.googleusercontent.com/d/1bBC1p57TTHiuiHVVpSEKAvXjSizNC7mn',
-    venue: 'NIE Mysuru',
-    description: 'Fast-paced coding and problem-solving sprint empowering technical women in engineering.',
+    title: '5g and Beyond',
+    category: 'NISB',
+    date: 'Jul 18, 2026',
+    image: 'https://lh3.googleusercontent.com/d/1m15UJlhY_0bbM9oWwNSbEC5VQEqJnf75',
+    venue: 'Online',
+    description: 'Next-generation telecommunications workshop diving into mmWave, edge networks, and future 6G protocols.',
     regLink: 'https://social.nisb.in',
   },
 ];
@@ -208,61 +115,97 @@ export default function CinematicEventsSection() {
   const [isLoading, setIsLoading] = useState(false);
   const [statusMsg, setStatusMsg] = useState('');
 
-  const fetchLiveSpreadsheet = async (sheetUrl?: string) => {
+  const fetchLiveSpreadsheet = async (sheetUrl?: string, isManual = false) => {
     setIsLoading(true);
-    setStatusMsg('Connecting to Google Sheet API...');
-
-    let targetGvizUrl = LIVE_GVIZ_URL;
-
-    if (sheetUrl) {
-      const match = sheetUrl.match(/\/d\/([a-zA-Z0-9_-]+)/);
-      if (match && match[1]) {
-        targetGvizUrl = `https://docs.google.com/spreadsheets/d/${match[1]}/gviz/tq?tqx=out:json`;
-      }
-    }
+    setStatusMsg(isManual ? 'Refreshing events...' : 'Syncing live feed...');
 
     try {
-      const res = await fetch(targetGvizUrl);
-      const text = await res.text();
-      const parsed = parseGVizResponse(text);
+      let freshEvents: EventItem[] = [];
 
-      if (parsed.length > 0) {
-        setEvents(parsed);
-        preloadTopEventImages(parsed, 6);
+      // 1. Primary path: Internal dynamic Next.js server route (No CORS, server-cached, instant)
+      if (!sheetUrl) {
         try {
-          localStorage.setItem('nisb_events_cache_v2', JSON.stringify(parsed));
-        } catch (e) { }
+          const apiRes = await fetch(`/api/events?t=${Date.now()}`, {
+            cache: 'no-store',
+          });
+          if (apiRes.ok) {
+            const data = await apiRes.json();
+            if (data.success && Array.isArray(data.events) && data.events.length > 0) {
+              freshEvents = data.events;
+            }
+          }
+        } catch (apiErr) {
+          console.warn('[Events Feed] API route fetch failed, falling back to direct GViz:', apiErr);
+        }
+      }
+
+      // 2. Direct fallback path: Client-side direct Google Sheets GViz with &headers=1
+      if (freshEvents.length === 0) {
+        freshEvents = await fetchLiveEvents(sheetUrl);
+      }
+
+      if (freshEvents.length > 0) {
+        setEvents(freshEvents);
+        preloadTopEventImages(freshEvents, 6);
+        try {
+          localStorage.setItem(
+            'nisb_events_cache_v3',
+            JSON.stringify({
+              data: freshEvents,
+              timestamp: Date.now(),
+            })
+          );
+        } catch (e) {}
         setCurrentIndex(0);
-        setStatusMsg('');
+        setStatusMsg('Live Synced');
       } else {
-        setStatusMsg('No events found in spreadsheet.');
+        setStatusMsg('No events found.');
       }
     } catch (err) {
       console.error('Failed to load Google Sheet:', err);
       setStatusMsg('Showing cached events.');
     } finally {
       setIsLoading(false);
+      setTimeout(() => {
+        setStatusMsg('');
+      }, 4000);
     }
   };
 
   useEffect(() => {
-    // 1. Try instant restore from local cache
+    // 1. Instant restore from local cache
     try {
-      const cached = localStorage.getItem('nisb_events_cache_v2');
-      if (cached) {
-        const parsed = JSON.parse(cached);
-        if (Array.isArray(parsed) && parsed.length > 0) {
-          setEvents(parsed);
-          preloadTopEventImages(parsed, 6);
+      const cachedRaw = localStorage.getItem('nisb_events_cache_v3');
+      if (cachedRaw) {
+        const parsedCache = JSON.parse(cachedRaw);
+        const cachedItems = Array.isArray(parsedCache) ? parsedCache : parsedCache?.data;
+        if (Array.isArray(cachedItems) && cachedItems.length > 0) {
+          setEvents(cachedItems);
+          preloadTopEventImages(cachedItems, 6);
         }
       }
-    } catch (e) { }
+    } catch (e) {}
 
-    // 2. Preload top 6 images immediately in advance
+    // 2. Preload top 6 images immediately
     preloadTopEventImages(INITIAL_TOP_EVENTS, 6);
 
-    // 3. Fetch latest updates in background
+    // 3. Immediately fetch latest live updates in background
     fetchLiveSpreadsheet();
+
+    // 4. Auto-revalidate when tab regains focus or visibility (instant updates when editing sheet)
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'visible') {
+        fetchLiveSpreadsheet();
+      }
+    };
+
+    window.addEventListener('focus', handleVisibilityChange);
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    return () => {
+      window.removeEventListener('focus', handleVisibilityChange);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
   }, []);
 
   const SOCIETY_CATEGORIES = ['ALL', 'NISB', 'CS', 'WIE', 'CASS', 'RAS', 'GRSS'];
@@ -380,16 +323,29 @@ export default function CinematicEventsSection() {
         {/* Header & Live Sheet Connection Status */}
         <div className="flex flex-col md:flex-row items-start md:items-end justify-between gap-6 pb-6 border-b border-[var(--border-main)]">
           <div>
-            <div className="flex items-center gap-3 mb-2">
-              {isLoading ? (
-                <span className="text-[10px] font-mono text-[var(--accent)] animate-pulse">
-                  {statusMsg}
-                </span>
-              ) : (
-                <span className="text-[10px] font-mono text-green-400 font-bold">
+            <div className="flex items-center gap-2.5 mb-2 flex-wrap">
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-[10px] font-mono text-emerald-400 font-bold uppercase tracking-wider">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                Live Sheet Feed
+              </span>
+
+              {statusMsg && (
+                <span className={`text-[10px] font-mono ${isLoading ? 'text-[var(--accent)] animate-pulse' : 'text-green-400 font-bold'}`}>
                   {statusMsg}
                 </span>
               )}
+
+              <button
+                onClick={() => fetchLiveSpreadsheet(undefined, true)}
+                disabled={isLoading}
+                title="Sync latest events directly from Google Sheet"
+                className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md bg-white/5 hover:bg-white/10 text-[10px] font-mono text-white/70 hover:text-white border border-white/10 transition-all disabled:opacity-40 active:scale-95"
+              >
+                <svg className={`w-3 h-3 ${isLoading ? 'animate-spin text-[var(--accent)]' : ''}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.3" />
+                </svg>
+                <span>{isLoading ? 'Syncing...' : 'Sync Now'}</span>
+              </button>
             </div>
 
             <h2 className="text-4xl md:text-6xl font-black uppercase font-display tracking-tight text-[var(--star-white)]">
