@@ -12,6 +12,7 @@ interface AwardItem {
   highlight?: boolean;
   type: 'global' | 'branch' | 'chapter' | 'individual';
   accent?: string;
+  honourees?: string[];
 }
 
 const AWARDS: AwardItem[] = [
@@ -20,15 +21,35 @@ const AWARDS: AwardItem[] = [
   // ─────────────────────────────────────────────
   {
     id: 'merwin',
-    year: '2020–2025',
+    year: '2018–2026',
     category: 'GLOBAL DISTINCTION',
     title: 'Richard E. Merwin Scholarship (REM)',
     issuer: 'IEEE Computer Society',
     description:
-      'Prestigious global scholarship earned by 5 NISB student leaders recognizing exceptional technical promise and IEEE involvement.',
+      'Prestigious global scholarship earned by 5 outstanding NISB student leaders recognizing exceptional technical promise and IEEE involvement.',
+    honourees: [
+      'Sriharsha M — CS Chairperson (2018–19)',
+      'Varun Bheemiah — CS Chairperson (2019–20)',
+      'Pranav B — CS Chairperson (2020–21)',
+      'Shreesh Kulkarni — CS Chairperson (2021–22)',
+      'Prerika P — CS Secretary (2025–26)',
+    ],
     highlight: true,
     type: 'global',
     accent: '#f59e0b',
+  },
+  {
+    id: 'bangalore-scholarship',
+    year: '2021–22',
+    category: 'STUDENT SCHOLARSHIP',
+    title: 'IEEE Bangalore Section Student Scholarship',
+    issuer: 'IEEE Bangalore Section',
+    description:
+      'Awarded to Madhusudan Joshi (Chairperson 2021–22) in recognition of academic distinction, student branch leadership, and high-impact volunteer commitment.',
+    honourees: ['Madhusudan Joshi — Chairperson (2021–22)'],
+    highlight: true,
+    type: 'individual',
+    accent: '#10b981',
   },
   {
     id: 'top25',
@@ -269,6 +290,39 @@ const AWARDS: AwardItem[] = [
 
 export default function AwardsSection() {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [selectedYearFilter, setSelectedYearFilter] = useState<string>('ALL');
+
+  const YEAR_FILTERS = ['ALL', '2025', '2024', '2023–24', '2018–22', 'Legacy', 'Scholarships'];
+
+  const displayedAwards = React.useMemo(() => {
+    return AWARDS.filter((award) => {
+      if (selectedYearFilter === 'ALL') return true;
+      if (selectedYearFilter === '2025') return award.year.includes('2025');
+      if (selectedYearFilter === '2024') return award.year.includes('2024');
+      if (selectedYearFilter === '2023–24') return award.year.includes('2023') || award.year.includes('2024');
+      if (selectedYearFilter === '2018–22')
+        return (
+          award.year.includes('2018') ||
+          award.year.includes('2019') ||
+          award.year.includes('2020') ||
+          award.year.includes('2021') ||
+          award.year.includes('2022')
+        );
+      if (selectedYearFilter === 'Legacy')
+        return (
+          award.year.includes('2011') ||
+          award.year.includes('2013') ||
+          award.year.includes('2015')
+        );
+      if (selectedYearFilter === 'Scholarships')
+        return (
+          award.category.includes('SCHOLARSHIP') ||
+          award.id === 'merwin' ||
+          award.id === 'bangalore-scholarship'
+        );
+      return true;
+    });
+  }, [selectedYearFilter]);
 
   const containerRef = useRef<HTMLDivElement>(null);
   const cardNodesRef = useRef<(HTMLDivElement | null)[]>([]);
@@ -282,8 +336,15 @@ export default function AwardsSection() {
   const lastXRef = useRef(0);
   const lastTimeRef = useRef(0);
 
-  const totalCards = AWARDS.length;
+  const totalCards = displayedAwards.length;
   const totalCardsRef = useRef(totalCards);
+
+  useEffect(() => {
+    totalCardsRef.current = displayedAwards.length;
+    currentOffsetRef.current = 0;
+    targetOffsetRef.current = 0;
+    setActiveIndex(0);
+  }, [displayedAwards]);
 
   // Helper: Shortest modular distance in circular array
   const getShortestDiff = useCallback((target: number, current: number, total: number) => {
@@ -325,21 +386,22 @@ export default function AwardsSection() {
         newActiveIdx = i;
       }
 
-      // Parabolic 3D curve positioning
+      // Dynamic 3D Coverflow curve positioning
       const x = rel * cardSpacing;
-      // Cards curve gently backward as they move away from center
-      const z = -Math.min(absRel * 130, 600);
-      const rotateY = -rel * 14; // Subtle 3D tilt facing center
-      const scale = Math.max(0.72, 1 - absRel * 0.12);
-      const opacity = Math.max(0, 1 - absRel * 0.36);
-      const blur = isMobile ? 0 : Math.max(0, (absRel - 0.6) * 4);
-      const zIndex = Math.round((10 - Math.min(absRel, 10)) * 100);
+      // Parabolic depth curve
+      const z = -Math.min(absRel * 150, 650) + (absRel < 0.4 ? 35 : 0);
+      // Apple Coverflow dynamic 3D tilt facing center
+      const rotateY = Math.sign(-rel) * Math.min(absRel * 24, 38);
+      const scale = Math.max(0.70, 1 - absRel * 0.11 + (absRel < 0.3 ? 0.05 : 0));
+      const opacity = Math.max(0, 1 - absRel * 0.35);
+      const blur = isMobile ? 0 : Math.max(0, (absRel - 0.45) * 4);
+      const zIndex = Math.round((12 - Math.min(absRel, 12)) * 100);
 
       // Apply transform & styling
       card.style.transform = `translate3d(${x.toFixed(1)}px, 0px, ${z.toFixed(1)}px) rotateY(${rotateY.toFixed(1)}deg) scale(${scale.toFixed(3)})`;
       card.style.opacity = opacity.toFixed(2);
       if (!isMobile) {
-        card.style.filter = blur > 0.5 ? `blur(${blur.toFixed(1)}px)` : 'none';
+        card.style.filter = blur > 0.4 ? `blur(${blur.toFixed(1)}px)` : 'none';
       }
       card.style.zIndex = `${zIndex}`;
       card.style.visibility = opacity > 0.02 ? 'visible' : 'hidden';
@@ -547,8 +609,16 @@ export default function AwardsSection() {
           transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.3s ease;
         }
         .awards-card-wrapper.active-card-center .awards-card-body {
-          border-color: rgba(6, 182, 212, 0.55);
-          box-shadow: 0 0 50px -10px rgba(6, 182, 212, 0.35), 0 30px 60px -15px rgba(0, 0, 0, 0.95), inset 0 0 20px rgba(255, 255, 255, 0.06);
+          border-color: rgba(56, 189, 248, 0.75);
+          box-shadow: 0 0 60px -5px rgba(56, 189, 248, 0.45), 0 35px 75px -15px rgba(0, 0, 0, 0.98), inset 0 0 25px rgba(255, 255, 255, 0.1);
+        }
+        .awards-card-wrapper.active-card-center .awards-holo-sheen {
+          opacity: 0.85;
+          animation: holoGlint 4s ease-in-out infinite;
+        }
+        @keyframes holoGlint {
+          0%, 100% { opacity: 0.3; }
+          50% { opacity: 0.9; }
         }
         .awards-card-wrapper:hover .awards-card-body {
           border-color: rgba(255, 255, 255, 0.35);
@@ -559,6 +629,7 @@ export default function AwardsSection() {
           background: linear-gradient(115deg, transparent 25%, rgba(255, 255, 255, 0.08) 48%, rgba(255, 255, 255, 0.18) 50%, transparent 55%);
           pointer-events: none;
           opacity: 0.5;
+          transition: opacity 0.5s ease;
         }
       `}</style>
 
@@ -600,6 +671,29 @@ export default function AwardsSection() {
           </div>
         </div>
 
+        {/* ── INTERACTIVE FILTER BY YEAR & SCHOLARSHIPS ── */}
+        <div className="flex items-center gap-2 flex-wrap pt-1">
+          <span className="text-[10px] font-mono text-white/50 uppercase tracking-wider pr-1">
+            FILTER:
+          </span>
+          {YEAR_FILTERS.map((yr) => {
+            const isSelected = selectedYearFilter === yr;
+            return (
+              <button
+                key={yr}
+                onClick={() => setSelectedYearFilter(yr)}
+                className={`px-3 py-1 rounded-full text-xs font-mono font-bold transition-all border ${
+                  isSelected
+                    ? 'bg-[var(--accent)] text-black border-[var(--accent)] shadow-[0_0_15px_var(--accent-glow)] scale-105'
+                    : 'bg-white/5 text-white/70 border-white/10 hover:bg-white/10 hover:text-white'
+                }`}
+              >
+                {yr === 'Scholarships' ? '⭐ Scholarships' : yr}
+              </button>
+            );
+          })}
+        </div>
+
         {/* ═════════════════════════════════════════════════════════════ */}
         {/* ── SMOOTH DRAG-ONLY 3D SLIDER SHOWCASE ── */}
         {/* ═════════════════════════════════════════════════════════════ */}
@@ -612,9 +706,9 @@ export default function AwardsSection() {
             onPointerUp={handlePointerUp}
             onPointerCancel={handlePointerUp}
             onWheel={handleWheel}
-            className="awards-3d-stage relative w-full h-[470px] sm:h-[510px] md:h-[550px] flex items-center justify-center overflow-hidden touch-pan-y"
+            className="awards-3d-stage relative w-full h-[490px] sm:h-[530px] md:h-[570px] flex items-center justify-center overflow-hidden touch-pan-y"
           >
-            {AWARDS.map((award, i) => (
+            {displayedAwards.map((award, i) => (
               <div
                 key={award.id}
                 ref={(el) => {
@@ -689,6 +783,26 @@ export default function AwardsSection() {
                     <p className="text-xs sm:text-sm font-sans text-white/80 leading-relaxed line-clamp-3">
                       {award.description}
                     </p>
+
+                    {/* Named Honourees Showcase (e.g. Richard E. Merwin winners & Bangalore Section Scholarship) */}
+                    {award.honourees && award.honourees.length > 0 && (
+                      <div className="pt-2 border-t border-white/10 space-y-1">
+                        <span className="text-[9px] font-mono text-amber-300 font-bold uppercase tracking-widest block">
+                          LAUREATES &amp; HONOUREES:
+                        </span>
+                        <div className="flex flex-col gap-1 max-h-[110px] overflow-y-auto pr-1">
+                          {award.honourees.map((hon, hIdx) => (
+                            <div
+                              key={hIdx}
+                              className="text-[10px] font-mono text-white/95 bg-white/[0.07] border border-amber-400/30 px-2 py-0.5 rounded flex items-center gap-1.5"
+                            >
+                              <span className="text-amber-400">★</span>
+                              <span>{hon}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
                   </div>
 
                   {/* Card Bottom: IEEE Distinction Badge */}
@@ -703,15 +817,11 @@ export default function AwardsSection() {
 
           {/* Bottom Slider Nav Indicators */}
           <div className="flex items-center justify-center gap-1.5 pt-3 flex-wrap max-w-xl mx-auto">
-            {AWARDS.map((_, idx) => (
+            {displayedAwards.map((_, idx) => (
               <button
                 key={idx}
                 onClick={() => navigateToIndex(idx)}
-                className={`h-1.5 rounded-full transition-all duration-300 ${activeIndex === idx
-                  ? 'w-7 bg-[var(--accent)] shadow-[0_0_10px_var(--accent)]'
-                  : 'w-1.5 bg-white/20 hover:bg-white/40'
-                  }`}
-                aria-label={`Go to slide ${idx + 1}`}
+                className={`h-1.5 rounded-full transition-all duration-300 ${activeIndex === idx ? 'w-6 bg-[var(--accent)]' : 'w-1.5 bg-white/20'}`}
               />
             ))}
           </div>

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, type Variants } from 'framer-motion';
 import {
   EventItem,
   OFFICIAL_SPREADSHEET_ID,
@@ -72,6 +72,32 @@ export const INITIAL_TOP_EVENTS: EventItem[] = [
     regLink: 'https://social.nisb.in',
   },
 ];
+
+const eventSlideVariants: Variants = {
+  enter: (dir: number) => ({
+    opacity: 0,
+    x: dir * 80,
+    scale: 0.95,
+    rotateY: dir * -5,
+    filter: 'blur(7px)',
+  }),
+  center: {
+    opacity: 1,
+    x: 0,
+    scale: 1,
+    rotateY: 0,
+    filter: 'blur(0px)',
+    transition: { duration: 0.48, ease: [0.16, 1, 0.3, 1] as const },
+  },
+  exit: (dir: number) => ({
+    opacity: 0,
+    x: -dir * 80,
+    scale: 0.95,
+    rotateY: dir * 5,
+    filter: 'blur(7px)',
+    transition: { duration: 0.32, ease: [0.16, 1, 0.3, 1] as const },
+  }),
+};
 
 // Preload top event images in advance into browser memory & disk cache
 function preloadTopEventImages(items: EventItem[], count = 6) {
@@ -192,7 +218,12 @@ export default function CinematicEventsSection() {
     // 3. Immediately fetch latest live updates in background
     fetchLiveSpreadsheet();
 
-    // 4. Auto-revalidate when tab regains focus or visibility (instant updates when editing sheet)
+    // 4. Auto-sync periodic interval (every 3 minutes) so data updates continuously without manual sync button
+    const autoSyncInterval = setInterval(() => {
+      fetchLiveSpreadsheet();
+    }, 3 * 60 * 1000);
+
+    // 5. Auto-revalidate when tab regains focus or visibility (instant updates when editing sheet)
     const handleVisibilityChange = () => {
       if (document.visibilityState === 'visible') {
         fetchLiveSpreadsheet();
@@ -203,13 +234,21 @@ export default function CinematicEventsSection() {
     document.addEventListener('visibilitychange', handleVisibilityChange);
 
     return () => {
+      clearInterval(autoSyncInterval);
       window.removeEventListener('focus', handleVisibilityChange);
       document.removeEventListener('visibilitychange', handleVisibilityChange);
     };
   }, []);
 
   const SOCIETY_CATEGORIES = ['ALL', 'NISB', 'CS', 'WIE', 'CASS', 'RAS', 'GRSS'];
-  const SPECIAL_FILTERS = ['Industrial Visits', 'Technical Talks'];
+  const SPECIAL_FILTERS = [
+    'Industrial Visits',
+    'Technical Talks',
+    'Workshops',
+    'Social Initiatives',
+    'Collab Events',
+    'Weekly Meetups',
+  ];
 
   // Enhanced category matching supporting collab events (e.g. CS+CASS on both feeds) and thematic filters
   const eventMatchesCategory = (evt: EventItem, cat: string): boolean => {
@@ -220,21 +259,58 @@ export default function CinematicEventsSection() {
     const descLower = (evt.description || '').toLowerCase();
 
     if (cat === 'Industrial Visits') {
+      // Exclude IoT and Industry 4.0 talk
+      if (titleLower.includes('iot and industry 4.0')) return false;
       return (
         titleLower.includes('visit') ||
         titleLower.includes('tour') ||
         titleLower.includes('isro') ||
         titleLower.includes('iisc') ||
+        titleLower.includes('vssc') ||
         titleLower.includes('nigst') ||
-        titleLower.includes('industry') ||
+        titleLower.includes('ksrsac') ||
+        titleLower.includes('ksndmc') ||
+        titleLower.includes('surathkal') ||
+        titleLower.includes('at&s') ||
         catUpper.includes('VISIT') ||
         descLower.includes('industrial visit') ||
         descLower.includes('technical tour')
       );
     }
 
+    if (cat === 'Technical Talks') {
+      return (
+        titleLower.includes('iot and industry 4.0') ||
+        titleLower.includes('talk') ||
+        titleLower.includes('webinar') ||
+        titleLower.includes('seminar') ||
+        titleLower.includes('lecture') ||
+        titleLower.includes('keynote') ||
+        titleLower.includes('session') ||
+        descLower.includes('technical talk') ||
+        descLower.includes('expert lecture')
+      );
+    }
+
+    if (cat === 'Workshops') {
+      return (
+        titleLower.includes('fluxon') ||
+        titleLower.includes('bootcamp') ||
+        titleLower.includes('workshop') ||
+        titleLower.includes('codelabs') ||
+        titleLower.includes('hands-on') ||
+        catUpper.includes('WORKSHOP') ||
+        descLower.includes('workshop') ||
+        descLower.includes('bootcamp')
+      );
+    }
+
     if (cat === 'Social Initiatives') {
       return (
+        titleLower.includes('vigyaan') ||
+        titleLower.includes('vatsalya') ||
+        titleLower.includes('satellites') ||
+        titleLower.includes('blood') ||
         titleLower.includes('social') ||
         titleLower.includes('ashram') ||
         titleLower.includes('divya deepa') ||
@@ -256,20 +332,6 @@ export default function CinematicEventsSection() {
         titleLower.includes('sfg') ||
         titleLower.includes('hfg') ||
         descLower.includes('weekly meetup')
-      );
-    }
-
-    if (cat === 'Technical Talks') {
-      return (
-        titleLower.includes('talk') ||
-        titleLower.includes('webinar') ||
-        titleLower.includes('seminar') ||
-        titleLower.includes('lecture') ||
-        titleLower.includes('keynote') ||
-        titleLower.includes('bootcamp') ||
-        titleLower.includes('session') ||
-        descLower.includes('technical talk') ||
-        descLower.includes('expert lecture')
       );
     }
 
@@ -303,13 +365,17 @@ export default function CinematicEventsSection() {
 
   const currentEvent = filteredEvents[currentIndex] || filteredEvents[0];
 
+  const [slideDirection, setSlideDirection] = useState(1);
+
   const handleNext = () => {
     if (filteredEvents.length === 0) return;
+    setSlideDirection(1);
     setCurrentIndex((prev) => (prev + 1) % filteredEvents.length);
   };
 
   const handlePrev = () => {
     if (filteredEvents.length === 0) return;
+    setSlideDirection(-1);
     setCurrentIndex((prev) => (prev - 1 + filteredEvents.length) % filteredEvents.length);
   };
 
@@ -323,29 +389,11 @@ export default function CinematicEventsSection() {
         {/* Header & Live Sheet Connection Status */}
         <div className="flex flex-col md:flex-row items-start md:items-end justify-between gap-6 pb-6 border-b border-[var(--border-main)]">
           <div>
-            <div className="flex items-center gap-2.5 mb-2 flex-wrap">
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-[10px] font-mono text-emerald-400 font-bold uppercase tracking-wider">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-[10px] font-mono text-emerald-400 font-bold uppercase tracking-wider">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                Live Sheet Feed
+                Live Campus Pulse
               </span>
-
-              {statusMsg && (
-                <span className={`text-[10px] font-mono ${isLoading ? 'text-[var(--accent)] animate-pulse' : 'text-green-400 font-bold'}`}>
-                  {statusMsg}
-                </span>
-              )}
-
-              <button
-                onClick={() => fetchLiveSpreadsheet(undefined, true)}
-                disabled={isLoading}
-                title="Sync latest events directly from Google Sheet"
-                className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md bg-white/5 hover:bg-white/10 text-[10px] font-mono text-white/70 hover:text-white border border-white/10 transition-all disabled:opacity-40 active:scale-95"
-              >
-                <svg className={`w-3 h-3 ${isLoading ? 'animate-spin text-[var(--accent)]' : ''}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.3" />
-                </svg>
-                <span>{isLoading ? 'Syncing...' : 'Sync Now'}</span>
-              </button>
             </div>
 
             <h2 className="text-4xl md:text-6xl font-black uppercase font-display tracking-tight text-[var(--star-white)]">
@@ -445,15 +493,17 @@ export default function CinematicEventsSection() {
             </div>
 
             {/* ── BESPOKE FULL-POSTER EXHIBITION STAGE & CYBER-PASS CARD ── */}
-            <div className="relative min-h-[520px] rounded-3xl overflow-hidden border border-white/15 bg-[#060a14] shadow-[0_25px_70px_rgba(0,0,0,0.95)]">
-              <AnimatePresence mode="wait">
+            <div className="relative min-h-[520px] rounded-3xl overflow-hidden border border-white/15 bg-[#060a14] shadow-[0_25px_70px_rgba(0,0,0,0.95)]" style={{ perspective: 1200 }}>
+              <AnimatePresence mode="wait" custom={slideDirection}>
                 {currentEvent && (
                   <motion.div
                     key={currentEvent.id || currentIndex}
-                    initial={{ opacity: 0, y: 15 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -15 }}
-                    transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                    custom={slideDirection}
+                    variants={eventSlideVariants}
+                    initial="enter"
+                    animate="center"
+                    exit="exit"
+                    style={{ transformStyle: 'preserve-3d' }}
                     className="grid grid-cols-1 lg:grid-cols-12 gap-0 items-stretch"
                   >
                     {/* Left Column: 100% Full Uncropped Poster Exhibition Stage */}
@@ -594,8 +644,45 @@ export default function CinematicEventsSection() {
               </AnimatePresence>
             </div>
 
-            {/* Quick Event Thumbnail Fast-Scroller Bar */}
-
+            {/* Quick Event Coverflow Ribbon */}
+            {filteredEvents.length > 1 && (
+              <div className="space-y-2 pt-2">
+                <div className="flex items-center justify-between text-[11px] font-mono text-white/50 px-1">
+                  <span>EVENTS TIMELINE</span>
+                  <span>{currentIndex + 1} OF {filteredEvents.length}</span>
+                </div>
+                <div className="flex items-center gap-3 overflow-x-auto py-2 px-1 scrollbar-none">
+                  {filteredEvents.slice(0, 15).map((evt, idx) => {
+                    const isSelected = idx === currentIndex;
+                    return (
+                      <button
+                        key={evt.id || idx}
+                        onClick={() => {
+                          setSlideDirection(idx > currentIndex ? 1 : -1);
+                          setCurrentIndex(idx);
+                        }}
+                        className={`shrink-0 flex items-center gap-3 p-2 pr-4 rounded-2xl border transition-all duration-300 text-left ${
+                          isSelected
+                            ? 'bg-white/15 border-[var(--accent)] shadow-[0_0_20px_var(--accent-glow)] scale-105'
+                            : 'bg-white/5 border-white/10 hover:bg-white/10 hover:border-white/20 opacity-60 hover:opacity-100'
+                        }`}
+                      >
+                        <img
+                          src={evt.image}
+                          alt=""
+                          className="w-10 h-10 rounded-xl object-cover shrink-0"
+                          loading="lazy"
+                        />
+                        <div className="font-mono text-xs max-w-[130px]">
+                          <p className="text-[10px] text-[var(--accent)] font-bold truncate">{evt.date}</p>
+                          <p className="text-white font-bold truncate text-[11px]">{evt.title}</p>
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
           </div>
         )}
 

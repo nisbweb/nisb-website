@@ -253,15 +253,25 @@ export default function BlogsAndPodcastSection() {
               </div>
             </div>
 
-            {/* Bottom CTA */}
-            <div className="p-5 sm:p-6 pt-0">
+            {/* Bottom CTAs: Tech N Tales & NISBits Playlist */}
+            <div className="p-5 sm:p-6 pt-0 flex flex-col sm:flex-row gap-3">
               <a
                 href="https://youtu.be/_xdb0UZCQZc?si=aqc6PIgmdk4QuwfV"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 w-full py-3 rounded-full bg-red-600 hover:bg-red-700 text-white text-xs font-mono font-extrabold uppercase tracking-wider transition-all shadow-[0_0_20px_rgba(239,68,68,0.4)] hover:shadow-[0_0_30px_rgba(239,68,68,0.7)] hover:scale-[1.02] active:scale-95"
+                className="flex items-center justify-center gap-2 flex-1 py-3 px-4 rounded-full bg-red-600 hover:bg-red-700 text-white text-xs font-mono font-extrabold uppercase tracking-wider transition-all shadow-[0_0_20px_rgba(239,68,68,0.4)] hover:shadow-[0_0_30px_rgba(239,68,68,0.7)] hover:scale-[1.02] active:scale-95 text-center"
               >
-                <span>Watch on YouTube</span>
+                <span>Tech N Tales</span>
+                <span>↗</span>
+              </a>
+              <a
+                href="https://youtube.com/playlist?list=PLVDx7sfjQxUE&si=GvLNr1WOR9qF9mKk"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-2 flex-1 py-3 px-4 rounded-full bg-white/10 hover:bg-white/20 border border-white/15 text-white text-xs font-mono font-extrabold uppercase tracking-wider transition-all hover:scale-[1.02] active:scale-95 text-center"
+              >
+                <span className="w-2 h-2 rounded-full bg-rose-500 animate-pulse" />
+                <span>NISBits Playlist</span>
                 <span>↗</span>
               </a>
             </div>

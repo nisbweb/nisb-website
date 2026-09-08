@@ -19,6 +19,7 @@ import SiteFooter from '@/components/landing/SiteFooter';
 // Client-only canvas & interactive widgets
 const RadialThemeDial = dynamic(() => import('@/components/landing/RadialThemeDial'), { ssr: false });
 const RobotWalkingDivider = dynamic(() => import('@/components/landing/RobotWalkingDivider'), { ssr: false });
+const NISBotCornerChat = dynamic(() => import('@/components/landing/NISBotCornerChat'), { ssr: false });
 
 // Heavy / SSR-unsafe components loaded dynamically
 const IntroSequence = dynamic(() => import('@/components/intro/IntroSequence'), {
@@ -147,6 +148,9 @@ export default function HomePage() {
 
         {/* ── 180° Semicircular Chromatic Reactor Theme Dial ── */}
         {landingVisible && <RadialThemeDial />}
+
+        {/* ── Big Interactive Hovering NISBot & Corner AI Chatbot ── */}
+        {landingVisible && <NISBotCornerChat />}
       </main>
     </SmoothScroll>
   );

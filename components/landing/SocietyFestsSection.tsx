@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, type Variants } from 'framer-motion';
 
 interface SocietyFest {
   code: string;
@@ -24,10 +24,10 @@ const SOCIETY_FESTS: SocietyFest[] = [
   {
     code: 'NISB',
     society: 'NIE IEEE Student Branch',
-    badge: 'STUDENT BRANCH FLAGSHIP FESTS',
+    badge: 'NISB • ANKURA & ADROIT',
     accent: '#38bdf8',
-    festName: 'ANKURA & ADROIT',
-    festTagline: 'Flagship Fests of NISB',
+    festName: 'NISB • ANKURA & ADROIT',
+    festTagline: 'Odd & Even Semester Signature Fests',
     description:
       'The flagship celebrations of NISB. Ankura and Adroit bring together students through technical learning, competitions, innovation, and a shared enthusiasm for technology. They represent the branch’s spirit of curiosity, collaboration, and building experiences beyond the classroom.',
     flagships: [
@@ -256,19 +256,54 @@ const SOCIETY_FESTS: SocietyFest[] = [
   },
 ];
 
-export default function SocietyFestsSection() {
-  const [activeCode, setActiveCode] = useState<string>('NISB');
+const festCardVariants: Variants = {
+  enter: (dir: number) => ({
+    opacity: 0,
+    x: dir * 80,
+    scale: 0.94,
+    rotateY: dir * -7,
+    filter: 'blur(8px)',
+  }),
+  center: {
+    opacity: 1,
+    x: 0,
+    scale: 1,
+    rotateY: 0,
+    filter: 'blur(0px)',
+    transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] as const },
+  },
+  exit: (dir: number) => ({
+    opacity: 0,
+    x: -dir * 80,
+    scale: 0.94,
+    rotateY: dir * 7,
+    filter: 'blur(8px)',
+    transition: { duration: 0.35, ease: [0.16, 1, 0.3, 1] as const },
+  }),
+};
 
-  const current = SOCIETY_FESTS.find((f) => f.code === activeCode) || SOCIETY_FESTS[0];
+export default function SocietyFestsSection() {
+  const [activeCode, setActiveCode] = useState('NISB');
+  const [direction, setDirection] = useState(1);
+
+  const handleSelectCode = (newCode: string) => {
+    if (newCode === activeCode) return;
+    const oldIdx = SOCIETY_FESTS.findIndex((s) => s.code === activeCode);
+    const newIdx = SOCIETY_FESTS.findIndex((s) => s.code === newCode);
+    setDirection(newIdx > oldIdx ? 1 : -1);
+    setActiveCode(newCode);
+  };
+
+  const current = SOCIETY_FESTS.find((s) => s.code === activeCode) || SOCIETY_FESTS[0];
 
   return (
     <section
-      id="flagships"
+      id="fests"
       className="premium-section py-20 bg-[var(--void)] text-[var(--star-white)] relative overflow-hidden border-b border-[var(--border-main)]"
     >
-      {/* Background ambient lighting */}
+      {/* Dynamic Ambient Society Glow */}
       <div
-        className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[700px] h-[350px] rounded-full blur-[140px] pointer-events-none opacity-20 transition-all duration-700"
+        className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[700px] h-[350px] rounded-full blur-[140px] pointer-events-none opacity-25 transition-all duration-700"
         style={{ backgroundColor: current.accent }}
       />
 
@@ -276,7 +311,6 @@ export default function SocietyFestsSection() {
         {/* Header */}
         <div className="flex flex-col md:flex-row items-start md:items-end justify-between gap-6 pb-6 border-b border-[var(--border-main)]">
           <div>
-
             <h2 className="text-3xl sm:text-4xl md:text-6xl font-black uppercase font-display tracking-tight text-[var(--star-white)] leading-tight">
               SOCIETY <span className="text-[var(--accent)]">FLAGSHIPS</span>
             </h2>
@@ -286,99 +320,111 @@ export default function SocietyFestsSection() {
           </p>
         </div>
 
-        {/* Society Selector Pills */}
+        {/* Society Selector Pills with Smooth Layout Glide */}
         <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
           {SOCIETY_FESTS.map((soc) => (
             <button
               key={soc.code}
-              onClick={() => setActiveCode(soc.code)}
-              className={`px-4 py-2 rounded-full text-xs font-mono font-bold tracking-wider uppercase transition-all duration-300 ${activeCode === soc.code
-                ? 'bg-[var(--star-white)] text-[var(--void)] shadow-[0_0_20px_rgba(255,255,255,0.3)] scale-105'
-                : 'bg-white/5 text-white/70 hover:bg-white/10 hover:text-white border border-white/10'
-                }`}
+              onClick={() => handleSelectCode(soc.code)}
+              className={`relative px-4 py-2 rounded-full text-xs font-mono font-bold tracking-wider uppercase transition-colors duration-300 border ${
+                activeCode === soc.code
+                  ? 'text-[var(--void)] border-transparent'
+                  : 'text-white/70 hover:text-white border-white/10 bg-white/5 hover:bg-white/10'
+              }`}
             >
-              {soc.code} • {soc.festName.split('&')[0].trim()}
+              {activeCode === soc.code && (
+                <motion.div
+                  layoutId="activeSocietyPill"
+                  className="absolute inset-0 bg-[var(--star-white)] rounded-full -z-10 shadow-[0_0_24px_rgba(255,255,255,0.45)]"
+                  transition={{ type: 'spring', stiffness: 450, damping: 30 }}
+                />
+              )}
+              {soc.code === 'NISB' ? 'NISB • Ankura & Adroit' : `${soc.code} • ${soc.festName}`}
             </button>
           ))}
         </div>
 
-        {/* Active Fest Spotlight Showcase Card */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={current.code}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-            className={`rounded-3xl border border-white/15 bg-gradient-to-br ${current.bgGradient} backdrop-blur-xl p-6 sm:p-8 md:p-12 shadow-2xl space-y-10 relative overflow-hidden`}
-          >
-            {/* Top Bar: Society name + Badge */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-6">
-              <div>
-                <span
-                  className="inline-block text-[10px] sm:text-xs font-mono font-bold uppercase tracking-[0.3em] px-3 py-1 rounded-full border mb-2"
-                  style={{
-                    borderColor: `${current.accent}50`,
-                    color: current.accent,
-                    backgroundColor: `${current.accent}15`,
-                  }}
-                >
-                  {current.badge}
-                </span>
-                <h3 className="text-3xl sm:text-4xl md:text-5xl font-black uppercase font-display text-white tracking-tight">
-                  {current.festName}
-                </h3>
-                <p className="text-xs sm:text-sm font-mono text-[var(--accent)] font-semibold mt-1">
-                  {current.festTagline}
-                </p>
+        {/* Active Fest Spotlight Showcase Card with Crazy 3D Fluid Morph */}
+        <div style={{ perspective: 1200 }}>
+          <AnimatePresence mode="wait" custom={direction}>
+            <motion.div
+              key={current.code}
+              custom={direction}
+              variants={festCardVariants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              style={{ transformStyle: 'preserve-3d' }}
+              className={`rounded-3xl border border-white/15 bg-gradient-to-br ${current.bgGradient} backdrop-blur-xl p-6 sm:p-8 md:p-12 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.8)] space-y-10 relative overflow-hidden`}
+            >
+              {/* Top Bar: Society name + Badge */}
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-6">
+                <div>
+                  <span
+                    className="inline-block text-[10px] sm:text-xs font-mono font-bold uppercase tracking-[0.3em] px-3 py-1 rounded-full border mb-2"
+                    style={{
+                      borderColor: `${current.accent}50`,
+                      color: current.accent,
+                      backgroundColor: `${current.accent}15`,
+                    }}
+                  >
+                    {current.badge}
+                  </span>
+                  <h3 className="text-3xl sm:text-4xl md:text-5xl font-black uppercase font-display text-white tracking-tight">
+                    {current.festName}
+                  </h3>
+                  <p className="text-xs sm:text-sm font-mono text-[var(--accent)] font-semibold mt-1">
+                    {current.festTagline}
+                  </p>
+                </div>
               </div>
 
-              {/* Stat Chips */}
-              <div className="flex items-center gap-4 flex-wrap sm:flex-nowrap">
-                {current.stats.map((s, idx) => (
-                  <div
-                    key={idx}
-                    className="px-4 py-2.5 rounded-2xl bg-black/50 border border-white/10 backdrop-blur-md text-center min-w-[90px]"
+              {/* Middle: Description */}
+              <p className="text-sm sm:text-base leading-relaxed text-white/80 max-w-4xl font-sans">
+                {current.description}
+              </p>
+
+              {/* Bottom 3-Column Flagship Tracks with Staggered 3D Cards */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
+                {current.flagships.map((f, idx) => (
+                  <motion.div
+                    key={f.name}
+                    initial={{ opacity: 0, y: 24, rotateX: 12 }}
+                    animate={{
+                      opacity: 1,
+                      y: 0,
+                      rotateX: 0,
+                      transition: {
+                        delay: 0.1 + idx * 0.08,
+                        duration: 0.45,
+                        ease: [0.16, 1, 0.3, 1],
+                      },
+                    }}
+                    whileHover={{
+                      y: -6,
+                      scale: 1.02,
+                      transition: { duration: 0.2 },
+                    }}
+                    className="p-5 rounded-2xl bg-black/40 border border-white/10 hover:border-white/30 transition-all duration-300 flex flex-col justify-between gap-4 group"
+                    style={{ transformStyle: 'preserve-3d' }}
                   >
-                    <p className="text-lg sm:text-xl font-black text-white font-display leading-none">{s.val}</p>
-                    <p className="text-[9px] font-mono text-white/60 uppercase tracking-widest mt-1">{s.label}</p>
-                  </div>
+                    <div>
+                      <span className="text-[9px] font-mono uppercase tracking-[0.25em] text-white/50 block mb-1">
+                        {f.type}
+                      </span>
+                      <h4 className="text-lg font-bold text-white uppercase font-display tracking-tight group-hover:text-[var(--accent)] transition-colors">
+                        {f.name}
+                      </h4>
+                      <p className="text-xs font-sans text-white/70 mt-2 leading-relaxed">
+                        {f.desc}
+                      </p>
+                    </div>
+                  </motion.div>
                 ))}
               </div>
-            </div>
-
-            {/* Middle: Description */}
-            <p className="text-sm sm:text-base leading-relaxed text-white/80 max-w-4xl font-sans">
-              {current.description}
-            </p>
-
-            {/* Bottom 3-Column Flagship Tracks */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
-              {current.flagships.map((f, idx) => (
-                <div
-                  key={idx}
-                  className="p-5 rounded-2xl bg-black/40 border border-white/10 hover:border-white/25 transition-all duration-300 flex flex-col justify-between gap-4 group"
-                >
-                  <div>
-                    <span className="text-[9px] font-mono uppercase tracking-[0.25em] text-white/50 block mb-1">
-                      {f.type}
-                    </span>
-                    <h4 className="text-lg font-bold text-white uppercase font-display tracking-tight group-hover:text-[var(--accent)] transition-colors">
-                      {f.name}
-                    </h4>
-                    <p className="text-xs font-sans text-white/70 mt-2 leading-relaxed">
-                      {f.desc}
-                    </p>
-                  </div>
-
-                  <div className="pt-2 border-t border-white/5 flex items-center justify-between text-[10px] font-mono text-[var(--accent)] font-bold">
-
-                  </div>
-                </div>
-              ))}
-            </div>
-          </motion.div>
-        </AnimatePresence>
+            </motion.div>
+          </AnimatePresence>
+        </div>
       </div>
     </section>
   );

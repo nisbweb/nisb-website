@@ -34,9 +34,9 @@ const ACTIVITIES: ActivityItem[] = [
     id: 'focus-groups',
     title: 'Focus Groups',
     image: '/image copy 2.png',
-    tag: 'SFG & HFG Workshops',
+    tag: 'SFG & HFG WORKSHOPS',
     destinations: 'SFG (Software) • HFG (Hardware)',
-    body: 'Where curiosity meets code, circuits, and a whole lot of building. SFG and HFG bring students together to learn, experiment, and turn ideas into working technology!',
+    body: 'Where curiosity meets code, circuits, and hands-on building. SFG and HFG bring students together to learn, experiment, and turn ideas into working technology.',
     details: {
       heading: 'Focus Groups: SFG & HFG',
       subheading: 'Learn Together. Build Together. Go Beyond.',
@@ -53,11 +53,6 @@ const ACTIVITIES: ActivityItem[] = [
           desc: 'If you like knowing what happens behind the screen, HFG is your playground. Dive into electronics, digital and analog systems, embedded development, microcontrollers, and hands-on hardware projects that turn theory into something you can actually build!',
           tag: 'Circuits • Embedded • Electronics • IoT',
         },
-        {
-          title: 'From Ideas to Prototypes',
-          desc: 'Focus Groups encourage students to collaborate, experiment across domains, and take their ideas from a sketch or concept to something that actually works!',
-          tag: 'Build • Experiment • Collaborate',
-        },
       ],
     },
   },
@@ -66,74 +61,87 @@ const ACTIVITIES: ActivityItem[] = [
     id: 'industrial-visits',
     title: 'Industrial Visits',
     image: '/WhatsApp Image 2026-08-08 at 22.33.54.jpeg',
-    tag: 'INDUSTRY EXPOSURE',
-    destinations: 'ISRO • IISc Bangalore • NIGST • AT&S • IIIT Hyderabad',
-    body: 'We take learning beyond the classroom through technical visits that expose students to real-world engineering, research, manufacturing, and emerging technologies.',
+    tag: 'INDUSTRY & R&D EXPOSURE',
+    destinations: 'ISRO • IIST & VSSC • NIGST • IISc • NITK • IIIT-H • AT&S',
+    body: 'We take learning beyond the classroom through technical visits that expose students to premier space ecosystems, research laboratories, electronics manufacturing, and supercomputing centers.',
     details: {
-      heading: 'Industrial Tours & R&D Visits',
+      heading: 'Industrial Visits',
       subheading: 'See Where Engineering Comes to Life.',
       overview:
-        'NISB organizes technical visits that give students first-hand exposure to research institutions, engineering facilities, and industry environments. From space applications and geoscience to advanced research and manufacturing, these experiences help connect classroom concepts with the real world.',
+        'NISB organizes immersive technical visits that connect students directly with premier national research facilities, space exploration centers, and leading industry environments across India.',
       highlights: [
         {
-          title: 'ISRO',
-          desc: 'Technical exposure to one of India’s leading space and research organizations, giving students a closer look at engineering in the space domain.',
-          tag: 'Space • Engineering • Research',
+          title: 'IIST & VSSC, THIRUVANANTHAPURAM',
+          desc: "A journey into India's space ecosystem showcasing launch vehicles, satellite technology, and landmark missions. Students explored VSSC's space heritage and IIST's research facilities, including remote sensing, satellite data processing, and CubeSat development.",
+          tag: 'Space Applications • Launch Vehicles • Research',
         },
         {
-          title: 'IISc Bangalore',
-          desc: 'An opportunity for students to experience the research environment of one of India’s premier institutions and explore engineering beyond the classroom.',
+          title: 'NITK, SURATHKAL',
+          desc: 'A research-focused visit introducing students to cutting-edge engineering laboratories, academic research facilities, and innovation centers, offering insights into interdisciplinary projects and higher education in engineering.',
+          tag: 'Research • Engineering • Innovation',
+        },
+        {
+          title: 'IIIT HYDERABAD',
+          desc: 'A visit to IIIT Hyderabad providing exposure to pioneering research in artificial intelligence, robotics, computer vision, data science, and intelligent systems, while showcasing its vibrant innovation and startup ecosystem.',
+          tag: 'AI • Research • Innovation',
+        },
+        {
+          title: 'NIGST, HYDERABAD',
+          desc: 'An immersive visit focused on geospatial science and remote sensing, introducing students to satellite imagery analysis, GIS mapping, earth observation technologies, and their applications in environmental monitoring and resource management.',
+          tag: 'Geospatial • Remote Sensing • Research',
+        },
+        {
+          title: 'UR RAO SATELLITE CENTRE, BENGALURU',
+          desc: "A technical visit to one of ISRO's premier satellite development centers, offering students an inside look at spacecraft engineering, satellite design, assembly, testing, and India's cutting-edge space missions.",
+          tag: 'Space • Satellite Technology • Research',
+        },
+        {
+          title: 'IISc BANGALORE',
+          desc: "An opportunity for students to experience the research environment of one of India's premier institutions and explore interdisciplinary engineering, advanced laboratories, and innovation-driven research beyond the classroom.",
           tag: 'Research • Innovation • Technology',
         },
         {
-          title: 'NIGST',
-          desc: 'Exposure to geospatial technologies, remote sensing, and the applications of engineering in understanding and mapping our world.',
-          tag: 'GIS • Remote Sensing • Geospatial',
+          title: 'KSRSAC & KSNDMC, BANGALORE',
+          desc: 'A technical visit offering practical exposure to geospatial technologies, satellite data, GIS, and remote sensing applications, along with insights into weather monitoring, disaster prediction, and early warning systems for effective disaster management.',
+          tag: 'GIS • Remote Sensing • Disaster Management',
         },
         {
-          title: 'AT&S & Industry Visits',
-          desc: 'Visits to industry environments that help students understand how engineering concepts translate into real-world products, processes, and professional workflows.',
+          title: 'AT&S INDUSTRIAL VISIT',
+          desc: 'A visit to AT&S providing students with first-hand exposure to advanced electronics manufacturing, PCB production, industrial automation, quality control, and professional engineering workflows in a global manufacturing environment.',
           tag: 'Industry • Manufacturing • Engineering',
-        },
-        {
-          title: 'IIIT Hyderabad',
-          desc: 'A technical visit that provided students an opportunity to enhance their knowledge in space applications and explore research-oriented learning.',
-          tag: 'Space Applications • Research',
         },
       ],
     },
   },
-
-
 
   {
     id: 'weekly-meetups',
     title: 'Weekly Meetups',
     image:
       'https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2070&auto=format&fit=crop',
-    tag: 'PEER LEARNING',
-    destinations: 'Python • AVR Programming • Technical Discussions',
-    body: 'Regular meetups where students learn together, explore technologies, discuss ideas, and build confidence one session at a time.',
+    tag: 'PEER LEARNING & CODE SERIES',
+    destinations: 'ML Series • DSA Series • Web Tech & Linux',
+    body: 'Regular technical series where students learn together, explore technologies, code interactively, and build confidence from foundations to real-world workflows.',
     details: {
-      heading: 'Weekly Technical Meetups',
-      subheading: 'Small Sessions. Big Learning.',
+      heading: 'Technical Meetup Series',
+      subheading: 'Hands-on. Interactive. Industry-Relevant.',
       overview:
-        'Weekly meetups give NISB members a consistent space to explore technical topics, learn from peers, and strengthen their foundations. From programming basics to embedded systems, the sessions encourage curiosity through regular, accessible learning.',
+        'Weekly meetups give NISB members a consistent space to explore technical topics, learn from peers, and strengthen their foundations through guided hands-on coding and problem-solving.',
       highlights: [
         {
-          title: 'Python Weekly Meetups',
-          desc: 'Regular Python-focused sessions helping students build programming foundations and gradually become more comfortable solving problems with code.',
-          tag: 'Python • Programming • Foundations',
+          title: 'ML MEETUP SERIES (2026)',
+          desc: 'A beginner-to-intermediate machine learning series covering Python for ML, data preprocessing, model building, and real-world AI workflows through interactive coding sessions.',
+          tag: 'AI • Machine Learning • Hands-on',
         },
         {
-          title: 'Introduction to Python',
-          desc: 'Beginner-friendly sessions introducing students to Python concepts and giving them a starting point for their programming journey.',
-          tag: 'Python • Beginners • Coding',
+          title: 'DSA MEETUP SERIES (2025)',
+          desc: 'Weekly problem-solving sessions focused on strengthening algorithmic thinking, mastering fundamental data structures, and preparing students for coding interviews and contests.',
+          tag: 'Data Structures • Algorithms • Problem Solving',
         },
         {
-          title: 'WIE Weekly Meetup — AVR Programming',
-          desc: 'A WIE weekly meetup introducing students to AVR programming and giving them an opportunity to explore embedded systems through hands-on learning.',
-          tag: 'WIE • AVR • Embedded Systems',
+          title: 'WEB TECHNOLOGIES & LINUX SERIES (2024)',
+          desc: 'A foundational series introducing students to HTML, CSS, JavaScript, Linux command-line workflows, Git, and essential open-source development practices through practical demonstrations.',
+          tag: 'Web Development • Linux • Open Source',
         },
       ],
     },
@@ -141,47 +149,37 @@ const ACTIVITIES: ActivityItem[] = [
 
   {
     id: 'social-initiatives',
-    title: 'Humanitarian Activities',
+    title: 'Social Initiatives',
     image: '/image copy.png',
-    tag: 'COMMUNITY IMPACT',
+    tag: 'HUMANITARIAN & OUTREACH',
     destinations:
-      'Vigyaan • Dhriti • Blood Donation • Vatsalya • Community Visits',
-    body: 'NISB steps beyond technology to create moments that matter — from STEM outreach and blood donation drives to spending time with communities that deserve to be heard, supported, and remembered.',
+      'Vigyaan • Vatsalya • Little Joy • School to Satellites • Blood Drives',
+    body: 'NISB steps beyond technology to create moments that matter — from rural STEM outreach and space education to spending companionship time with communities that deserve support and love.',
     details: {
-      heading: 'Humanitarian Activities & Outreach',
+      heading: 'Social Initiatives & Humanitarian Outreach',
       subheading: 'Advancing Technology for Humanity. Showing Up for Community.',
       overview:
-        'For NISB, engineering is not only about what we build. It is also about the people we build for. Through outreach initiatives, social visits, STEM education, blood donation drives, and moments of companionship, NISB encourages students to contribute beyond the campus and create meaningful human connections.',
+        'For NISB, engineering is not only about what we build. It is also about the people we build for. Through rural school outreach, companionships at care homes, STEM awareness, and blood donation drives, NISB encourages students to contribute meaningfully beyond the campus.',
       highlights: [
         {
           title: 'VIGYAAN — Rural STEM Outreach',
-          desc: 'A social initiative focused on rural outreach, engaging school students with science, technology, and STEM activities while encouraging curiosity and confidence in learning.',
-          tag: 'Rural Outreach • STEM • Education',
+          desc: 'A social initiative focused on rural outreach, engaging school students with STEM activities while encouraging curiosity and confidence in learning.',
+          tag: 'Venue: Govt. High School, Lakshmipuram • Rural STEM',
         },
         {
-          title: 'DHRITI — Social Initiative',
-          desc: 'A community-focused initiative similar in spirit to Vigyaan, creating opportunities for students to step outside the classroom and engage meaningfully with the wider community.',
-          tag: 'Community • Outreach • Impact',
+          title: 'LITTLE JOY, PRERANA, AASHA & VATSALYA',
+          desc: 'Community visits that took NISB members to spaces serving different communities, including orphanages and schools for differently abled students, creating opportunities for interaction, learning, and companionship.',
+          tag: 'Venue: Shree Bharathi Vriddha Sevashrama • Care & Companionship',
         },
         {
-          title: 'Blood Donation Camps',
-          desc: 'NISB has organized blood donation camps in 2021, 2022, and 2024, bringing students together for a simple act of service that can make a very real difference.',
-          tag: '2021 • 2022 • 2024 • Social Service',
+          title: 'School to Satellites',
+          desc: 'A two-phase outreach initiative designed to introduce school students to the fascinating world of space technology, beginning with the fundamentals of remote sensing and continuing with an educational visit to ISRO’s U R Rao Satellite Centre and the Jawaharlal Nehru Planetarium.',
+          tag: 'Humanitarian & Space Outreach • ISRO URSC',
         },
         {
-          title: 'LITTLE JOY, PRERANA & AASHA',
-          desc: 'Community visits that took NISB members to spaces serving different communities, including orphanages, schools for differently abled students, and Samarthanam, creating opportunities for interaction, learning, and companionship.',
-          tag: 'Community Visits • Inclusion • Companionship',
-        },
-        {
-          title: 'VATSALYA',
-          desc: 'A social initiative centered around spending meaningful time with residents of an old age home — not simply as visitors, but as companions, sharing conversations, presence, and a little warmth.',
-          tag: 'Old Age Home • Companionship • Community',
-        },
-        {
-          title: 'WIE & STEM Outreach',
-          desc: 'Through WIE-led initiatives, NISB creates opportunities for young students to discover STEM, ask questions, and imagine possibilities for their futures.',
-          tag: 'WIE • STEM • Empowerment',
+          title: 'Weekly Community Meetups & Blood Donation Camps',
+          desc: 'NISB regularly organizes blood donation camps and weekly volunteer sessions, bringing students together for meaningful service, health awareness, and youth mentorship.',
+          tag: 'Blood Donation Drives • Youth Mentorship • Social Impact',
         },
       ],
     },
@@ -214,7 +212,7 @@ export default function ActivitiesBentoGrid() {
             </motion.h2>
           </div>
           <motion.p className="text-xs font-mono text-[var(--text-muted)] max-w-sm" variants={fadeUp}>
-            Empowering student engineers through industrial tours, focus research labs, weekly meetups, and social impact drives.
+            Empowering student engineers through industrial visits, technical workshops, weekly meetups and social initiatives.
           </motion.p>
         </div>
 
